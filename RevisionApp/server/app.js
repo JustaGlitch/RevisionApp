@@ -6,12 +6,16 @@ const logRoutes = require("./middleware/logger");
 // Routers
 
 // Middleware
-const api = express();
+const app = express();
 
-api.use(cors());
-api.use(express.json());
-api.use(logRoutes);
+app.use(cors());
+app.use(express.json());
+app.use(logRoutes);
 
 //Routes
 
-module.exports = api;
+app.get("/", (req, res) => {
+    res.send("this is the StudyDex API");
+  });
+
+module.exports = app;
