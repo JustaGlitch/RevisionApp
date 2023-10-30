@@ -1,4 +1,5 @@
 -- Drop tables
+DROP TABLE IF EXISTS token;
 DROP TABLE IF EXISTS collection;
 DROP TABLE IF EXISTS study_sessions;
 DROP TABLE IF EXISTS tasks;
@@ -8,11 +9,12 @@ DROP TABLE IF EXISTS class;
 DROP TABLE IF EXISTS pokemon;
 DROP TABLE IF EXISTS admin;
 
+
 -- Admin table
 CREATE TABLE admin (
     admin_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL  -- Ideally store a hashed password
+    password VARCHAR(255) NOT NULL  
 );
 
 -- Class table
@@ -26,7 +28,7 @@ CREATE TABLE class (
 CREATE TABLE student_user (
     user_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,  -- Ideally store a hashed password
+    password VARCHAR(255) NOT NULL, 
     current_poked VARCHAR(255)
 );
 
@@ -37,6 +39,17 @@ CREATE TABLE students (
     class_id INT,
     FOREIGN KEY (user_id) REFERENCES student_user(user_id),
     FOREIGN KEY (class_id) REFERENCES class(class_id)
+);
+
+-- Token table
+CREATE TABLE token (
+    token_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id INT, 
+    admin_id INT,
+    token VARCHAR(36) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES student_user(user_id),
+    FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
 );
 
 -- Tasks table
