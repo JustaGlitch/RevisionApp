@@ -1,9 +1,15 @@
+require("dotenv").config();
+
 const { Pool } = require("pg");
 
 const db = new Pool({
-    connectionString: process.env.DB_URL
-})
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT
+});
 
-console.log("DB connection established.")
+console.log("DB connection established.");
 
 module.exports = db;
