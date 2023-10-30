@@ -1,5 +1,7 @@
 const db = require("../database/connect");
-const fetch = require("node-fetch");
+let fetch;
+import('node-fetch').then(module => fetch = module.default);
+
 
 class Pokemon {
     constructor(pokemon_id, name, evolution_stage, evolves_to, study_time, image_url = null) {
@@ -104,12 +106,4 @@ class Pokemon {
 }
 
 module.exports = Pokemon;
-
-// Mock data for demonstration purposes:
-const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
-testPokemon.create().then(() => {
-    console.log("Successfully created test Pokémon.");
-}).catch((error) => {
-    console.error("Error:", error);
-});
 
