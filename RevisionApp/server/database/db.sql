@@ -96,6 +96,15 @@ CREATE TABLE collection (
 INSERT INTO admin (username, password) VALUES ('adminUser', 'password123');
 INSERT INTO class (admin_id) VALUES (1);
 INSERT INTO student_user (username, password, current_poked) VALUES ('studentUser1', 'pass1234', 'Pikachu');
+
+INSERT INTO student_user (username, password, current_poked)
+VALUES
+('student1', 'password1', 'Pikachu'),
+('student2', 'password2', 'Pikachu'),
+('student3', 'password3', 'Pikachu'),
+('student4', 'password4', 'Pikachu'),
+('student5', 'password5', 'Pikachu');
+
 INSERT INTO students (user_id, class_id) VALUES (1, 1);
 -- Insert the baby Pokemon
 INSERT INTO pokemon (name, evolution_stage) VALUES ('Pikachu', 'baby');
@@ -114,3 +123,22 @@ VALUES ('Charmeleon', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Ch
 INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
 VALUES ('Charmander', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Charmeleon'), 30),
        ('Squirtle', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Wartortle'), 30);
+
+-- Inserting dummy data into the pokemon table
+INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
+VALUES 
+('Bulbasaur', 'baby', NULL, 15),
+('Ivysaur', 'middle', NULL, 30),
+('Venusaur', 'final', NULL, 45),
+('Charmander', 'baby', NULL, 15),
+('Charmeleon', 'middle', NULL, 30),
+('Charizard', 'final', NULL, 45);
+
+-- Inserting dummy data into the collection table
+INSERT INTO collection (poked_id, user_id)
+VALUES 
+(1, 1), -- User 1 has Bulbasaur
+(4, 1), -- User 1 also has Charmander
+(2, 2), -- User 2 has Ivysaur
+(3, 3); -- User 3 has Venusaur
+
