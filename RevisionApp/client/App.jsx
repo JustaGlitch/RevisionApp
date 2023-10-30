@@ -1,30 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Routes, Route, Outlet } from 'react-router-dom'
+import BasicLayout from "./layouts";
+import * as Pages from './pages'
+import './assets/css/bootstrap.min.css'
+import './assets/css/App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Routes>
+      <Route path="/" element={<BasicLayout />}>
+        <Route index element={<Pages.MainPage/>} />
+        <Route path="/login" element={<Pages.Login/>} />
+        <Route path="/register" element={<Pages.Register/>} />
+        <Route path="/task/:id" element={<Pages.TaskPage/>} />
+        <Route path="/account" element={<Pages.AccountPage/>}>
+          <Route index element={<Pages.CollectionPage/>} />
+          <Route path="collection" element={<Outlet/>} />
+          <Route path="tasks" element={<Pages.AllTasksPage/>} />
+          <Route path="users" element={<Pages.AllUsersPage/>} />
+          <Route path="settings" element={<Pages.AccountSettingsPage/>} />
+        </Route>
+        <Route path='*' element={<Pages.PageNotFound/>} />
+      </Route>
+    </Routes>
   )
 }
 
