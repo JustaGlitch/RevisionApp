@@ -18,7 +18,6 @@ class Pokemon {
         try {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
             const data = await response.json();
-            console.log("Fetched Pokémon sprite URL:", data.sprites.front_default);  // Add this line
             return data.sprites.front_default;
         } catch (error) {
             console.error("Failed to fetch Pokémon sprite:", error);
