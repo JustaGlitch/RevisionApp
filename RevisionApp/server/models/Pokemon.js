@@ -2,7 +2,6 @@ const db = require("../database/connect");
 let fetch;
 import('node-fetch').then(module => fetch = module.default);
 
-
 class Pokemon {
     constructor(pokemon_id, name, evolution_stage, evolves_to, study_time, image_url = null) {
         this.pokemon_id = pokemon_id;
