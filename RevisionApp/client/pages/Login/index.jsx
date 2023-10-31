@@ -6,7 +6,7 @@ function index() {
   return (
     <div className='container h-100'>
       <div className='row h-100'>
-        <div className="col-sm-12 col-md-6 d-flex justify-content-center align-items-center">
+        <div className="col-sm-12 col-md-6 d-flex justify-content-center align-items-center h-75">
           <LoginForm/>
         </div>
         <div className="col-sm-12 col-md-6 d-flex justify-content-center align-items-center h-75">

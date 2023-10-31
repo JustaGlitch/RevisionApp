@@ -10,12 +10,27 @@
 
 #main-containter {
   height: 100%;
-  background: url('../img/bg.png');
+  background: url('../img/bg-auth.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom;
 }
 
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.main-page {
+  background-image: url('../img/bg-main.png'), linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  animation: gradientAnimation 30s linear infinite;
+  background-size: contain;
+}
 
 footer {
   margin-top: auto;
@@ -25,6 +40,27 @@ footer {
   background-color: #5db470;
 }
 
-h1 {
+h1, h2 {
   margin-bottom: 1.5rem;
+}
+
+.card-list {
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #dee2e6
+}
+
+.card {
+  border: none;
+  margin-bottom: 0.75rem;
+}
+
+.card-list-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card:last-child {
+  margin-bottom: 0;
 }
