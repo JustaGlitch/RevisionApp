@@ -13,10 +13,12 @@ function App() {
       <Route path="/register" element={<Layouts.auth />} >
         <Route index element={<Pages.Register/>} />
       </Route>
+      <Route path="/" element={<Layouts.task />}>
+        <Route path="/task/:id" element={<Pages.TaskPage/>} />
+      </Route>
 
       <Route path="/" element={<Layouts.main />}>
         <Route index element={<Pages.MainPage/>} />
-        <Route path="/task/:id" element={<Pages.TaskPage/>} />
         <Route path="/account" element={<Pages.AccountPage/>}>
           <Route index element={<Pages.CollectionPage/>} />
           <Route path="collection" element={<Outlet/>} />
