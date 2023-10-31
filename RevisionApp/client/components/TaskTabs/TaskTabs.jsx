@@ -16,4 +16,4 @@ function TaskTabs() {
   )
 }
 
-export default TaskTabs
+export default TaskTabs;
