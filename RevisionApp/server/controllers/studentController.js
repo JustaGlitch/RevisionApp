@@ -1,8 +1,7 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const StudentUser = require("../models/Student");
 const Token = require("../models/Token");
-const { index } = require("./tasksController");
 
 async function register(req, res){
     try{
