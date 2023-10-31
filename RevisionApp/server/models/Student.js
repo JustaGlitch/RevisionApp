@@ -43,6 +43,15 @@ class StudentUser {
         const response = await db.query("UPDATE student_user SET current_poked = true WHERE user_id = $1 RETURNING *", [user_id]);
         return new StudentUser(...response.rows[0]);
     }
+
+    async update() {
+        const response = await db.query("UPDATE student_user SET username = $1, password = $2 WHERE user_id = $3 RETURNING *", [this.username, this.password, this.user_id]);
+        return new StudentUser(...response.rows[0]);
+    }
+
+    async destroy() {
+        await db.query("DELETE FROM student_user WHERE user_id = $1", [this.user_id]);
+    }
 }
 
 module.exports = StudentUser;

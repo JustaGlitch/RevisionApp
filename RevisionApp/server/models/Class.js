@@ -50,7 +50,7 @@ class Class {
         }
     }
 
-    async delete() {
+    async destroy() {
         const query = `DELETE FROM ${Class.tableName} WHERE class_id = $1`;
         const values = [this.class_id];
 

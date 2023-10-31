@@ -1,9 +1,9 @@
 const db = require("../database/connect");
 
 class Collection {
-    constructor(collection_id, poked_id, user_id) {
+    constructor(collection_id, pokemon_id, user_id) {
         this.collection_id = collection_id;
-        this.poked_id = poked_id;
+        this.pokemon_id = pokemon_id;
         this.user_id = user_id;
         this.tableName = "collection";
     }
@@ -12,8 +12,8 @@ class Collection {
     async create() {
         try {
             const result = await db.query(
-                `INSERT INTO ${this.tableName} (poked_id, user_id) VALUES ($1, $2) RETURNING collection_id`,
-                [this.poked_id, this.user_id]
+                `INSERT INTO ${this.tableName} (pokemon_id, user_id) VALUES ($1, $2) RETURNING collection_id`,
+                [this.pokemon_id, this.user_id]
             );
             this.collection_id = result.rows[0].collection_id;
             return this;
@@ -32,7 +32,7 @@ class Collection {
             );
             if (result.rows.length === 0) return null;
             const collectionData = result.rows[0];
-            return new Collection(collectionData.collection_id, collectionData.poked_id, collectionData.user_id);
+            return new Collection(collectionData.collection_id, collectionData.pokemon_id, collectionData.user_id);
         } catch (error) {
             console.error("Error finding collection entry by ID:", error);
             throw error;
@@ -43,8 +43,8 @@ class Collection {
     async update() {
         try {
             await db.query(
-                `UPDATE ${this.tableName} SET poked_id = $1, user_id = $2 WHERE collection_id = $3`,
-                [this.poked_id, this.user_id, this.collection_id]
+                `UPDATE ${this.tableName} SET pokemon_id = $1, user_id = $2 WHERE collection_id = $3`,
+                [this.pokemon_id, this.user_id, this.collection_id]
             );
         } catch (error) {
             console.error("Error updating collection entry:", error);
@@ -53,9 +53,12 @@ class Collection {
     }
 
     // Delete a collection entry by its collection_id
-    async delete() {
+    async destroy() {
         try {
-            await db.query(`DELETE FROM ${this.tableName} WHERE collection_id = $1`, [this.collection_id]);
+            await db.query(
+                `DELETE FROM ${this.tableName} WHERE collection_id = $1`,
+                [this.collection_id]
+            );
         } catch (error) {
             console.error("Error deleting collection entry:", error);
             throw error;
