@@ -1,5 +1,6 @@
 const db = require("../database/connect");
-const fetch = require("node-fetch");
+let fetch;
+import('node-fetch').then(module => fetch = module.default);
 
 class Pokemon {
     constructor(pokemon_id, name, evolution_stage, evolves_to, study_time, image_url = null) {
@@ -16,7 +17,7 @@ class Pokemon {
         try {
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
             const data = await response.json();
-            console.log("Fetched Pokémon sprite URL:", data.sprites.front_default);  // Add this line
+            console.log("Fetched Pokémon sprite URL:", data.sprites.front_default);  
             return data.sprites.front_default;
         } catch (error) {
             console.error("Failed to fetch Pokémon sprite:", error);
@@ -30,8 +31,12 @@ class Pokemon {
             this.image_url = await Pokemon.fetchSpriteURL(this.name);
         }
         try {
+            console.log(`Inserting: ${this.name}, ${this.evolution_stage}, ${this.evolves_to}, ${this.study_time}, ${this.image_url}`);
+
             const result = await db.query(
-                `INSERT INTO ${this.tableName} (name, evolution_stage, evolves_to, study_time, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING pokemon_id`,
+                `INSERT INTO ${this.tableName} (name, evolution_stage, evolves_to, study_time, image_url) 
+                 VALUES ($1, $2, $3, $4, $5) 
+                 RETURNING pokemon_id`,
                 [this.name, this.evolution_stage, this.evolves_to, this.study_time, this.image_url]
             );
             this.pokemon_id = result.rows[0].pokemon_id;
@@ -106,10 +111,24 @@ class Pokemon {
 module.exports = Pokemon;
 
 // Mock data for demonstration purposes:
-const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
-testPokemon.create().then(() => {
-    console.log("Successfully created test Pokémon.");
-}).catch((error) => {
-    console.error("Error:", error);
-});
+async function runTest() {
+    console.log("Starting test...");
+
+    // Ensure fetch is available
+    if (!fetch) {
+        await import('node-fetch').then(module => fetch = module.default);
+    }
+
+    const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
+    console.log("Test Pokémon created...");
+    try {
+        await testPokemon.create();
+        console.log("Successfully inserted test Pokémon into database.");
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+// Run the test
+runTest();
 
