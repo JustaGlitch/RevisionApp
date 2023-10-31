@@ -7,7 +7,7 @@ expect.extend(matchers);
 
 describe('Footer', () => {
   beforeEach(() => {
-    render(<Footer />);
+    render(<Footer bgColor="bg-footer" textColor="text-white" />);
   });
 
   afterEach(() => {
@@ -19,8 +19,8 @@ describe('Footer', () => {
     expect(footer).toBeInTheDocument();
   });
 
-  it('has the expected CSS classes', () => {
+  it('has the expected inline styles for background and text color', () => {
     const footer = screen.getByText('2023 © Git Sematary');
-    expect(footer).toHaveClass('w-100 d-flex py-3 justify-content-center bg-footer text-white');
+    expect(footer).toHaveStyle({ backgroundColor: 'bg-footer', color: 'text-white' });
   });
 });

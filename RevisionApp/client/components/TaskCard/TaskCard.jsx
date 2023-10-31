@@ -4,7 +4,7 @@ function TaskCard({ task }) {
   const { title, description, timestamp } = task;
 
   return (
-    <div className="card-list mt-4">
+    <div className="card-list mt-4" data-testid="task-card">
       <div className="card-list-head">
         <h6>{title}</h6>
       </div>
