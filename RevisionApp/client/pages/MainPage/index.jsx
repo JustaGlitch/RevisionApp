@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { AddTaskForm } from "../../components";
-import { TasksTabs } from "../../components";
-import { TasksList } from "../../components";
+import { TaskCard, TaskTabs, AddTaskForm, TasksList } from '../../components'
+
 
 function index() {
   // State to store all tasks.
@@ -33,6 +32,7 @@ function index() {
   return (
     <div className="col-sm-12 offset-md-1 col-md-7 bg-white p-4 rounded-4">
       <h1>List of Tasks</h1>
+
       {/* Form to add a new task. */}
       <AddTaskForm onAddTask={handleAddTask} />
 

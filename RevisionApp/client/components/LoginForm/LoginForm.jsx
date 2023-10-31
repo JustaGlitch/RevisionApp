@@ -16,8 +16,7 @@ function LoginForm() {
               <input type="password" className="form-control" id="exampleInputPassword1"
               placeholder='Your Password'/>
             </div>
-           
-            <button type="submit" className="btn btn-info offset-3 col-6 text-white">Register</button>
+            <button type="submit" class="btn btn-info offset-3 col-6 text-white">Login</button>
             </div>
           </form>
           </>
