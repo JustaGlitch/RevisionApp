@@ -37,7 +37,7 @@ function index() {
       <AddTaskForm onAddTask={handleAddTask} />
 
       {/* Tabs UI. */}
-      <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
+      <TaskTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       <div className="tab-content" id="myTabContent">
         {/* Content for each tab. It displays tasks based on the currently
         selected tab. */}

@@ -79,13 +79,39 @@ h1, h2 {
   align-items: center;
   border: 20px solid #d6d6d6;
   color: #d6d6d6;
-  font-size: 4rem
+  font-size: 4rem;
+  background: url('../img/stopwatch-bg.png');
+  background-size: cover;
 }
+
+
 
 .openPokeball {
   background: url('../img/openPokeball.png');
+}
+
+.closedPokeball {
+  background: url('../img/closedPokeball.png');
+}
+
+.openPokeball, .closedPokeball {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   height: 75%;
+}
+
+.task-page {
+  transition: background 2s linear;
+}
+
+
+.fade-out {
+  transition: 1s ease
+}
+
+.stopWatch {
+  border: 1rem solid grey;
+  background: white;
+  border-radius: 1rem;
 }
