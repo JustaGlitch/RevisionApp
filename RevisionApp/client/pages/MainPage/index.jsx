@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { TaskCard, TaskTabs, AddTaskForm, TasksList } from '../../components'
-
+import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 
 function index() {
   // State to store all tasks.
   const [tasks, setTasks] = useState([
-    {
-      // id: 1,
-      // title: "Sample Task",
-      // description: "Some placeholder content in a paragraph.",
-      // status: "In Progress",
-      // timestamp: "now",
-    },
+    // {
+    //   id: 1,
+    //   title: "Sample Task",
+    //   description: "Some placeholder content in a paragraph.",
+    //   status: "In Progress",
+    //   timestamp: "now",
+    // },
   ]);
 
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
+
+  //Date Object to capture the current date and time
+  const currentDateTime = new Date();
+  const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
 
   // Function to handle the addition of a new task.
   const handleAddTask = (title, description) => {
@@ -24,7 +27,7 @@ function index() {
       title,
       description,
       status: "In Progress",
-      timestamp: "now",
+      timestamp: formattedDateTime,
     };
     setTasks([...tasks, newTask]);
   };
