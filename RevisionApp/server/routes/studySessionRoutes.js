@@ -4,12 +4,10 @@ const studySessionController = require('../controllers/studySessionController');
 
 const studySessionRouter = Router();
 
-studySessionRouter.post('/create', studySessionController.create);
-// update admin by id using patch method
-studySessionRouter.patch('/:study_session_id', studySessionController.update);
-// delete admin by id using delete method
-studySessionRouter.delete('/:study_session_id', studySessionController.destroy);
-studySessionRouter.get('/index', studySessionController.index);
-studySessionRouter.get('/:study_session_id', studySessionController.show);
+studySessionRouter.get('/', studySessionController.index);
+studySessionRouter.get('/:session_id', studySessionController.show);
+studySessionRouter.post('/', studySessionController.create);
+studySessionRouter.patch('/:session_id', studySessionController.update);
+studySessionRouter.delete('/:session_id', studySessionController.destroy);
 
 module.exports = studySessionRouter;

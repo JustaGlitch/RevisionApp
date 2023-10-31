@@ -4,7 +4,7 @@ const studentsController = require('../controllers/studentsController');
 
 const studentsRouter = Router();
 
-studentsRouter.get('/index', studentsController.index);
+studentsRouter.get('/', studentsController.index);
 studentsRouter.get('/:student_id', studentsController.show);
 studentsRouter.post('/', studentsController.create);
 studentsRouter.patch('/:student_id', studentsController.update);

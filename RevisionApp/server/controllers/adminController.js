@@ -9,11 +9,10 @@ async function register(req, res){
 
         const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
 
-        data.password = await bcrypt.hash(data.password, salt);
-        const result = await Admin.create(data);
+        data["password"] = await bcrypt.hash(data["password"], salt);
 
-        const token = await Token.create(result.admin_id);
-        res.status(201).json({authenticated: true, token: token.token});
+        const result = await Admin.create(data);
+        res.status(201).json(result);
 
     }catch(error){
         console.log(error);
@@ -27,14 +26,15 @@ async function login(req, res){
 
         const admin = await Admin.getAdminUsername(data.username);
 
-        const authenticated = await bcrypt.compare(data.password, admin.password);
+        const authenticated = await bcrypt.compare(data.password, admin["password"]);
 
         if(!authenticated){
             throw new Error("Invalid password");
-        }
+        }else{
 
         const token = await Token.create(admin.admin_id);
         res.status(200).json({authenticated: true, token: token.token});
+        }
 
     }catch(error){
         console.log(error);
@@ -43,22 +43,20 @@ async function login(req, res){
 }
 
 async function profile (req, res){
-    const token = req.headers["authorization"];
     try{
-        const admin = await Admin.getOneByToken(token);
-        const { username } = admin;
-        res.status(200).json({username: username});
+        const admin = await Admin.getOneByToken(req.headers["authorization"]);
+        res.status(200).json(admin);
     }catch(error){
         console.log(error);
-        res.status(403).json({error: error.message});
+        res.status(400).json({error: error.message});
     }
 }
 
+// get all admins
 async function index (req, res){
     try{
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classes = await Class.getAll(admin.admin_id);
-        res.status(200).json(classes);
+        const admin = await Admin.getAll();
+        res.status(200).json(admin);
     }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
@@ -67,16 +65,9 @@ async function index (req, res){
 
 async function show (req, res){
     try{
-        const data = req.params;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
-
-        // Check if admin is authorized
-        if(classData.admin_id !== admin.admin_id){
-            throw new Error("Unauthorized");
-        }
-
-        res.status(200).json(classData);
+        const id = parseInt(req.params.admin_id);
+        const admin = await Admin.getAdminId(id);
+        res.status(200).json(admin);
     }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
@@ -86,9 +77,8 @@ async function show (req, res){
 async function create (req, res){
     try{
         const data = req.body;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const newClass = await Class.create(data.class_name, admin.admin_id);
-        res.status(201).json(newClass);
+        const admin = await Admin.create(data);
+        res.status(201).json(admin);
     }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
@@ -97,18 +87,19 @@ async function create (req, res){
 
 async function update (req, res){
     try{
-        const data = req.body;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
-
-        // Check if admin is authorized
-        if(classData.admin_id !== admin.admin_id){
-            throw new Error("Unauthorized");
+        let id = parseInt(req.params.admin_id);
+        const existingAdmin = await Admin.getAdminId(id);
+        
+        const dataToUpdate = {
+            ...existingAdmin,
+            ...req.body
         }
+        const admin = await new Admin(dataToUpdate)
+        const updatedAdmin = await admin.update();
 
-        const updatedClass = await classData.update(data.class_name);
-        res.status(200).json(updatedClass);
-    }catch(error){
+        res.status(200).json(updatedAdmin);
+    }
+    catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
     }
@@ -116,17 +107,10 @@ async function update (req, res){
 
 async function destroy (req, res){
     try{
-        const data = req.params;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
-
-        // Check if admin is authorized
-        if(classData.admin_id !== admin.admin_id){
-            throw new Error("Unauthorized");
-        }
-
-        await classData.destroy();
-        res.status(200).json({message: "Class deleted"});
+        let id = parseInt(req.params.admin_id);
+        const admin = await Admin.getAdminId(id);
+        await admin.destroy();
+        res.status(200).json({message: "Admin deleted"});
     }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});

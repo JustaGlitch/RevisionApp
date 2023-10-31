@@ -143,3 +143,30 @@ VALUES
 (2, 2), -- User 2 has Ivysaur
 (3, 3); -- User 3 has Venusaur
 
+-- Inserting dummy data into the tasks table
+INSERT INTO tasks (title, description, admin_id, user_id, completed, suggested_time)
+VALUES
+('Task 1', 'Description 1', 1, 1, FALSE, '00:30:00'),
+('Task 2', 'Description 2', 1, 1, FALSE, '00:30:00'),
+('Task 3', 'Description 3', 1, 1, FALSE, '00:30:00'),
+('Task 4', 'Description 4', 1, 1, FALSE, '00:30:00'),
+('Task 5', 'Description 5', 1, 1, FALSE, '00:30:00'),
+('Task 6', 'Description 6', 1, 1, FALSE, '00:30:00'),
+('Task 7', 'Description 7', 1, 1, FALSE, '00:30:00'),
+('Task 8', 'Description 8', 1, 1, FALSE, '00:30:00'),
+('Task 9', 'Description 9', 1, 1, FALSE, '00:30:00'),
+('Task 10', 'Description 10', 1, 1, FALSE, '00:30:00'),
+('Task 11', 'Description 11', 1, 1, FALSE, '00:30:00'),
+('Task 12', 'Description 12', 1, 1, FALSE, '00:30:00'),
+('Task 13', 'Description 13', 1, 1, FALSE, '00:30:00'),
+('Task 14', 'Description 14', 1, 1, FALSE, '00:30:00'),
+('Task 15', 'Description 15', 1, 1, FALSE, '00:30:00'),
+('Task 16', 'Description 16', 1, 1, FALSE, '00:30:00'),
+('Task 17', 'Description 17', 1, 1, FALSE, '00:30:00');
+
+-- Inserting dummy data into the study_sessions table
+INSERT INTO study_sessions (user_id, duration)
+VALUES
+(1, '00:30:00'),
+(2, '00:30:00');
+
