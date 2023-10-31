@@ -11,12 +11,12 @@ class Token {
         this.token = token;
     }
 
-    static async create(id, type) {
+    static async create(user_id, admin_id) {
         const token = uuidv4();
-        let column = type === 'admin' ? 'admin_id' : 'user_id';
-        const response = await db.query(`INSERT INTO token (${column}, token) VALUES ($1, $2) RETURNING token_id;`, [id, token]);
+        const response = await db.query("INSERT INTO token (user_id, admin_id, token) VALUES ($1, $2, $3) RETURNING *", [user_id, admin_id, token]);
         const newId = response.rows[0].token_id;
-        return await Token.getOneById(newId);
+        const newToken = await Token.getOneById(newId);
+        return newToken
     }
 
     static async getOneById(id) {

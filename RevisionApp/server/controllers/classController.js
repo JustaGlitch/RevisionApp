@@ -1,48 +1,49 @@
 const Class = require("../models/Class");
-const Admin = require("../models/Admin");
 
-async function createClass(req, res) {
+async function index(req, res) {
     try {
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const newClass = await Class.create(admin.admin_id);
-        res.status(201).json(newClass);
+        const classes = await Class.getAll();
+        res.status(200).json(classes);
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });
     }
 }
 
-async function getClass(req, res) {
+async function show(req, res) {
     try {
-        const data = req.params;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
-
-        // Check if admin is authorized
-        if (classData.admin_id !== admin.admin_id) {
-            throw new Error("Unauthorized");
-        }
-
-        res.status(200).json(classData);
+        const id = parseInt(req.params.class_id);
+        const classes = await Class.getById(id);
+        res.status(200).json(classes);
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });
     }
 }
 
-// update class using update method by passing in admin_id by the class_id
-async function updateClass(req, res) {
+async function create(req, res) {
     try {
         const data = req.body;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
+        const classes = await Class.create(data);
+        res.status(201).json(classes);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+}
 
-        // Check if admin is authorized
-        if (classData.admin_id !== admin.admin_id) {
-            throw new Error("Unauthorized");
+async function update(req, res) {
+    try {
+        let id = parseInt(req.params.class_id);
+        const existingClass = await Class.getById(id);
+
+        const dataToUpdate = {
+            ...existingClass,
+            ...req.body
         }
+        const classes = await new Class(dataToUpdate)
+        const updatedClass = await classes.update();
 
-        const updatedClass = await classData.updateAdmin(data.admin_id);
         res.status(200).json(updatedClass);
     } catch (error) {
         console.log(error);
@@ -50,19 +51,14 @@ async function updateClass(req, res) {
     }
 }
 
-// delete class using destroy method
-async function destroyClass(req, res) {
+async function destroy(req, res) {
     try {
-        const data = req.params;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
+        let id = parseInt(req.params.class_id);
+        const existingClass = await Class.getById(id);
 
-        // Check if admin is authorized
-        if (classData.admin_id !== admin.admin_id) {
-            throw new Error("Unauthorized");
-        }
+        const classes = await new Class(existingClass)
+        await classes.destroy();
 
-        await classData.destroy();
         res.status(200).json({ message: "Class deleted" });
     } catch (error) {
         console.log(error);
@@ -70,34 +66,4 @@ async function destroyClass(req, res) {
     }
 }
 
-async function index (req, res){
-    try{
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classes = await Class.getAll(admin.admin_id);
-        res.status(200).json(classes);
-    }catch(error){
-        console.log(error);
-        res.status(400).json({error: error.message});
-    }
-}
-
-async function show (req, res){
-    try{
-        const data = req.params;
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        const classData = await Class.getById(data.class_id);
-
-        // Check if admin is authorized
-        if(classData.admin_id !== admin.admin_id){
-            throw new Error("Unauthorized");
-        }
-
-        res.status(200).json(classData);
-    }catch(error){
-        console.log(error);
-        res.status(400).json({error: error.message});
-    }
-}
-
-
-module.exports = { createClass, getClass, updateClass, destroyClass, index, show };
+module.exports = { create, index, show, update, destroy };

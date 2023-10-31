@@ -112,24 +112,10 @@ class Pokemon {
 module.exports = Pokemon;
 
 // Mock data for demonstration purposes:
-async function runTest() {
-    console.log("Starting test...");
-
-    // Ensure fetch is available
-    if (!fetch) {
-        await import('node-fetch').then(module => fetch = module.default);
-    }
-
-    const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
-    console.log("Test Pokémon created...");
-    try {
-        await testPokemon.create();
-        console.log("Successfully inserted test Pokémon into database.");
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-
-// Run the test
-runTest();
+const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
+testPokemon.create().then(() => {
+    console.log("Successfully created test Pokémon.");
+}).catch((error) => {
+    console.error("Error:", error);
+});
 

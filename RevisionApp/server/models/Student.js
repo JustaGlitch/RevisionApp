@@ -13,7 +13,7 @@ class StudentUser {
         if (response.rows.length != 1) {
             throw new Error("Student not found");
         }
-        return new StudentUser(...response.rows[0]);
+        return new StudentUser(response.rows[0]);
     }
 
     static async getUserUsername(username){
@@ -21,8 +21,9 @@ class StudentUser {
         if (response.rows.length != 1) {
             throw new Error("Student not found");
         }
-        return new StudentUser(...response.rows[0]);
+        return new StudentUser(response.rows[0]);
     }
+    
 
     // You might need to join with the token table or modify your schema for this method to work
     static async getOneByToken(token) {
@@ -31,6 +32,11 @@ class StudentUser {
             throw new Error("Student not found");
         }
         return new StudentUser(...response.rows[0]);
+    }
+
+    static async getAll() {
+        const response = await db.query("SELECT * FROM admin");
+        return response.rows.map(row => new StudentUser(row));
     }
 
     static async create(data) {

@@ -1,70 +1,45 @@
 const db = require("../database/connect");
 
-class Student {
+class Students {
     constructor(student_id, user_id, class_id) {
         this.student_id = student_id;
         this.user_id = user_id;
         this.class_id = class_id;
-        this.tableName = "students";
+    }
+
+    // Fetch all students
+    static async getAll() {
+        const response = await db.query(`SELECT * FROM students`);
+        return response.rows.map(row => new Students(row));
     }
 
     // Create a new student
-    async create() {
-        try {
-            const result = await db.query(
-                `INSERT INTO ${this.tableName} (user_id, class_id) VALUES ($1, $2) RETURNING student_id`,
-                [this.user_id, this.class_id]
-            );
-            this.student_id = result.rows[0].student_id;
-            return this;
-        } catch (error) {
-            console.error("Error creating student:", error);
-            throw error;
-        }
+    static async create(data) {
+        const { user_id, class_id } = data;
+        const response = await db.query("INSERT INTO students (user_id, class_id) VALUES ($1, $2) RETURNING *", [user_id, class_id]);
+        const newId = response.rows[0].student_id;
+        return Students.findById(newId);
     }
 
     // Fetch a student by its student_id
-    static async findById(student_id) {
-        try {
-            const result = await db.query(
-                `SELECT * FROM ${this.tableName} WHERE student_id = $1`,
-                [student_id]
-            );
-            if (result.rows.length === 0) return null;
-            const studentData = result.rows[0];
-            return new Student(studentData.student_id, studentData.user_id, studentData.class_id);
-        } catch (error) {
-            console.error("Error finding student by ID:", error);
-            throw error;
+    static async findById(id) {
+        const response = await db.query(`SELECT * FROM students WHERE student_id = $1`, [id]);
+        if (response.rows.length != 1) {
+            throw new Error("Student not found");
         }
+        return new Students(response.rows[0]);
     }
 
     // Update the student's user_id and class_id
     async update() {
-        try {
-            await db.query(
-                `UPDATE ${this.tableName} SET user_id = $1, class_id = $2 WHERE student_id = $3`,
-                [this.user_id, this.class_id, this.student_id]
-            );
-            return this;
-        } catch (error) {
-            console.error("Error updating student:", error);
-            throw error;
-        }
+        const response = await db.query("UPDATE students SET user_id = $1, class_id = $2 WHERE student_id = $3 RETURNING *", [this.user_id, this.class_id, this.student_id]);
+        return new Students(response.rows[0]);
     }
 
     // Delete a student by its student_id
     async destroy() {
-        try {
-            await db.query(
-                `DELETE FROM ${this.tableName} WHERE student_id = $1`,
-                [this.student_id]
-            );
-        } catch (error) {
-            console.error("Error deleting student:", error);
-            throw error;
-        }
+        await db.query("DELETE FROM students WHERE student_id = $1", [this.student_id]);
     }
 }
 
-module.exports = Student;
+module.exports = Students;

@@ -12,11 +12,10 @@ async function index(req, res){
 
 async function show(req, res){
     try{
-        const data = req.params;
-        const student = await Students.findById(data.student_id);
+        const id = parseInt(req.params.student_id);
+        const student = await Students.findById(id);
         res.status(200).json(student);
-    }
-    catch(error){
+    }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
     }
@@ -25,7 +24,7 @@ async function show(req, res){
 async function create(req, res){
     try{
         const data = req.body;
-        const newStudent = await Students.create(data.student_name, data.student_email, data.student_password);
+        const newStudent = await Students.create(data);
         res.status(201).json(newStudent);
     }catch(error){
         console.log(error);
@@ -35,12 +34,18 @@ async function create(req, res){
 
 async function update(req, res){
     try{
-        const data = req.body;
-        const student = await Students.findById(data.student_id);
-        const updatedStudent = await student.update(data.student_name, data.student_email, data.student_password);
+        let id = parseInt(req.params.student_id);
+        const existingStudent = await Students.findById(id);
+
+        const dataToUpdate = {
+            ...existingStudent,
+            ...req.body
+        }
+        const student = await new Students(dataToUpdate)
+        const updatedStudent = await student.update();
+
         res.status(200).json(updatedStudent);
-    }
-    catch(error){
+    }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
     }
@@ -48,12 +53,11 @@ async function update(req, res){
 
 async function destroy(req, res){
     try{
-        const data = req.params;
-        const student = await Students.findById(data.student_id);
+        let id = parseInt(req.params.student_id);
+        const student = await Students.findById(id);
         await student.destroy();
         res.status(200).json({message: "Student deleted"});
-    }
-    catch(error){
+    }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
     }
