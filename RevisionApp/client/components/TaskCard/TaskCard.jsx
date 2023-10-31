@@ -2,7 +2,7 @@ import React from 'react'
 
 function TaskCard() {
   return (
-    <div className="card-list mt-4">
+    <div className="card-list mt-4" data-testid="task-card">
       <div className="card-list-head">
         <h6>Class 1</h6>
       </div>
