@@ -7,7 +7,7 @@ class Task {
         this.description = description;
         this.admin_id = admin_id;
         this.user_id = user_id;
-        this.completed = completed || false; // Default to false if not provided
+        this.completed = completed || false; 
         this.suggested_time = suggested_time;
         this.tableName = "tasks";
     }
@@ -58,10 +58,12 @@ class Task {
     }
 
     // Delete a task by its task_id
-    async delete() {
+    async destroy() {
         try {
-            await db.query(`DELETE FROM ${this.tableName} WHERE task_id = $1`, [this.task_id]);
-            return true;
+            await db.query(
+                `DELETE FROM ${this.tableName} WHERE task_id = $1`,
+                [this.task_id]
+            );
         } catch (error) {
             console.error("Error deleting task:", error);
             throw error;

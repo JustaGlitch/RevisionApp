@@ -54,10 +54,12 @@ class StudySession {
     }
 
     // Delete a study session by its session_id
-    async delete() {
+    async destroy() {
         try {
-            await db.query(`DELETE FROM ${this.tableName} WHERE session_id = $1`, [this.session_id]);
-            return true;
+            await db.query(
+                `DELETE FROM ${this.tableName} WHERE session_id = $1`,
+                [this.session_id]
+            );
         } catch (error) {
             console.error("Error deleting study session:", error);
             throw error;

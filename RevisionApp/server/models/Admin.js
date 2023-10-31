@@ -40,6 +40,15 @@ class Admin {
         return Admin.getAdminId(newId);
     }
 
+    async update() {
+        const response = await db.query("UPDATE admin SET username = $1, password = $2 WHERE admin_id = $3 RETURNING *", [this.username, this.password, this.admin_id]);
+        return new Admin(response.rows[0]);
+    }
+
+    async destroy() {
+        await db.query("DELETE FROM admin WHERE admin_id = $1", [this.admin_id]);
+    }
+
 }
 
 module.exports = Admin;
