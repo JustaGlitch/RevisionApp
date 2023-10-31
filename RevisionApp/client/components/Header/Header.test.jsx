@@ -20,22 +20,22 @@ describe('Header', () => {
     cleanup();
   });
 
-  it('renders the Home link', () => {
+  it('renders the home link', () => {
     const homeLink = screen.getByRole('link', { name: /All Tasks/i });
     expect(homeLink).toBeInTheDocument();
   });
 
-  it('renders the Points link', () => {
+  it('renders the account link', () => {
     const pointsLink = screen.getByRole('link', { name: /Account/i });
     expect(pointsLink).toBeInTheDocument();
   });
 
-  it('renders the Letter link', () => {
+  it('renders the login link', () => {
     const letterLink = screen.getByRole('link', { name: /Login/i });
     expect(letterLink).toBeInTheDocument();
   });
 
-  it('renders the Letter link', () => {
+  it('renders the register link', () => {
     const letterLink = screen.getByRole('link', { name: /Register/i });
     expect(letterLink).toBeInTheDocument();
   });

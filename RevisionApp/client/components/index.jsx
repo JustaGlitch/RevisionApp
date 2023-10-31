@@ -9,3 +9,6 @@ export {default as ModalAcceptedTask} from './ModalAcceptedTask/ModalAcceptedTas
 export {default as TaskTabs} from './TaskTabs/TaskTabs'
 export {default as StopWatch} from './StopWatch/StopWatch'
 export {default as YourReward} from './YourReward/YourReward'
+export { default as AddTaskForm } from "./AddTaskForm";
+export { default as TasksTabs } from "./TaskTabs";
+export { default as TasksList } from "./TasksList";

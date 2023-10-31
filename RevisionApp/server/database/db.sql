@@ -87,9 +87,9 @@ CREATE TABLE pokemon (
 -- Collection table
 CREATE TABLE collection (
     collection_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    poked_id INT,
+    pokemon_id INT,
     user_id INT,
-    FOREIGN KEY (poked_id) REFERENCES pokemon(pokemon_id),
+    FOREIGN KEY (pokemon_id) REFERENCES pokemon(pokemon_id),
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
 
@@ -136,7 +136,7 @@ VALUES
 ('Charizard', 'final', NULL, 45);
 
 -- Inserting dummy data into the collection table
-INSERT INTO collection (poked_id, user_id)
+INSERT INTO collection (pokemon_id, user_id)
 VALUES 
 (1, 1), -- User 1 has Bulbasaur
 (4, 1), -- User 1 also has Charmander
