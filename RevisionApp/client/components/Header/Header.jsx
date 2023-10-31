@@ -5,7 +5,7 @@ import StudyDex from "../../assets/img/logo.png";
 
 export default function Header() {
   return (
-    <header className='bg-body-tertiary'>
+    <header className='bg-body-tertiary z-3 shadow-sm'>
     <div className='container'>
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
@@ -17,12 +17,12 @@ export default function Header() {
           <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="mainNav">
-          <div className="navbar ms-auto" >
-            <NavLink className="nav-link" to="/">All Tasks</NavLink>
-            <NavLink className="ms-5 nav-link" to="/account">Account</NavLink>
-            <NavLink className="ms-5 nav-link" to="/login">Login</NavLink>
-            <NavLink className="ms-5 nav-link" to="/register">Register</NavLink>
-          </div>
+            <div className="navbar ms-auto" >
+              <NavLink className="nav-link" to="/">All Tasks</NavLink>
+              <NavLink className="ms-5 nav-link" to="/account">Account</NavLink>
+              <NavLink className="ms-5 nav-link" to="/login">Login</NavLink>
+              <NavLink className="ms-5 nav-link" to="/register">Register</NavLink>
+            </div>
           </div>
       </div>
       </nav>

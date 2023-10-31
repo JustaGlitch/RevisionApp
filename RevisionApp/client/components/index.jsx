@@ -11,3 +11,4 @@ export { default as YourReward } from "./YourReward/YourReward";
 export { default as AddTaskForm } from "./AddTaskForm";
 export { default as TasksTabs } from "./TaskTabs";
 export { default as TasksList } from "./TasksList";
+export { default as Preloader } from "./Preloader/Preloader";

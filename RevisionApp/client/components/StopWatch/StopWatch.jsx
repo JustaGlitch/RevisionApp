@@ -34,7 +34,7 @@ const StopWatch = ({onStartStop, isStopped, setIsStopped}) => {
         {minutes.toString().padStart(2, "0")}:
         {seconds.toString().padStart(2, "0")}
       </p>
-      <div class="btn-group  btn-group-lg stopwatch-buttons" role="group">
+      <div className="btn-group  btn-group-lg stopwatch-buttons" role="group">
         <button className="stopwatch-button btn bg-success-subtle" onClick={startAndStop}>
           {isRunning ? "Pause" : "Start"}
         </button>
