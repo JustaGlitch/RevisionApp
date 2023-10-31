@@ -64,3 +64,28 @@ h1, h2 {
 .card:last-child {
   margin-bottom: 0;
 }
+
+.stopwatch-container {
+
+  /* display: flex; */
+}
+
+.stopwatch-time {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 20px solid #d6d6d6;
+  color: #d6d6d6;
+  font-size: 4rem
+}
+
+.openPokeball {
+  background: url('../img/openPokeball.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 75%;
+}
