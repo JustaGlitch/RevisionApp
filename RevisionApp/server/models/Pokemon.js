@@ -25,7 +25,6 @@ class Pokemon {
         }
     }
     
-
     async create() {
         if (!this.image_url) {
             this.image_url = await Pokemon.fetchSpriteURL(this.name);
@@ -97,10 +96,12 @@ class Pokemon {
         }
     }
 
-    async delete() {
+    async destroy() {
         try {
-            await db.query(`DELETE FROM ${this.tableName} WHERE pokemon_id = $1`, [this.pokemon_id]);
-            return true;
+            await db.query(
+                `DELETE FROM ${this.tableName} WHERE pokemon_id = $1`,
+                [this.pokemon_id]
+            );
         } catch (error) {
             console.error("Error deleting Pokémon:", error);
             throw error;
