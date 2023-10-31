@@ -6,50 +6,38 @@ import matchers from '@testing-library/jest-dom/matchers';
 expect.extend(matchers);
 
 describe('TaskCard', () => {
+    const task = {
+      title: 'Class 1',
+      description: 'Some placeholder content in a paragraph',
+      timestamp: 'now',
+    };
+
     beforeEach(() => {
-      render(<TaskCard />);
+      render(<TaskCard task={task} />);
     });
   
     afterEach(() => {
       cleanup();
     });
 
-
-  it('renders the component', () => {
-    const taskCard = screen.getByTestId('task-card');
-    expect(taskCard).toBeInTheDocument();
-  });
-
-  it('displays the class name', () => {
-      const className = screen.getByText((content, element) => {
-      const parentElement = element.parentElement;
-      const hasExpectedClass = parentElement.classList.contains('card-list-head');
-      return hasExpectedClass && content === 'Class 1';
+    it('renders the component', () => {
+      const taskCard = screen.getByTestId('task-card');
+      expect(taskCard).toBeInTheDocument();
     });
-  
-    expect(className).toBeInTheDocument();
-  });
-  
 
-
-  it('displays the task details', () => {
-     const taskDescription = screen.getByText((content, element) => {
-      const taskDescriptionElement = element.closest('.list-group-item'); 
-      return taskDescriptionElement && content.includes('Some placeholder content in a paragraph');
+    it('displays the class name', () => {
+      const className = screen.getByText('Class 1', { selector: '.card-list-head h6' });
+      expect(className).toBeInTheDocument();
     });
-  
-    expect(taskDescription).toBeInTheDocument();
-  });
-  
+    
 
-
-  it('displays the timestamp', () => {
-    const timestamp = screen.getByText((content, element) => {
-      return content === 'now' && element.classList.contains('opacity-50');
+    it('displays the task details', () => {
+      const taskDescription = screen.getByText(task.description);
+      expect(taskDescription).toBeInTheDocument();
     });
-  
-    expect(timestamp).toBeInTheDocument();
-  });
-  
-  
+
+    it('displays the timestamp', () => {
+      const timestamp = screen.getByText(task.timestamp);
+      expect(timestamp).toBeInTheDocument();
+    });
 });
