@@ -54,10 +54,12 @@ class Student {
     }
 
     // Delete a student by its student_id
-    async delete() {
+    async destroy() {
         try {
-            await db.query(`DELETE FROM ${this.tableName} WHERE student_id = $1`, [this.student_id]);
-            return true;
+            await db.query(
+                `DELETE FROM ${this.tableName} WHERE student_id = $1`,
+                [this.student_id]
+            );
         } catch (error) {
             console.error("Error deleting student:", error);
             throw error;
