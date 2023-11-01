@@ -176,6 +176,7 @@ const addGen1Pokemon = async () => {
 db.query(sql)
     .then(async data => {
         await addGen1Pokemon()
+        await db.query("INSERT INTO collection (pokemon_id, user_id) VALUES (1, 1),(4, 1),(2, 2),(3, 3);")
         db.end();
         console.log("setup complete")
     })

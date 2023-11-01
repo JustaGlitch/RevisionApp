@@ -61,8 +61,8 @@ class Pokemon {
 
     async findBabyVersion() {
         try {
-            const middleResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = ${this.pokemon_id}`)
-            const babyResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = ${middleResult.rows[0].pokemon_id}`)
+            const middleResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = $1`,[this.pokemon_id])
+            const babyResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = $1`, [middleResult.rows[0].pokemon_id])
             let pokemonData
             if(babyResult){
                 pokemonData = babyResult.rows[0]

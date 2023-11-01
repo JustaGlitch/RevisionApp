@@ -45,10 +45,12 @@ CREATE TABLE students (
 -- Token table
 CREATE TABLE token (
     token_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES student_user(user_id), 
-    admin_id INT NOT NULL REFERENCES admin(admin_id),
+    user_id INT, 
+    admin_id INT,
     token VARCHAR(36) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_id) REFERENCES admin(admin_id),
+    FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
 
 -- Tasks table
@@ -234,12 +236,13 @@ VALUES (1, 1),
 -- ('Charizard', 'final', NULL, 45);
 
 -- Inserting dummy data into the collection table
-INSERT INTO collection (pokemon_id, user_id)
-VALUES 
-(1, 1), -- User 1 has Bulbasaur
-(4, 1), -- User 1 also has Charmander
-(2, 2), -- User 2 has Ivysaur
-(3, 3); -- User 3 has Venusaur
+-- THIS HAD TO BE MOVED TO SETUP
+-- INSERT INTO collection (pokemon_id, user_id)
+-- VALUES 
+-- (1, 1), -- User 1 has Bulbasaur
+-- (4, 1), -- User 1 also has Charmander
+-- (2, 2), -- User 2 has Ivysaur
+-- (3, 3); -- User 3 has Venusaur
 
 -- Inserting dummy data into the tasks table
 INSERT INTO tasks (title, description, admin_id, user_id, class_id, completed, suggested_time, taskCreated_at)
