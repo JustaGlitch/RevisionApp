@@ -6,17 +6,27 @@ function index() {
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
-    // {
-    //   id: 1,
-    //   title: "Sample Task",
-    //   description: "Some placeholder content in a paragraph.",
-    //   status: "In Progress",
-    //   timestamp: "now",
-    // },
+    {
+      id: 1,
+      title: "Sample Task 1",
+      description: "This is a dummy task description.",
+      status: "Completed",
+      timestamp: new Date().toLocaleString(),
+      responsible: "Class 1",
+    },
+    {
+      id: 2,
+      title: "Sample Task 2",
+      description: "Another dummy task description.",
+      status: "In Progress",
+      timestamp: new Date().toLocaleString(),
+      responsible: "Tom Byrne",
+    },
   ]);
 
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
+  console.log("Currently Selected Tab:", selectedTab);
 
   //Date Object to capture the current date and time
   const currentDateTime = new Date();
