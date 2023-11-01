@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 
 function index() {
@@ -6,27 +6,52 @@ function index() {
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Sample Task 1",
-      description: "This is a dummy task description.",
-      status: "Completed",
-      timestamp: new Date().toLocaleString(),
-      responsible: "Class 1",
-    },
-    {
-      id: 2,
-      title: "Sample Task 2",
-      description: "Another dummy task description.",
-      status: "In Progress",
-      timestamp: new Date().toLocaleString(),
-      responsible: "Tom Byrne",
-    },
+    // {
+    //   id: 1,
+    //   title: "Sample Task 1",
+    //   description: "This is a dummy task description.",
+    //   status: "Completed",
+    //   timestamp: new Date().toLocaleString(),
+    //   responsible: "Class 1",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Sample Task 2",
+    //   description: "Another dummy task description.",
+    //   status: "In Progress",
+    //   timestamp: new Date().toLocaleString(),
+    //   responsible: "Tom Byrne",
+    // },
   ]);
 
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
-  console.log("Currently Selected Tab:", selectedTab);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("https://studydex.onrender.com/tasks");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
+        // Transform the fetched tasks to match the expected structure
+        const transformedTasks = data.map((task) => ({
+          id: task.task_id,
+          title: task.title,
+          description: task.description,
+          status: task.completed ? "Completed" : "In Progress",
+        }));
+
+        setTasks(transformedTasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   //Date Object to capture the current date and time
   const currentDateTime = new Date();
@@ -55,15 +80,15 @@ function index() {
       {/* Tabs UI. */}
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       <div className="tab-content" id="myTabContent">
-        {/* Content for each tab. It displays tasks based on the currently
-        selected tab. */}
         <div
           className="tab-pane fade show active"
           id="home"
           role="tabpanel"
           aria-labelledby="home-tab"
         >
-          {selectedTab === "All" && <TasksList tasks={tasks} filter="All" />}
+          {selectedTab === "All" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="All" />
+          )}
         </div>
         <div
           className="tab-pane fade"
@@ -72,7 +97,7 @@ function index() {
           aria-labelledby="profile-tab"
         >
           {selectedTab === "In Progress" && (
-            <TasksList tasks={tasks} filter="In Progress" />
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
           )}
         </div>
         <div
@@ -82,7 +107,7 @@ function index() {
           aria-labelledby="contact-tab"
         >
           {selectedTab === "Completed" && (
-            <TasksList tasks={tasks} filter="Completed" />
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
           )}
         </div>
       </div>
