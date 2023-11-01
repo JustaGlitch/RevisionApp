@@ -2,12 +2,14 @@ import React, { useState } from "react";
 function AddTaskForm({ onAddTask, isAdmin }) {
   // Local state for form fields.
   const [title, setTitle] = useState("");
+  const [suggested_time, setSuggestedTime] = useState('');
   const [description, setDescription] = useState("");
   const [responsible, setResponsible] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddTask(title, description, responsible);
+    onAddTask(title, description, responsible, suggested_time);
     setTitle("");
+    setSuggestedTime(0);
     setDescription("");
     setResponsible("");
   };
@@ -16,7 +18,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
     <div className="">
       <h5>Add New Task</h5>
       <form className="row mb-4 p-3 bg-light rounded" onSubmit={handleSubmit}>
-        <div className="col-sm-12 col-md-6">
+        <div className="col-sm-12 col-md-4">
           <input
             className="form-control mb-3"
             type="text"
@@ -26,7 +28,17 @@ function AddTaskForm({ onAddTask, isAdmin }) {
           />
         </div>
         {isAdmin && (
-          <div className="col-sm-12 col-md-6">
+        <>
+        <div className="col-sm-12 col-md-4">
+          <input
+            className="form-control mb-3"
+            type="number"
+            placeholder="Suggested time"
+            value={suggested_time}
+            onChange={(e) => setSuggestedTime(e.target.value)}
+          />
+        </div>
+          <div className="col-sm-12 col-md-4">
             <select
               className="form-select"
               value={responsible}
@@ -38,6 +50,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
               <option value="Tom Byrne">Tom Byrne</option>
             </select>
           </div>
+          </>
         )}
         <div className="col-sm-12">
           <textarea

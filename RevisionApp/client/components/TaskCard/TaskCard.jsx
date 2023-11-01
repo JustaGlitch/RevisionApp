@@ -2,7 +2,7 @@ import React from "react";
 import { ModalAcceptTask } from "../../components";
 
 function TaskCard({ id, task }) {
-  const { title, description, timestamp } = task;
+  const { title, description, timestamp, suggested_time } = task;
 
   return (
     <div className="card-list mt-4" data-testid="task-card">
@@ -38,7 +38,7 @@ function TaskCard({ id, task }) {
           </div>
         </a>
       </div>
-      <ModalAcceptTask id={id} />
+      <ModalAcceptTask id={id} suggested_time={suggested_time}/>
     </div>
   );
 }
