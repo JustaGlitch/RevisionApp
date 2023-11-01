@@ -14,7 +14,7 @@ function index() {
   return (
     <>
       <Header />
-      <div class="position-fixed bottom-0 end-0 p-3 d-sm-none d-md-block">
+      <div className="position-fixed bottom-0 end-0 p-3 d-sm-none d-md-block">
         <button onClick={handleStopAnimation} className="btn btn-warning shadow">{stopAnimation ? "Animate!" : "Stop Animation"}</button>
       </div>
 
