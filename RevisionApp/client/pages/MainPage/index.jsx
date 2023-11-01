@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 
 function index() {
+  const isAdmin = true;
+
   // State to store all tasks.
   const [tasks, setTasks] = useState([
     // {
@@ -21,11 +23,12 @@ function index() {
   const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
 
   // Function to handle the addition of a new task.
-  const handleAddTask = (title, description) => {
+  const handleAddTask = (title, description, responsible) => {
     const newTask = {
       id: tasks.length + 1,
       title,
       description,
+      responsible,
       status: "In Progress",
       timestamp: formattedDateTime,
     };
@@ -37,7 +40,7 @@ function index() {
       <h1>List of Tasks</h1>
 
       {/* Form to add a new task. */}
-      <AddTaskForm onAddTask={handleAddTask} />
+      <AddTaskForm isAdmin={isAdmin} onAddTask={handleAddTask} />
 
       {/* Tabs UI. */}
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
