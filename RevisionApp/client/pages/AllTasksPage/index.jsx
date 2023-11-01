@@ -4,7 +4,6 @@ import { TasksTabs } from "../../components";
 import { TasksList } from "../../components";
 
 function TasksPage() {
-  // State to store all tasks.
   const [tasks, setTasks] = useState([
     {
       id: 1,

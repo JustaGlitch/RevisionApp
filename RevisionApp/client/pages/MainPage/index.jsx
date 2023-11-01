@@ -6,22 +6,22 @@ function index() {
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Sample Task 1",
-      description: "This is a dummy task description.",
-      status: "Completed",
-      timestamp: new Date().toLocaleString(),
-      responsible: "Class 1",
-    },
-    {
-      id: 2,
-      title: "Sample Task 2",
-      description: "Another dummy task description.",
-      status: "In Progress",
-      timestamp: new Date().toLocaleString(),
-      responsible: "Tom Byrne",
-    },
+    // {
+    //   id: 1,
+    //   title: "Sample Task 1",
+    //   description: "This is a dummy task description.",
+    //   status: "Completed",
+    //   timestamp: new Date().toLocaleString(),
+    //   responsible: "Class 1",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Sample Task 2",
+    //   description: "Another dummy task description.",
+    //   status: "In Progress",
+    //   timestamp: new Date().toLocaleString(),
+    //   responsible: "Tom Byrne",
+    // },
   ]);
 
   // State to track the currently selected tab.
@@ -53,7 +53,7 @@ function index() {
       <AddTaskForm isAdmin={isAdmin} onAddTask={handleAddTask} />
 
       {/* Tabs UI. */}
-      <TaskTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
+      <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       <div className="tab-content" id="myTabContent">
         {/* Content for each tab. It displays tasks based on the currently
         selected tab. */}
