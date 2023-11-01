@@ -27,7 +27,7 @@
 
 .main-page {
   background-image: url('../img/bg-main.png'), linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: contain;
+  background-size: auto;
 }
 
 .animate {
