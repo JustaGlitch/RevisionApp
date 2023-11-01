@@ -59,7 +59,7 @@ class Pokemon {
     }
 
     static async getAllPokemon() {
-        const result = await db.query(`SELECT DISTINCT(name) FROM pokemon`)
+        const result = await db.query(`SELECT * FROM pokemon`)
         return result.rows
     }
     static async getAllBabyPokemon() {
