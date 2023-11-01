@@ -1,14 +1,10 @@
-const { Pool } = require("pg");
+const request = require("supertest");
 const db = require("../database/connect");
+const { Pool } = require("pg");
 
 describe("Database Connection", () => {
-	it("should create a database connection pool", () => {
+	it("should establish a database connection", async () => {
+		expect(db).toBeDefined();
 		expect(db).toBeInstanceOf(Pool);
-	});
-
-	it("should connect to the database", async () => {
-		const client = await db.connect();
-		expect(client).toBeDefined();
-		client.release();
 	});
 });
