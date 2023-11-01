@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { ModalAcceptedTask } from "../../components";
 
-function ModalAcceptTask({ id, suggested_time, class_id = "Class 1" }) {
+
+function ModalAcceptTask({ id, suggested_time, class_id }) {
   const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);

@@ -23,7 +23,7 @@ function index() {
     //   class_id: "Tom Byrne",
     // },
   ]);
-
+const [category, setCategory] = useState(0)
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
 
@@ -52,7 +52,17 @@ function index() {
       }
     };
     fetchTasks();
+
+
   }, []);
+  const fetchCategoriesByName = async (name) => {
+      const response = await fetch(`https://studydex.onrender.com/class/classname/${name}`);
+      const data = await response.json();
+      return data.class_id
+  }
+
+
+
 
   //Date Object to capture the current date and time
   const currentDateTime = new Date();
@@ -62,16 +72,17 @@ function index() {
   const handleAddTask = async (
     title,
     description,
-    class_id = class_id,
-    suggested_time = suggested_time
+    class_id,
+    suggested_time
   ) => {
+    const cat = await fetchCategoriesByName(class_id);
     const newTask = {
       id: tasks.length + 1,
       title,
       description,
-      class_id,
+      class_id: cat,
       status: "In Progress",
-      suggested_time,
+      suggested_time: "00:30:00",
       timestamp: formattedDateTime,
     };
     console.log(newTask);
