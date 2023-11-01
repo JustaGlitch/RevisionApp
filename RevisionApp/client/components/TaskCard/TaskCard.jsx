@@ -23,7 +23,9 @@ function TaskCard({ id, task }) {
               <h6 className="mb-0">{title}</h6>
               <p className="mb-0 opacity-75">{description}</p>
             </div>
-            <small className="opacity-50 text-nowrap d-flex align-items-center">{timestamp}</small>
+            <small className="opacity-50 text-nowrap d-flex align-items-center">
+              {timestamp}
+            </small>
           </div>
           <div
             className="btn-group"

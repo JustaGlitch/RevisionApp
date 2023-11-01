@@ -26,7 +26,6 @@ function index() {
 
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
-  console.log("Currently Selected Tab:", selectedTab);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -36,7 +35,16 @@ function index() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setTasks(data);
+
+        // Transform the fetched tasks to match the expected structure
+        const transformedTasks = data.map((task) => ({
+          id: task.task_id,
+          title: task.title,
+          description: task.description,
+          status: task.completed ? "Completed" : "In Progress",
+        }));
+
+        setTasks(transformedTasks);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
@@ -72,15 +80,15 @@ function index() {
       {/* Tabs UI. */}
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       <div className="tab-content" id="myTabContent">
-        {/* Content for each tab. It displays tasks based on the currently
-        selected tab. */}
         <div
           className="tab-pane fade show active"
           id="home"
           role="tabpanel"
           aria-labelledby="home-tab"
         >
-          {selectedTab === "All" && <TasksList tasks={tasks} filter="All" />}
+          {selectedTab === "All" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="All" />
+          )}
         </div>
         <div
           className="tab-pane fade"
@@ -89,7 +97,7 @@ function index() {
           aria-labelledby="profile-tab"
         >
           {selectedTab === "In Progress" && (
-            <TasksList tasks={tasks} filter="In Progress" />
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
           )}
         </div>
         <div
@@ -99,7 +107,7 @@ function index() {
           aria-labelledby="contact-tab"
         >
           {selectedTab === "Completed" && (
-            <TasksList tasks={tasks} filter="Completed" />
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
           )}
         </div>
       </div>

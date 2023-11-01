@@ -44,7 +44,9 @@ function TasksPage() {
           role="tabpanel"
           aria-labelledby="home-tab"
         >
-          {selectedTab === "All" && <TasksList tasks={tasks} filter="All" />}
+          {selectedTab === "All" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="All" />
+          )}
         </div>
         <div
           className="tab-pane fade"
@@ -53,7 +55,7 @@ function TasksPage() {
           aria-labelledby="profile-tab"
         >
           {selectedTab === "In Progress" && (
-            <TasksList tasks={tasks} filter="In Progress" />
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
           )}
         </div>
         <div
@@ -63,7 +65,7 @@ function TasksPage() {
           aria-labelledby="contact-tab"
         >
           {selectedTab === "Completed" && (
-            <TasksList tasks={tasks} filter="Completed" />
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
           )}
         </div>
       </div>

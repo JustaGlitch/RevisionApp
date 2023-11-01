@@ -6,7 +6,6 @@ function ModalAcceptTask({ id }) {
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);
   };
-  // console.log(id);
   return (
     <>
       <div
