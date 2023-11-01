@@ -12,7 +12,7 @@ function index() {
     //   description: "This is a dummy task description.",
     //   status: "Completed",
     //   timestamp: new Date().toLocaleString(),
-    //   responsible: "Class 1",
+    //   class_id: "Class 1",
     // },
     // {
     //   id: 2,
@@ -20,7 +20,7 @@ function index() {
     //   description: "Another dummy task description.",
     //   status: "In Progress",
     //   timestamp: new Date().toLocaleString(),
-    //   responsible: "Tom Byrne",
+    //   class_id: "Tom Byrne",
     // },
   ]);
 
@@ -61,19 +61,19 @@ function index() {
   const handleAddTask = async (
     title,
     description,
-    responsible,
+    class_id,
     suggested_time
   ) => {
     const newTask = {
       id: tasks.length + 1,
       title,
       description,
-      responsible,
+      class_id: tasks.class_id,
       status: "In Progress",
-      suggested_time,
+      suggested_time: tasks.suggested_time,
       timestamp: formattedDateTime,
     };
-
+    console.log(newTask);
     try {
       const response = await fetch("https://studydex.onrender.com/tasks", {
         method: "POST",
