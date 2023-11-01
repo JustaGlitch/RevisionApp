@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function ModalAcceptedTask({id, time}) {
   return (
-    <div className="modal fade" data-testid={`acceptedTaskModal-${id}`} aria-hidden="true" aria-labelledby={`acceptedTaskModalLabel${id}`} tabIndex="-1">
+    <div className="modal fade" id={`acceptedTaskModal-${id}`} aria-hidden="true" aria-labelledby={`acceptedTaskModalLabel${id}`} tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">

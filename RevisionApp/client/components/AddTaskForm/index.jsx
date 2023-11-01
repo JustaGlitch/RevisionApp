@@ -20,8 +20,8 @@ function AddTaskForm({ onAddTask, isAdmin }) {
     <div className="">
       
       <h5>Add New Task</h5>
-    <form className="row mb-4 p-2 bg-light rounded" onSubmit={handleSubmit}>
-      <div className="col-sm-12 col-md-4">
+    <form className="row mb-4 p-3 bg-light rounded" onSubmit={handleSubmit}>
+      <div className="col-sm-12 col-md-6">
       <input
         className="form-control"
         type="text"
@@ -30,17 +30,10 @@ function AddTaskForm({ onAddTask, isAdmin }) {
         onChange={(e) => setTitle(e.target.value)}
       />
       </div>
+          {isAdmin && (
       <div className="col-sm-12 col-md-6">
-      <input
-        className="form-control d-flex w-100"
-        type="text"
-        placeholder="Task description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      ></input>
-      </div>
-      {isAdmin && (
-        <select className="form-select"
+        <select
+        className="form-select"
           value={responsible}
           onChange={(e) => setResponsible(e.target.value)}
         >
@@ -49,10 +42,20 @@ function AddTaskForm({ onAddTask, isAdmin }) {
           <option value="Class 2">Class 2</option>
           <option value="Tom Byrne">Tom Byrne</option>
         </select>
+        </div>
       )}
+      <div className="col-sm-12">
+      <textarea
+        className="form-control d-flex w-100 my-3"
+        placeholder="Task description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      ></textarea>
+      </div>
+      
 
-      <div className="col-sm-12 col-md-2">
-      <button className="btn btn-info text-white justify-content-end" type="submit">Add Task</button>
+      <div className="col-sm-12 offset-md-4 col-md-4">
+      <button className="btn btn-info text-white w-100" type="submit">Add Task</button>
       </div>
 
     </form>
