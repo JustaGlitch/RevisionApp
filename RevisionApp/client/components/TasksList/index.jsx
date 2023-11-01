@@ -14,7 +14,6 @@ function TasksList({ tasks, filter }) {
       {console.log("Filtered Tasks:", filteredTasks)};
       {filteredTasks.map((task) => (
         <TaskCard key={task.id} id={task.id} task={task} />
-
       ))}
     </div>
   );
