@@ -42,7 +42,7 @@ function index() {
           title: task.title,
           description: task.description,
           class_id: task.class_id,
-          suggested_time: Number(task.suggested_time.split(":")[1]),
+          // suggested_time: Number(task.suggested_time.split(":")[1]),
           status: task.completed ? "Completed" : "In Progress",
         }));
 
@@ -62,16 +62,16 @@ function index() {
   const handleAddTask = async (
     title,
     description,
-    class_id,
-    suggested_time
+    class_id = class_id,
+    suggested_time = suggested_time
   ) => {
     const newTask = {
       id: tasks.length + 1,
       title,
       description,
-      class_id: tasks.class_id,
+      class_id,
       status: "In Progress",
-      suggested_time: tasks.suggested_time,
+      suggested_time,
       timestamp: formattedDateTime,
     };
     console.log(newTask);

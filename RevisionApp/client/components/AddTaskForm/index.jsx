@@ -4,7 +4,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
   const [title, setTitle] = useState("");
   const [suggested_time, setSuggestedTime] = useState("");
   const [description, setDescription] = useState("");
-  const [responsible, setResponsible] = useState("");
+  const [class_id, setClass_id] = useState("");
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -18,11 +18,11 @@ function AddTaskForm({ onAddTask, isAdmin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddTask(title, description, responsible, suggested_time);
+    onAddTask(title, description, class_id, suggested_time);
     setTitle("");
     setSuggestedTime(0);
     setDescription("");
-    setResponsible("");
+    setClass_id("");
   };
   // Renders a form to input task title and description.
   return (
@@ -52,8 +52,8 @@ function AddTaskForm({ onAddTask, isAdmin }) {
             <div className="col-sm-12 col-md-4">
               <select
                 className="form-select"
-                value={responsible}
-                onChange={(e) => setResponsible(e.target.value)}
+                value={class_id}
+                onChange={(e) => setClass_id(e.target.value)}
               >
                 {categories.map((el) => (
                   <option key={el.classname} value={el.classname}>

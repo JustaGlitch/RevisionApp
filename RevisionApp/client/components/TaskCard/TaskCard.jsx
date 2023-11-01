@@ -2,7 +2,7 @@ import React from "react";
 import { ModalAcceptTask } from "../../components";
 
 function TaskCard({ id, task }) {
-  const { title, description, timestamp, suggested_time, responsible } = task;
+  const { title, description, timestamp, suggested_time, class_id } = task;
 
   return (
     <div className="card-list mt-4" data-testid="task-card">
@@ -36,26 +36,14 @@ function TaskCard({ id, task }) {
               Accept
             </button>
           </div>
-          <div className="btn-group" role="group" aria-label="Task actions">
-            <button
-              type="button"
-              className="btn btn-success bg-gradient"
-              onClick={() => onEdit(id)}
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger bg-gradient"
-              onClick={() => onDelete(id)}
-            >
-              Delete
-            </button>
-          </div>
         </a>
       </div>
 
-      <ModalAcceptTask id={id} suggested_time={suggested_time} responsible={responsible}/>
+      <ModalAcceptTask
+        id={id}
+        suggested_time={suggested_time}
+        class_id={class_id}
+      />
     </div>
   );
 }
