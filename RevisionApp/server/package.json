@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "setup-db": "node ./database/setup-db.js",
-    "RUN-ONCE": "node ./database/setup-pokemon.js"
+    "setup-db": "node ./database/setup-db.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

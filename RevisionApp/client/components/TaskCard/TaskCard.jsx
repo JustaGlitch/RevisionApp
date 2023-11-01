@@ -36,8 +36,25 @@ function TaskCard({ id, task }) {
               Accept
             </button>
           </div>
+          <div className="btn-group" role="group" aria-label="Task actions">
+            <button
+              type="button"
+              className="btn btn-success bg-gradient"
+              onClick={() => onEdit(id)}
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger bg-gradient"
+              onClick={() => onDelete(id)}
+            >
+              Delete
+            </button>
+          </div>
         </a>
       </div>
+
       <ModalAcceptTask id={id} suggested_time={suggested_time} responsible={responsible}/>
     </div>
   );
