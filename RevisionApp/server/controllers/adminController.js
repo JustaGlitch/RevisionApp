@@ -43,9 +43,11 @@ async function login(req, res){
 }
 
 async function profile (req, res){
+    const token =  req.headers["authorization"]
     try{
-        const admin = await Admin.getOneByToken(req.headers["authorization"]);
-        res.status(200).json(admin);
+        const admin = await Admin.getOneByToken(token);
+        const {username, password} = admin;
+        res.status(200).json({username, password});
     }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});
