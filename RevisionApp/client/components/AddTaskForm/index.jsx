@@ -15,20 +15,34 @@ function AddTaskForm({ onAddTask }) {
   // Renders a form to input task title and description.
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="">
+      
+      <h5>Add New Task</h5>
+    <form className="row mb-4 p-2 bg-light rounded" onSubmit={handleSubmit}>
+      <div className="col-sm-12 col-md-4">
       <input
+        className="form-control"
         type="text"
         placeholder="Task title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <textarea
+      </div>
+      <div className="col-sm-12 col-md-6">
+      <input
+        className="form-control d-flex w-100"
+        type="text"
         placeholder="Task description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-      ></textarea>
-      <button type="submit">Add Task</button>
+      ></input>
+      </div>
+      <div className="col-sm-12 col-md-2">
+      <button className="btn btn-info text-white justify-content-end" type="submit">Add Task</button>
+      </div>
     </form>
+
+    </div>
   );
 }
 

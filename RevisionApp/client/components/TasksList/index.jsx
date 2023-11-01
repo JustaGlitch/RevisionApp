@@ -12,7 +12,7 @@ function TasksList({ tasks, filter }) {
   return (
     <div>
       {filteredTasks.map((task) => (
-        <TaskCard id={task.id} task={task} />
+        <TaskCard key={task.id} id={task.id} task={task} />
       ))}
     </div>
   );
