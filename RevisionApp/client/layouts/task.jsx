@@ -15,7 +15,7 @@ function index() {
   const intervalId = setInterval(() => {
     const randomIndex = Math.floor(Math.random() * bgs.length);
     setBackground(bgs[randomIndex]);
-  }, 5000);
+  }, 15000);
   return () => {
     clearInterval(intervalId);
   };
