@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ModalAcceptedTask } from "../../components";
 
-function ModalAcceptTask({ id }) {
-  const [suggestedTime, setSuggestedTime] = useState(30);
+function ModalAcceptTask({ id, suggested_time }) {
+  const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
   const handleSetSuggestedTime = (e) => {
-    setSuggestedTime(e.target.value);
+      setSuggestedTime(e.target.value);
   };
   return (
     <>
@@ -46,7 +46,7 @@ function ModalAcceptTask({ id }) {
                     onChange={handleSetSuggestedTime}
                     className="form-control"
                     id={`suggestedTimeInput-${id}`}
-                    placeholder="30"
+                    value={suggestedTime}
                     required
                   />
                 </form>
