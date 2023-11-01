@@ -62,13 +62,8 @@ function index() {
   const handleAddTask = async (
     title,
     description,
-<<<<<<< HEAD
     class_id = class_id,
     suggested_time = suggested_time
-=======
-    class_id,
-    suggested_time
->>>>>>> e4f11d641209ed7910ae23dcb245f24a92e2728b
   ) => {
     const newTask = {
       id: tasks.length + 1,
