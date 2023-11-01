@@ -1,10 +1,10 @@
 const db = require("../database/connect");
 
 class Admin {
-    constructor(admin_id, username, password) {
-        this.admin_id = admin_id;
-        this.username = username;
-        this.password = password; 
+    constructor(data) {
+        this.admin_id = data.admin_id;
+        this.username = data.username;
+        this.password = data.password; 
     }
     
     static async getAdminId(id){
