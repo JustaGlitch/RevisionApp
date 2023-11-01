@@ -8,6 +8,6 @@ CREATE TABLE pokemon (
     evolves_to INT,               -- Reference to the ID of the evolved form
     study_time INT,              -- Time in minutes
     sprite_url VARCHAR(500),
-    3D_url VARCHAR(500),
+    threeD_url VARCHAR(500),
     FOREIGN KEY (evolves_to) REFERENCES pokemon(pokemon_id)
 );

@@ -65,9 +65,9 @@ const sql = fs.readFileSync('./database/pokemon.sql').toString();
 // }
 
 const addToDB = async(final,middle,baby) => {
-    // console.log(final)
-    // console.log(middle)
-    // console.log(baby)
+    console.log(final)
+    console.log(middle)
+    console.log(baby)
     // remove gmax and mega
     // const tag = name.replace('name-','')
     // if substring(4) == gmax || mega
@@ -88,30 +88,46 @@ const addToDB = async(final,middle,baby) => {
         const middleResponse = await middleImage.json()
         const finalImage = await fetch(`https://pokeapi.co/api/v2/pokemon/${final}`)
         const finalResponse = await finalImage.json()
-        const finalID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[final,'final',null,null,finalResponse.sprites["front_default"], finalResponse.sprites.other.home["front_default"]])
-        const middleID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[middle,'middle',finalID.rows[0].pokemon_id,60,middleResponse.sprites["front_default"], middleResponse.sprites.other.home["front_default"]])
-        const babyID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[baby,'baby',middleID.rows[0].pokemon_id,30,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
+        const finalID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[final,'final',null,null,finalResponse.sprites["front_default"], finalResponse.sprites.other.home["front_default"]])
+        const middleID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[middle,'middle',finalID.rows[0].pokemon_id,60,middleResponse.sprites["front_default"], middleResponse.sprites.other.home["front_default"]])
+        const babyID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[baby,'baby',middleID.rows[0].pokemon_id,30,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
     }else if(middle){
         const babyImage = await fetch(`https://pokeapi.co/api/v2/pokemon/${baby}`)
         const babyResponse = await babyImage.json()
         const middleImage = await fetch(`https://pokeapi.co/api/v2/pokemon/${middle}`)
         const middleResponse = await middleImage.json()
-        const finalID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[middle,'final',null,null,middleResponse.sprites["front_default"], middleResponse.sprites.other.home["front_default"]])
-        const babyID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;", [baby,'baby',finalID.rows[0].pokemon_id,30,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
-    }else{
+        const finalID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[middle,'final',null,null,middleResponse.sprites["front_default"], middleResponse.sprites.other.home["front_default"]])
+        const babyID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;", [baby,'baby',finalID.rows[0].pokemon_id,30,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
+    }else if(baby){
         const babyImage = await fetch(`https://pokeapi.co/api/v2/pokemon/${baby}`)
         const babyResponse = await babyImage.json()
-        const finalID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[baby,'final',null,null,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
-        const babyID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, 3D_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;", [baby,'baby',finalID.rows[0].pokemon_id,30,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
+        const finalID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;",[baby,'final',null,null,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
+        const babyID = await db.query("INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING pokemon_id;", [baby,'baby',finalID.rows[0].pokemon_id,30,babyResponse.sprites["front_default"], babyResponse.sprites.other.home["front_default"]])
     }
 }
 
-const checkInGen = async (final,middle,baby,pokeList) => {
+const checkInGen = async (final,middle,baby, pokeList, currentPoke) => {
     //check baby exists in gen
     //then check that line hasn't already been added
     //SELECT * FROM pokemon where final doesn't exist or something
     //if true => addToDB
     //if(theGot.pokemon_species.findIndex((poke) => poke.name == baby) > -1){}
+    if(pokeList.findIndex((poke) => poke.name == final) == -1){
+        final = null
+        const exists = await db.query("SELECT * FROM pokemon WHERE name = $1",[middle])
+        if(exists.rowCount > 0){
+            middle = null
+            baby = null
+        }
+    }
+    if(pokeList.findIndex((poke) => poke.name == middle) == -1){
+        middle = null
+        final = null
+        const exists = await db.query("SELECT * FROM pokemon WHERE name = $1",[baby])
+        if(exists.rowCount > 0){
+            baby = null
+        }
+    }
     if(pokeList.findIndex((poke) => poke.name == baby) == -1){
         baby = middle
         middle = final
@@ -119,8 +135,7 @@ const checkInGen = async (final,middle,baby,pokeList) => {
     }
     //find evo line
     //select * from where baby, middle, final
-    
-    if(!false){
+    if(currentPoke == baby){
         await addToDB(final,middle,baby)
     }
 }
@@ -131,27 +146,28 @@ const addGen1Pokemon = async () => {
     for (let j = 0; j < theGot.pokemon_species.length; j++) {
         const getTheCurrent = await fetch(theGot.pokemon_species[j].url)
         const theCurrent = await getTheCurrent.json()
-        const getTheLine = await fetch(theCurrent.evolution-chain.url)
+        const getTheLine = await fetch(theCurrent.evolution_chain.url)
         const theLine = await getTheLine.json()
+        console.log(theLine)
         let baby, middle, final
         baby = theLine.chain.species.name
         if(theLine.chain.evolves_to.length >= 1){
             for (let i = 0; i < theLine.chain.evolves_to.length; i++) {
                 middle = theLine.chain.evolves_to[i].species.name
                 if(theLine.chain.evolves_to[i].evolves_to.length >= 1){
-                    for (let j = 0; j < array.length; j++) {
+                    for (let j = 0; j < theLine.chain.evolves_to[i].evolves_to.length; j++) {
                         final = theLine.chain.evolves_to[i].evolves_to[j].species.name
-                        await checkInGen(final,middle,baby,theGot.pokemon_species)
+                        await checkInGen(final,middle,baby,theGot.pokemon_species,theCurrent.name)
                     }
                 }else{
                     final = null
-                    await checkInGen(final,middle,baby,theGot.pokemon_species)
+                    await checkInGen(final,middle,baby,theGot.pokemon_species,theCurrent.name)
                 }
             }
         }else{
             middle = null
             final = null
-            await checkInGen(final,middle,baby,theGot.pokemon_species)
+            await checkInGen(final,middle,baby,theGot.pokemon_species,theCurrent.name)
         }
         // if(theLine.chain.evolves_to.length > 1){
         //     for (let i = 0; i < theLine.chain.evolves_to.length; i++) {
