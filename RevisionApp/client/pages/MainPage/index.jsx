@@ -91,6 +91,26 @@ function index() {
           )}
         </div>
         <div
+          className="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          {selectedTab === "In Progress" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
+          )}
+        </div>
+        <div
+          className="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          {selectedTab === "Completed" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
+          )}
+        </div>
+        {/* <div
           className="tab-pane fade"
           id="profile"
           role="tabpanel"
@@ -109,7 +129,7 @@ function index() {
           {selectedTab === "Completed" && (
             <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
