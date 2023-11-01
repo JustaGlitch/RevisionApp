@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS tasks CASCADE;
 DROP TABLE IF EXISTS students CASCADE;
 DROP TABLE IF EXISTS student_user CASCADE;
 DROP TABLE IF EXISTS class CASCADE;
--- DROP TABLE IF EXISTS pokemon CASCADE;
+DROP TABLE IF EXISTS pokemon CASCADE;
 DROP TABLE IF EXISTS admin CASCADE;
 
 
@@ -76,15 +76,16 @@ CREATE TABLE study_sessions (
 );
 
 -- Pokémon table
--- CREATE TABLE pokemon (
---     pokemon_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
---     name VARCHAR(255) NOT NULL,
---     evolution_stage VARCHAR(50),  -- 'baby', 'middle', 'final'
---     evolves_to INT,               -- Reference to the ID of the evolved form
---     study_time INT,              -- Time in minutes
---     image_url VARCHAR(500),
---     FOREIGN KEY (evolves_to) REFERENCES pokemon(pokemon_id)
--- );
+CREATE TABLE pokemon (
+    pokemon_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    evolution_stage VARCHAR(50),  -- 'baby', 'middle', 'final'
+    evolves_to INT,               -- Reference to the ID of the evolved form
+    study_time INT,              -- Time in minutes
+    sprite_url VARCHAR(500),
+    threeD_url VARCHAR(500),
+    FOREIGN KEY (evolves_to) REFERENCES pokemon(pokemon_id)
+);
 
 -- Collection table
 CREATE TABLE collection (
