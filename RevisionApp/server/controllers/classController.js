@@ -20,6 +20,16 @@ async function show(req, res) {
         res.status(400).json({ error: error.message });
     }
 }
+async function showByName(req, res) {
+    try {
+        const classname = req.params.classname;
+        const classes = await Class.getByName(classname);
+        res.status(200).json(classes);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+}
 
 async function create(req, res) {
     try {
@@ -66,4 +76,4 @@ async function destroy(req, res) {
     }
 }
 
-module.exports = { create, index, show, update, destroy };
+module.exports = { create, index, show, update, destroy, showByName };
