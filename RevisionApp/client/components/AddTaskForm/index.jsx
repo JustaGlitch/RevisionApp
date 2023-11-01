@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 function AddTaskForm({ onAddTask, isAdmin }) {
   // Local state for form fields.
   const [title, setTitle] = useState("");
   const [suggested_time, setSuggestedTime] = useState('');
   const [description, setDescription] = useState("");
   const [responsible, setResponsible] = useState("");
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    const getAllCategories = async () => {
+      const resp = await fetch('https://studydex.onrender.com/class')
+      const result = await resp.json()
+      setCategories(result)
+    }
+    getAllCategories()
+  }, [])
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddTask(title, description, responsible, suggested_time);
@@ -44,10 +55,10 @@ function AddTaskForm({ onAddTask, isAdmin }) {
               value={responsible}
               onChange={(e) => setResponsible(e.target.value)}
             >
-              <option value="">Select Responsible</option>
-              <option value="Class 1">Class 1</option>
-              <option value="Class 2">Class 2</option>
-              <option value="Tom Byrne">Tom Byrne</option>
+
+              {categories.map(el => (
+                <option key={el.classname} value={el.classname}>{el.classname}</option>
+              ))}
             </select>
           </div>
           </>
