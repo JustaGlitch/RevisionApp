@@ -6,15 +6,15 @@ const [hideClosedPokeball, setHideClosedPokeball] = useState(false);
     if (isStopped) {
       const timer = setTimeout(() => {
         setHideClosedPokeball(true);
-      }, 3000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }
   }, [isStopped]);
   return (
     <div className='d-flex flex-column align-items-center justify-content-center h-100'>
-    <h2>Your Reward</h2>
-    <div className={`d-flex flex-column align-items-center justify-content-center h-100 w-100 ${isStopped ? hideClosedPokeball ? '' : 'closedPokeball fade-out' : 'openPokeball'}`}>
+    <h2>{!isStopped ? 'Your possible reward' : 'Your Reward'}</h2>
+    <div className={`d-flex flex-column align-items-center justify-content-center h-100 ${isStopped ? hideClosedPokeball ? '' : 'closedPokeball w-50 fade-out' : 'openPokeball w-100'}`}>
       {!isStopped ?
       <img className='w-50 fade-out' src={rewards[rewardIndex]} />
       : ''}

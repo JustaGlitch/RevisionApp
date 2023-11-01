@@ -27,8 +27,11 @@
 
 .main-page {
   background-image: url('../img/bg-main.png'), linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: auto;
+}
+
+.animate {
   animation: gradientAnimation 30s linear infinite;
-  background-size: contain;
 }
 
 #account-page {
@@ -77,7 +80,7 @@ h1, h2 {
   /* display: flex; */
 }
 
-.stopwatch-time {
+.stopwatch-time, .stopwatch-stopped {
   width: 300px;
   height: 300px;
   border-radius: 50%;
@@ -87,11 +90,19 @@ h1, h2 {
   border: 20px solid #d6d6d6;
   color: #d6d6d6;
   font-size: 4rem;
-  background: url('../img/stopwatch-bg.png');
-  background-size: cover;
+
 }
 
+.stopwatch-time {
+  background: url('../img/stopwatch-bg.png');
+  background-size: cover;
 
+}
+
+.stopwatch-stopped {
+  background: url('../img/stopwatch-bg-stopped.jpg');
+  background-size: contain;
+}
 
 .openPokeball {
   background: url('../img/openPokeball.png');

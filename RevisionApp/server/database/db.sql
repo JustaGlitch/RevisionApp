@@ -21,6 +21,7 @@ CREATE TABLE admin (
 CREATE TABLE class (
     class_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     admin_id INT,
+    classname VARCHAR(255),
     FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
 );
 
@@ -44,12 +45,10 @@ CREATE TABLE students (
 -- Token table
 CREATE TABLE token (
     token_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INT, 
-    admin_id INT,
+    user_id INT NOT NULL REFERENCES student_user(user_id), 
+    admin_id INT NOT NULL REFERENCES admin(admin_id),
     token VARCHAR(36) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES student_user(user_id),
-    FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tasks table
@@ -59,10 +58,13 @@ CREATE TABLE tasks (
     description VARCHAR(255),
     admin_id INT,
     user_id INT,
+    class_id INT,
     completed BOOLEAN,
     suggested_time TIME,
+    taskCreated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (admin_id) REFERENCES admin(admin_id),
-    FOREIGN KEY (user_id) REFERENCES student_user(user_id)
+    FOREIGN KEY (user_id) REFERENCES student_user(user_id),
+    FOREIGN KEY (class_id) REFERENCES class(class_id)
 );
 
 -- Study sessions table
@@ -114,25 +116,96 @@ ADD CONSTRAINT tasks_admin_id_fkey
 FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
 ON DELETE SET NULL;
 
-
+ALTER TABLE token ADD CONSTRAINT i FOREIGN KEY(admin_id) REFERENCES admin(admin_id);
 
 
 -- Dummy data insertion
-INSERT INTO admin (username, password) VALUES ('adminUser', 'password123');
-INSERT INTO class (admin_id) VALUES (1);
--- INSERT INTO student_user (username, password, current_poked) VALUES ('studentUser1', 'pass1234', 'Pikachu');
+INSERT INTO admin (username, password) 
+VALUES ('adminUser', 'password123'),
+         ('admin1', 'password1'),
+         ('admin2', 'password2'),
+         ('admin3', 'password3'),
+         ('admin4', 'password4'),
+         ('admin5', 'password5'),
+         ('admin6', 'password6'),
+         ('admin7', 'password7'),
+         ('admin8', 'password8'),
+         ('admin9', 'password9'),
+         ('admin10', 'password10');
+
+
+INSERT INTO class (admin_id, classname) 
+VALUES (1, 'class1'),
+         (2, 'class2'),
+         (5, 'class3'),
+         (5, 'class4'),
+         (6, 'class5'),
+         (7, 'class6'),
+         (9, 'class7'),
+         (10, 'class8'),
+         (2, 'class9'),
+         (3, 'class10');
+
+
+INSERT INTO student_user (username, password, current_poked) VALUES ('studentUser1', 'pass1234', 9);
 
 INSERT INTO student_user (username, password, current_poked)
 VALUES
-('student1', 'password1', 15),
-('student2', 'password2', 12),
-('student3', 'password3', 9),
-('student4', 'password4', 6),
-('student5', 'password5', 3);
+('student1', 'password1', 6),
+('student2', 'password2', 6),
+('student3', 'password3', 6),
+('student4', 'password4', 9),
+('student5', 'password5', 9),
+('student6', 'password6', 9),
+('student7', 'password7', 3),
+('student8', 'password8', 3),
+('student9', 'password9', 3),
+('student10', 'password10', 12),
+('student11', 'password11', 11),
+('student12', 'password12', 5),
+('student13', 'password13', 18),
+('student14', 'password14', 21),
+('student15', 'password15', 20),
+('student16', 'password16', 30),
+('student17', 'password17', 11),
+('student18', 'password18', 7),
+('student19', 'password19', 50),
+('student20', 'password20', 51),
+('student21', 'password21', 70),
+('student22', 'password22', 71),
+('student23', 'password23', 6),
+('student24', 'password24', 3),
+('student25', 'password25', 2);
 
-INSERT INTO students (user_id, class_id) VALUES (1, 1);
+INSERT INTO students (user_id, class_id) 
+VALUES (1, 1),
+            (2, 1),
+            (3, 1),
+            (4, 1),
+            (5, 1),
+            (6, 2),
+            (7, 2),
+            (8, 2),
+            (9, 2),
+            (10, 2),
+            (11, 3),
+            (12, 3),
+            (13, 3),
+            (14, 3),
+            (15, 3),
+            (16, 4),
+            (17, 4),
+            (18, 4),
+            (19, 4),
+            (20, 4),
+            (21, 5),
+            (22, 5),
+            (23, 5),
+            (24, 5),
+            (25, 5);
+
 -- Insert the baby Pokemon
--- INSERT INTO pokemon (name, evolution_stage) VALUES ('Pikachu', 'baby');
+-- INSERT INTO pokemon (name, evolution_stage) VALUES (9, 'baby');
 
 -- -- Insert final evolutions first (evolves_to is NULL and study_time can be NULL or 0)
 -- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
@@ -168,25 +241,21 @@ VALUES
 (3, 3); -- User 3 has Venusaur
 
 -- Inserting dummy data into the tasks table
-INSERT INTO tasks (title, description, admin_id, user_id, completed, suggested_time)
+INSERT INTO tasks (title, description, admin_id, user_id, class_id, completed, suggested_time, taskCreated_at)
 VALUES
-('Task 1', 'Description 1', 1, 1, FALSE, '00:30:00'),
-('Task 2', 'Description 2', 1, 1, FALSE, '00:30:00'),
-('Task 3', 'Description 3', 1, 1, FALSE, '00:30:00'),
-('Task 4', 'Description 4', 1, 1, FALSE, '00:30:00'),
-('Task 5', 'Description 5', 1, 1, FALSE, '00:30:00'),
-('Task 6', 'Description 6', 1, 1, FALSE, '00:30:00'),
-('Task 7', 'Description 7', 1, 1, FALSE, '00:30:00'),
-('Task 8', 'Description 8', 1, 1, FALSE, '00:30:00'),
-('Task 9', 'Description 9', 1, 1, FALSE, '00:30:00'),
-('Task 10', 'Description 10', 1, 1, FALSE, '00:30:00'),
-('Task 11', 'Description 11', 1, 1, FALSE, '00:30:00'),
-('Task 12', 'Description 12', 1, 1, FALSE, '00:30:00'),
-('Task 13', 'Description 13', 1, 1, FALSE, '00:30:00'),
-('Task 14', 'Description 14', 1, 1, FALSE, '00:30:00'),
-('Task 15', 'Description 15', 1, 1, FALSE, '00:30:00'),
-('Task 16', 'Description 16', 1, 1, FALSE, '00:30:00'),
-('Task 17', 'Description 17', 1, 1, FALSE, '00:30:00');
+('Task 1', 'Description 1', 1, 1, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 2', 'Description 2', 1, 2, 1, TRUE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 3', 'Description 3', 1, 3, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 4', 'Description 4', 1, 4, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 5', 'Description 5', 1, 5, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+
+('Task 6', 'Description 6', 1, 6, 2, TRUE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 7', 'Description 7', 1, 7, 2, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 8', 'Description 8', 1, 8, 2, TRUE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 9', 'Description 9', 1, 9, 2, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 10', 'Description 10', 1, 10, 2, TRUE, '00:30:00', CURRENT_TIMESTAMP);
+
+
 
 -- Inserting dummy data into the study_sessions table
 INSERT INTO study_sessions (user_id, duration)

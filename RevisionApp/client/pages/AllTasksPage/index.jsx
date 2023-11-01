@@ -4,7 +4,6 @@ import { TasksTabs } from "../../components";
 import { TasksList } from "../../components";
 
 function TasksPage() {
-  // State to store all tasks.
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -39,15 +38,15 @@ function TasksPage() {
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
 
       <div className="tab-content" id="myTabContent">
-        // Content for each tab. It displays tasks based on the currently
-        selected tab.
         <div
           className="tab-pane fade show active"
           id="home"
           role="tabpanel"
           aria-labelledby="home-tab"
         >
-          {selectedTab === "All" && <TasksList tasks={tasks} filter="All" />}
+          {selectedTab === "All" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="All" />
+          )}
         </div>
         <div
           className="tab-pane fade"
@@ -56,7 +55,7 @@ function TasksPage() {
           aria-labelledby="profile-tab"
         >
           {selectedTab === "In Progress" && (
-            <TasksList tasks={tasks} filter="In Progress" />
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
           )}
         </div>
         <div
@@ -66,7 +65,7 @@ function TasksPage() {
           aria-labelledby="contact-tab"
         >
           {selectedTab === "Completed" && (
-            <TasksList tasks={tasks} filter="Completed" />
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
           )}
         </div>
       </div>
