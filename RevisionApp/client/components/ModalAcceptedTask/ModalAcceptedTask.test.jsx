@@ -4,6 +4,7 @@ import { screen, render, cleanup } from '@testing-library/react';
 import ModalAcceptedTask from './ModalAcceptedTask';
 import matchers from '@testing-library/jest-dom/matchers';
 import { MemoryRouter } from 'react-router-dom';
+import WrapperComponentForTesting from './WrapperComponentForTesting';
 expect.extend(matchers);
 
 describe('ModalAcceptedTask', () => {
@@ -13,9 +14,10 @@ describe('ModalAcceptedTask', () => {
   
       render(
         <MemoryRouter>
-          <ModalAcceptedTask id={id} time={time} />
+          <WrapperComponentForTesting id={id} time={time} />
         </MemoryRouter>
       );
+      
   
       // Check that the modal is present in the document
       const modal = screen.getByTestId(`acceptedTaskModal-${id}`);
