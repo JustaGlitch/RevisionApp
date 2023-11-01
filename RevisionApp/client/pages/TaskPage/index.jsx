@@ -7,6 +7,7 @@ function index() {
   const [rewardIndex, setRewardIndex] = useState(0);
   const [changePokemon, setChangePokemon] = useState(false);
   const [isStopped, setIsStopped] = useState(false);
+  const [taskDescription, setTaskDescription] = useState('Task description')
 
 useEffect(() => {
   let intervalId;
@@ -23,21 +24,23 @@ useEffect(() => {
   }
 
   return () => clearInterval(intervalId);
-}, [changePokemon, rewards]);
+}, [changePokemon]);
   const handleStartStop = () => {
       setChangePokemon(!changePokemon);
     };
+  const handleFinish = () => {
+      setChangePokemon(false);
+    };
   return (
     <div className="row h-100">
-      <div className="col-sm-12 col-md-6">
-        <div className='d-flex col-sm-12 col-md-8 flex-column align-items-center py-4 stopWatch'>
-          {/* {!isStopped ? (
-            <> */}
-            <h1>Task 1</h1>
-            <div className='lead px-3'>Task description</div>
-        <StopWatch changePokemon={changePokemon} onStartStop={handleStartStop} isStopped={isStopped} setIsStopped={setIsStopped}/>
-        {/* </>
-        ) : ''} */}
+      <div className="col-sm-12 col-md-6 h-100">
+        <div className='d-flex col-sm-12 col-md-8 flex-column align-items-center py-4 stopWatch h-100'>
+           
+            <>
+              <h1>{!isStopped ?'Task 1': 'Task Finished!'}</h1>
+              <div className='lead px-5 text-center'>{!isStopped ? taskDescription: 'Congratulations, you can take a break now'}</div>
+            </>
+        <StopWatch changePokemon={changePokemon} onStartStop={handleStartStop} isStopped={isStopped} setIsStopped={setIsStopped} stopPokeChange={handleFinish} />
         </div>
       </div>
       <div className='col-sm-12 col-md-6'>

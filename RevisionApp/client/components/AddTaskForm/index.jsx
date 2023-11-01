@@ -23,7 +23,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
     <form className="row mb-4 p-3 bg-light rounded" onSubmit={handleSubmit}>
       <div className="col-sm-12 col-md-6">
       <input
-        className="form-control"
+        className="form-control mb-3"
         type="text"
         placeholder="Task title"
         value={title}
