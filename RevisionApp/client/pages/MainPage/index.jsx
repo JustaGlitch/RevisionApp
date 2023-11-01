@@ -42,7 +42,7 @@ function index() {
           title: task.title,
           description: task.description,
           class_id: task.class_id,
-          suggested_time: Number((task.suggested_time).split(':')[1]),
+          // suggested_time: Number(task.suggested_time.split(":")[1]),
           status: task.completed ? "Completed" : "In Progress",
         }));
 
@@ -62,8 +62,13 @@ function index() {
   const handleAddTask = async (
     title,
     description,
+<<<<<<< HEAD
+    class_id = class_id,
+    suggested_time = suggested_time
+=======
     class_id,
     suggested_time
+>>>>>>> e4f11d641209ed7910ae23dcb245f24a92e2728b
   ) => {
     const newTask = {
       id: tasks.length + 1,
@@ -74,8 +79,7 @@ function index() {
       suggested_time,
       timestamp: formattedDateTime,
     };
-
-
+    console.log(newTask);
     try {
       const response = await fetch("https://studydex.onrender.com/tasks", {
         method: "POST",
