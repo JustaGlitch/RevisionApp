@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-const StopWatch = ({onStartStop, isStopped, setIsStopped}) => {
+const StopWatch = ({onStartStop, isStopped, setIsStopped, stopPokeChange}) => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -24,17 +24,24 @@ const StopWatch = ({onStartStop, isStopped, setIsStopped}) => {
   const finish = () => {
     setTime(0);
     setIsRunning(false);
+    stopPokeChange()
     if (!isStopped) {
       setIsStopped(true);
   }
   };
   return (
     <div className="stopwatch-container text-center mt-5">
-      <p className="stopwatch-time">
-        {minutes.toString().padStart(2, "0")}:
-        {seconds.toString().padStart(2, "0")}
-      </p>
-      <div className="btn-group  btn-group-lg stopwatch-buttons" role="group">
+      {isStopped ? 
+        <p className="stopwatch-stopped">
+        
+        </p>
+      : 
+      <>
+        <p className="stopwatch-time">
+          {minutes.toString().padStart(2, "0")}:
+          {seconds.toString().padStart(2, "0")}
+        </p>
+              <div className="btn-group  btn-group-lg stopwatch-buttons" role="group">
         <button className="stopwatch-button btn bg-success-subtle" onClick={startAndStop}>
           {isRunning ? "Pause" : "Start"}
         </button>
@@ -42,6 +49,10 @@ const StopWatch = ({onStartStop, isStopped, setIsStopped}) => {
           Finish
         </button>
       </div>
+      </>
+      }
+
+
     </div>
   );
 };
