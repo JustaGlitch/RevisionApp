@@ -88,15 +88,20 @@ async function currentCollection (req, res) {
 }
 
 async function getAll (req,res) {
-
+    const pokemon = await Pokemon.getAllPokemon()
+    res.status(200).send(pokemon)
 }
 
 async function getAllBaby (req,res) {
-
+    const babies = await Pokemon.getAllBabyPokemon()
+    res.status(200).send(babies)
 }
 
 async function getById (req,res) {
-    
+    const id = parseInt(req.params.id)
+    console.log(id)
+    const pokemon = await Pokemon.findById(id)
+    res.status(200).send(pokemon)
 }
 
 module.exports = {newBaby, evolution, currentPokemon, currentCollection, getAll, getAllBaby, getById}

@@ -9,7 +9,7 @@ pokemonRouter.post('/new', pokemonController.newBaby)
 pokemonRouter.get('/current', pokemonController.currentPokemon)
 pokemonRouter.get('/collection', pokemonController.currentCollection)
 pokemonRouter.get('/', pokemonController.getAll)
-pokemonRouter.get('/baby', )
-pokemonRouter.get('/:id', )
+pokemonRouter.get('/baby', pokemonController.getAllBaby)
+pokemonRouter.get('/:id', pokemonController.getById)
 
 module.exports = pokemonRouter

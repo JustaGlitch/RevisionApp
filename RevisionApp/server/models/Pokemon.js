@@ -87,12 +87,11 @@ class Pokemon {
 
     static async findById(pokemon_id) {
         try {
-            const result = await db.query(
-                `SELECT * FROM ${this.tableName} WHERE pokemon_id = $1`,
-                [pokemon_id]
-            );
-            if (result.rows.length === 0) return null;
+            console.log(this.tableName)
+            const result = await db.query(`SELECT * FROM pokemon WHERE pokemon_id = $1`,[pokemon_id]);
+            if (result.rowCount === 0) return null;
             const pokemonData = result.rows[0];
+            console.log(pokemonData)
             return new Pokemon(pokemonData);
         } catch (error) {
             console.error("Error finding Pokémon by ID:", error);
