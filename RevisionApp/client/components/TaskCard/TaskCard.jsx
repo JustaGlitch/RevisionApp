@@ -39,11 +39,15 @@ function TaskCard({ id, task }) {
         </a>
       </div>
 
+<<<<<<< HEAD
       <ModalAcceptTask
         id={id}
         suggested_time={suggested_time}
         class_id={class_id}
       />
+=======
+      <ModalAcceptTask id={id} suggested_time={suggested_time} class_id={class_id}/>
+>>>>>>> e4f11d641209ed7910ae23dcb245f24a92e2728b
     </div>
   );
 }
