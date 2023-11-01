@@ -11,6 +11,7 @@ function TasksList({ tasks, filter }) {
   // Maps over the filtered tasks and renders TaskCard for each.
   return (
     <div>
+      {console.log("Filtered Tasks:", filteredTasks)}
       {filteredTasks.map((task) => (
         <TaskCard key={task.id} id={task.id} task={task} />
       ))}
