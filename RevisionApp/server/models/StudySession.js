@@ -1,10 +1,10 @@
 const db = require("../database/connect");
 
 class StudySession {
-    constructor(session_id, user_id, duration) {
-        this.session_id = session_id;
-        this.user_id = user_id;
-        this.duration = duration;
+    constructor(data) {
+        this.session_id = data.session_id;
+        this.user_id = data.user_id;
+        this.duration = data.duration;
     }
 
     // Fetch all study sessions

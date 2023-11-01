@@ -1,13 +1,13 @@
 -- Drop tables
-DROP TABLE IF EXISTS token;
-DROP TABLE IF EXISTS collection;
-DROP TABLE IF EXISTS study_sessions;
-DROP TABLE IF EXISTS tasks;
-DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS student_user;
-DROP TABLE IF EXISTS class;
-DROP TABLE IF EXISTS pokemon;
-DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS token CASCADE;
+DROP TABLE IF EXISTS collection CASCADE;
+DROP TABLE IF EXISTS study_sessions CASCADE;
+DROP TABLE IF EXISTS tasks CASCADE;
+DROP TABLE IF EXISTS students CASCADE;
+DROP TABLE IF EXISTS student_user CASCADE;
+DROP TABLE IF EXISTS class CASCADE;
+DROP TABLE IF EXISTS pokemon CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
 
 
 -- Admin table
@@ -92,6 +92,30 @@ CREATE TABLE collection (
     FOREIGN KEY (pokemon_id) REFERENCES pokemon(pokemon_id),
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
+
+ALTER TABLE students
+ADD CONSTRAINT students_user_id_fkey_new  -- Change the name here
+FOREIGN KEY (user_id) REFERENCES student_user(user_id)
+ON DELETE SET NULL;
+
+ALTER TABLE class
+DROP CONSTRAINT class_admin_id_fkey;
+
+ALTER TABLE class
+ADD CONSTRAINT class_admin_id_fkey
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+ON DELETE SET NULL;
+
+ALTER TABLE tasks
+DROP CONSTRAINT tasks_admin_id_fkey;
+
+ALTER TABLE tasks
+ADD CONSTRAINT tasks_admin_id_fkey
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+ON DELETE SET NULL;
+
+
+
 
 -- Dummy data insertion
 INSERT INTO admin (username, password) VALUES ('adminUser', 'password123');

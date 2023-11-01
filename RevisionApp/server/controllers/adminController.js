@@ -108,9 +108,23 @@ async function update (req, res){
 async function destroy (req, res){
     try{
         let id = parseInt(req.params.admin_id);
-        const admin = await Admin.getAdminId(id);
+        
+        // Check if the parsed ID is a valid number
+        if (isNaN(id)) {
+            return res.status(400).json({ error: "Invalid admin ID provided" });
+        }
+
+        // Create an instance of StudentUser with the correct user_id
+        const admin = new Admin({ admin_id: id });
+
+        // Log the value to diagnose any further issues
+        console.log("Attempting to delete admin with user_id:", admin.admin_id);
+
+        // Call the destroy method
         await admin.destroy();
-        res.status(200).json({message: "Admin deleted"});
+
+        // Respond with success
+        res.status(200).json({ message: "admin deleted" });
     }catch(error){
         console.log(error);
         res.status(400).json({error: error.message});

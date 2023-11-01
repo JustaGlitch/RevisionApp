@@ -1,14 +1,14 @@
 const db = require("../database/connect");
 
 class Task {
-    constructor(task_id, title, description, admin_id, user_id, completed, suggested_time) {
-        this.task_id = task_id;
-        this.title = title;
-        this.description = description;
-        this.admin_id = admin_id;
-        this.user_id = user_id;
-        this.completed = completed || false; 
-        this.suggested_time = suggested_time;
+    constructor(data) {
+        this.task_id = data.task_id;
+        this.title = data.title;
+        this.description = data.description;
+        this.admin_id = data.admin_id;
+        this.user_id = data.user_id;
+        this.completed = data.completed || false; 
+        this.suggested_time = data.suggested_time;
     }
 
     static async getAll() {

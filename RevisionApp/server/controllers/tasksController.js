@@ -24,8 +24,7 @@ async function show(req, res) {
 async function create(req, res) {
     try {
         const data = req.body;
-        const student = await Student.getUserId(data.student_id);
-        const newTask = await Task.create(data.task_name, student.student_id);
+        const newTask = await Task.create(data);
         res.status(201).json(newTask);
     } catch (error) {
         console.log(error);
@@ -35,39 +34,32 @@ async function create(req, res) {
 
 async function update(req, res) {
     try {
-        const data = req.body;
-        const student = await Student.getUserId(data.student_id);
-        const task = await Task.getById(data.task_id);
+        let id = parseInt(req.params.task_id);
+        const existingTask = await Task.getById(id);
 
-        // Check if student is authorized
-        if (task.student_id !== student.student_id) {
-            throw new Error("Unauthorized");
+        const dataToUpdate = {
+            ...existingTask,
+            ...req.body
         }
+        const task = await new Task(dataToUpdate)
+        const updatedTask = await task.update();
 
-        const updatedTask = await task.update(data.task_name);
         res.status(200).json(updatedTask);
-    } catch (error) {
+    }catch(error){
         console.log(error);
-        res.status(400).json({ error: error.message });
+        res.status(400).json({error: error.message});
     }
 }
 
 async function destroy(req, res) {
     try {
-        const data = req.params;
-        const student = await Student.getUserId(data.student_id);
-        const task = await Task.getById(data.task_id);
-
-        // Check if student is authorized
-        if (task.student_id !== student.student_id) {
-            throw new Error("Unauthorized");
-        }
-
+        let id = parseInt(req.params.task_id);
+        const task = await Task.getById(id);
         await task.destroy();
-        res.status(200).json({ message: "Task deleted" });
-    } catch (error) {
+        res.status(204).json({message: "Task deleted"});
+    }catch(error){
         console.log(error);
-        res.status(400).json({ error: error.message });
+        res.status(400).json({error: error.message});
     }
 }
 
