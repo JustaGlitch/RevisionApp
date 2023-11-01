@@ -30,7 +30,7 @@ class Collection {
                 `SELECT * FROM ${this.tableName} WHERE collection_id = $1`,
                 [collection_id]
             );
-            if (result.rows.length === 0) return null;
+            if (result.rowsCount === 0) return new Collection(null);
             const collectionData = result.rows[0];
             return new Collection(collectionData.collection_id, collectionData.pokemon_id, collectionData.user_id);
         } catch (error) {
