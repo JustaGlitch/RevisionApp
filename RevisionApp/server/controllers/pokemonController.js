@@ -8,22 +8,19 @@ async function newBaby (req,res) {
         const student = await Student.getOneByToken(token);
         const { user_id } = student;
         const studentCollection = await Collection.findByUserId(user_id)
-        if(studentCollection != null){
-            const babyVersion = studentCollection.map(async(item) => {
-                const pokemon = await Pokemon.findById(item.pokemon_id)
-                return await pokemon.findBabyVersion()
-            })
-            let condition = true
-            do {
-                const newBaby = await Pokemon.getNewBaby()
-                if(babyVersion.findIndex((poke) => poke.pokemon_id == newBaby.pokemon_id) == -1){
-                    condition = false
-                }
-            } while (condition);
-            await Student.updatePoke(user_id)
-            res.status(201).json(newBaby)
-        }
-        res.staus(418).json({message: "No collection"})
+        const babyVersion = studentCollection.map(async(item) => {
+            const pokemon = await Pokemon.findById(item.pokemon_id)
+            return await pokemon.findBabyVersion()
+        })
+        let condition = true
+        do {
+            const newBaby = await Pokemon.getNewBaby()
+            if(babyVersion.findIndex((poke) => poke.pokemon_id == newBaby.pokemon_id) == -1){
+                condition = false
+            }
+        } while (condition);
+        await Student.updatePoke(user_id)
+        res.status(201).json(newBaby)
     } catch (error) {
         console.log(error)
         res.status(404).send(error)
@@ -90,4 +87,16 @@ async function currentCollection (req, res) {
      }
 }
 
-module.exports = {newBaby, evolution, currentPokemon, currentCollection}
+async function getAll (req,res) {
+
+}
+
+async function getAllBaby (req,res) {
+
+}
+
+async function getById (req,res) {
+    
+}
+
+module.exports = {newBaby, evolution, currentPokemon, currentCollection, getAll, getAllBaby, getById}

@@ -59,6 +59,15 @@ class Pokemon {
         }
     }
 
+    static async getAllPokemon() {
+        const result = await db.query(`SELECT DISTINCT(*) FROM ${this.tableName}`)
+        return result.rows
+    }
+    static async getAllBabyPokemon() {
+        const result = await db.query(`SELECT * FROM ${this.tableName} WHERE evolution_stage = 'baby'`)
+        return result.rows
+    }
+
     async findBabyVersion() {
         try {
             const middleResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = $1`,[this.pokemon_id])

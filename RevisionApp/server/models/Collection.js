@@ -30,7 +30,7 @@ class Collection {
                 `SELECT * FROM ${this.tableName} WHERE collection_id = $1`,
                 [collection_id]
             );
-            if (result.rowsCount === 0) return new Collection(null);
+            if (result.rows.length === 0) return null;
             const collectionData = result.rows[0];
             return new Collection(collectionData.collection_id, collectionData.pokemon_id, collectionData.user_id);
         } catch (error) {
@@ -72,6 +72,7 @@ class Collection {
                 `SELECT * FROM ${this.tableName} WHERE user_id = $1`,
                 [user_id]
             );
+            if (result.rows.length === 0) return new Collection(null);
             return result.rows;
         } catch (error) {
             console.error("Error fetching collection for user:", error);
