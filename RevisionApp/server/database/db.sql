@@ -1,13 +1,13 @@
 -- Drop tables
-DROP TABLE IF EXISTS token;
-DROP TABLE IF EXISTS collection;
-DROP TABLE IF EXISTS study_sessions;
-DROP TABLE IF EXISTS tasks;
-DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS student_user;
-DROP TABLE IF EXISTS class;
-DROP TABLE IF EXISTS pokemon;
-DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS token CASCADE;
+DROP TABLE IF EXISTS collection CASCADE;
+DROP TABLE IF EXISTS study_sessions CASCADE;
+DROP TABLE IF EXISTS tasks CASCADE;
+DROP TABLE IF EXISTS students CASCADE;
+DROP TABLE IF EXISTS student_user CASCADE;
+DROP TABLE IF EXISTS class CASCADE;
+DROP TABLE IF EXISTS pokemon CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
 
 
 -- Admin table
@@ -87,11 +87,35 @@ CREATE TABLE pokemon (
 -- Collection table
 CREATE TABLE collection (
     collection_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    poked_id INT,
+    pokemon_id INT,
     user_id INT,
-    FOREIGN KEY (poked_id) REFERENCES pokemon(pokemon_id),
+    FOREIGN KEY (pokemon_id) REFERENCES pokemon(pokemon_id),
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
+
+ALTER TABLE students
+ADD CONSTRAINT students_user_id_fkey_new  -- Change the name here
+FOREIGN KEY (user_id) REFERENCES student_user(user_id)
+ON DELETE SET NULL;
+
+ALTER TABLE class
+DROP CONSTRAINT class_admin_id_fkey;
+
+ALTER TABLE class
+ADD CONSTRAINT class_admin_id_fkey
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+ON DELETE SET NULL;
+
+ALTER TABLE tasks
+DROP CONSTRAINT tasks_admin_id_fkey;
+
+ALTER TABLE tasks
+ADD CONSTRAINT tasks_admin_id_fkey
+FOREIGN KEY (admin_id) REFERENCES admin(admin_id)
+ON DELETE SET NULL;
+
+
+
 
 -- Dummy data insertion
 INSERT INTO admin (username, password) VALUES ('adminUser', 'password123');
@@ -136,10 +160,37 @@ VALUES
 ('Charizard', 'final', NULL, 45);
 
 -- Inserting dummy data into the collection table
-INSERT INTO collection (poked_id, user_id)
+INSERT INTO collection (pokemon_id, user_id)
 VALUES 
 (1, 1), -- User 1 has Bulbasaur
 (4, 1), -- User 1 also has Charmander
 (2, 2), -- User 2 has Ivysaur
 (3, 3); -- User 3 has Venusaur
+
+-- Inserting dummy data into the tasks table
+INSERT INTO tasks (title, description, admin_id, user_id, completed, suggested_time)
+VALUES
+('Task 1', 'Description 1', 1, 1, FALSE, '00:30:00'),
+('Task 2', 'Description 2', 1, 1, FALSE, '00:30:00'),
+('Task 3', 'Description 3', 1, 1, FALSE, '00:30:00'),
+('Task 4', 'Description 4', 1, 1, FALSE, '00:30:00'),
+('Task 5', 'Description 5', 1, 1, FALSE, '00:30:00'),
+('Task 6', 'Description 6', 1, 1, FALSE, '00:30:00'),
+('Task 7', 'Description 7', 1, 1, FALSE, '00:30:00'),
+('Task 8', 'Description 8', 1, 1, FALSE, '00:30:00'),
+('Task 9', 'Description 9', 1, 1, FALSE, '00:30:00'),
+('Task 10', 'Description 10', 1, 1, FALSE, '00:30:00'),
+('Task 11', 'Description 11', 1, 1, FALSE, '00:30:00'),
+('Task 12', 'Description 12', 1, 1, FALSE, '00:30:00'),
+('Task 13', 'Description 13', 1, 1, FALSE, '00:30:00'),
+('Task 14', 'Description 14', 1, 1, FALSE, '00:30:00'),
+('Task 15', 'Description 15', 1, 1, FALSE, '00:30:00'),
+('Task 16', 'Description 16', 1, 1, FALSE, '00:30:00'),
+('Task 17', 'Description 17', 1, 1, FALSE, '00:30:00');
+
+-- Inserting dummy data into the study_sessions table
+INSERT INTO study_sessions (user_id, duration)
+VALUES
+(1, '00:30:00'),
+(2, '00:30:00');
 

@@ -1,30 +1,93 @@
-import React from 'react'
-import { TaskCard } from '../../components'
+import React, { useState } from "react";
+import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 
 function index() {
+  const isAdmin = true;
+
+  // State to store all tasks.
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: "Sample Task 1",
+      description: "This is a dummy task description.",
+      status: "Completed",
+      timestamp: new Date().toLocaleString(),
+      responsible: "Class 1",
+    },
+    {
+      id: 2,
+      title: "Sample Task 2",
+      description: "Another dummy task description.",
+      status: "In Progress",
+      timestamp: new Date().toLocaleString(),
+      responsible: "Tom Byrne",
+    },
+  ]);
+
+  // State to track the currently selected tab.
+  const [selectedTab, setSelectedTab] = useState("All");
+  console.log("Currently Selected Tab:", selectedTab);
+
+  //Date Object to capture the current date and time
+  const currentDateTime = new Date();
+  const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
+
+  // Function to handle the addition of a new task.
+  const handleAddTask = (title, description, responsible) => {
+    const newTask = {
+      id: tasks.length + 1,
+      title,
+      description,
+      responsible,
+      status: "In Progress",
+      timestamp: formattedDateTime,
+    };
+    setTasks([...tasks, newTask]);
+  };
+
   return (
-    <div className='col-sm-12 offset-md-1 col-md-7 bg-white p-4 rounded-4'>
+    <div className="col-sm-12 offset-md-1 col-md-7 bg-white p-4 rounded-4">
       <h1>List of Tasks</h1>
-      <ul className="nav nav-tabs" id="myTab" role="tablist">
-        <li className="nav-item" role="presentation">
-          <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">All</button>
-        </li>
-        <li className="nav-item" role="presentation">
-          <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">In Progress</button>
-        </li>
-        <li className="nav-item" role="presentation">
-          <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Completed</button>
-        </li>
-      </ul>
+
+      {/* Form to add a new task. */}
+      <AddTaskForm isAdmin={isAdmin} onAddTask={handleAddTask} />
+
+      {/* Tabs UI. */}
+      <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
       <div className="tab-content" id="myTabContent">
-        <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <TaskCard />
+        {/* Content for each tab. It displays tasks based on the currently
+        selected tab. */}
+        <div
+          className="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          {selectedTab === "All" && <TasksList tasks={tasks} filter="All" />}
         </div>
-        <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-        <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+        <div
+          className="tab-pane fade"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          {selectedTab === "In Progress" && (
+            <TasksList tasks={tasks} filter="In Progress" />
+          )}
+        </div>
+        <div
+          className="tab-pane fade"
+          id="contact"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+        >
+          {selectedTab === "Completed" && (
+            <TasksList tasks={tasks} filter="Completed" />
+          )}
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default index
+export default index;
