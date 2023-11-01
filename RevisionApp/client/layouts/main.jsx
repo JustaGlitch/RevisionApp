@@ -7,18 +7,23 @@ function index() {
 
   const bgColor = "#f8f9fa";
   const textColor = "#212529";
-  const [stopAnimation, setStopAnimation] = useState(false)
+  const [stopAnimation, setStopAnimation] = useState(false);
   const handleStopAnimation = () => {
-    setStopAnimation(!stopAnimation)
-  }
+    setStopAnimation(!stopAnimation);
+  };
   return (
     <>
       <Header />
       <div className="position-fixed bottom-0 end-0 p-3 d-sm-none d-md-block">
-        <button onClick={handleStopAnimation} className="btn btn-warning shadow">{stopAnimation ? "Animate!" : "Stop Animation"}</button>
+        <button
+          onClick={handleStopAnimation}
+          className="btn btn-warning shadow"
+        >
+          {stopAnimation ? "Animate!" : "Stop Animation"}
+        </button>
       </div>
 
-      <div className={`main-page h-100 ${stopAnimation ? '' : 'animate'}`}>
+      <div className={`main-page h-100 ${stopAnimation ? "" : "animate"}`}>
         <div className="container h-100">
           <div className="row d-flex justify-content-center my-5">
             {isAdmin && <LeftColumn />}
