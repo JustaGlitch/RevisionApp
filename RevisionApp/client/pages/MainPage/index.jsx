@@ -58,7 +58,7 @@ function index() {
   const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
 
   // Function to handle the addition of a new task.
-  const handleAddTask = (title, description, responsible) => {
+  const handleAddTask = async (title, description, responsible) => {
     const newTask = {
       id: tasks.length + 1,
       title,
@@ -67,7 +67,27 @@ function index() {
       status: "In Progress",
       timestamp: formattedDateTime,
     };
-    setTasks([...tasks, newTask]);
+
+    try {
+      const response = await fetch("https://studydex.onrender.com/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send task to the API");
+      }
+
+      const returnedTask = await response.json();
+      setTasks((prevTasks) => [...prevTasks, returnedTask]);
+    } catch (error) {
+      console.error("Error sending task:", error);
+    }
+
+    // setTasks([...tasks, newTask]);
   };
 
   return (
