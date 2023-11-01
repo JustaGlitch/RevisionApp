@@ -9,22 +9,21 @@ class Pokemon {
         this.evolution_stage = evolution_stage;
         this.evolves_to = evolves_to;
         this.study_time = study_time;
-        this.sprite_url = sprite_url;
-        this.threeD_url = threeD_url;
+        this.image_url = image_url;
         this.tableName = "pokemon";
     }
 
-    // static async fetchSpriteURL(pokemonName) {
-    //     try {
-    //         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-    //         const data = await response.json();
-    //         console.log("Fetched Pokémon sprite URL:", data.sprites.front_default);  
-    //         return data.sprites.front_default;
-    //     } catch (error) {
-    //         console.error("Failed to fetch Pokémon sprite:", error);
-    //         throw error;
-    //     }
-    // }
+    static async fetchSpriteURL(pokemonName) {
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+            const data = await response.json();
+            console.log("Fetched Pokémon sprite URL:", data.sprites.front_default);  
+            return data.sprites.front_default;
+        } catch (error) {
+            console.error("Failed to fetch Pokémon sprite:", error);
+            throw error;
+        }
+    }
     
     // async create() {
     //     if (!this.image_url) {
@@ -54,7 +53,24 @@ class Pokemon {
             const pokemonData = result.rows[random]
             return new Pokemon(pokemonData)
         } catch (error) {
-            console.error("Error getting new baby:", error)
+            console.error("Error creating Pokémon:", error);
+            throw error;
+        }
+    }
+
+    async findBabyVersion() {
+        try {
+            const middleResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = ${this.pokemon_id}`)
+            const babyResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = ${middleResult.rows[0].pokemon_id}`)
+            let pokemonData
+            if(babyResult){
+                pokemonData = babyResult.rows[0]
+            }else{
+                pokemonData = middleResult.rows[0]
+            }
+            return new Pokemon(pokemonData)
+        } catch (error) {
+            console.error("Error getting baby version:", error)
             throw error;
         }
     }
@@ -104,14 +120,13 @@ class Pokemon {
         try {
             const evolvedPokemon = await Pokemon.findById(this.evolves_to);
 
-            // this.name = evolvedPokemon.name;
-            // this.evolution_stage = evolvedPokemon.evolution_stage;
-            // this.evolves_to = evolvedPokemon.evolves_to;
-            // this.image_url = await Pokemon.fetchSpriteURL(this.name);
+            this.name = evolvedPokemon.name;
+            this.evolution_stage = evolvedPokemon.evolution_stage;
+            this.evolves_to = evolvedPokemon.evolves_to;
+            this.image_url = await Pokemon.fetchSpriteURL(this.name);
 
-            // await this.update();
+            await this.update();
 
-            return evolvedPokemon
         } catch (error) {
             console.error("Error during Pokémon evolution:", error);
             throw error;
@@ -121,8 +136,8 @@ class Pokemon {
     async update() {
         try {
             await db.query(
-                `UPDATE ${this.tableName} SET name = $1, evolution_stage = $2, evolves_to = $3, sprite_url = $4, threeD_url = $5 WHERE pokemon_id = $6`,
-                [this.name, this.evolution_stage, this.evolves_to, this.sprite_url, this.threeD_url, this.pokemon_id]
+                `UPDATE ${this.tableName} SET name = $1, evolution_stage = $2, evolves_to = $3, image_url = $4 WHERE pokemon_id = $5`,
+                [this.name, this.evolution_stage, this.evolves_to, this.image_url, this.pokemon_id]
             );
         } catch (error) {
             console.error("Error updating Pokémon:", error);
@@ -146,10 +161,10 @@ class Pokemon {
 module.exports = Pokemon;
 
 // Mock data for demonstration purposes:
-// const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
-// testPokemon.create().then(() => {
-//     console.log("Successfully created test Pokémon.");
-// }).catch((error) => {
-//     console.error("Error:", error);
-// });
+const testPokemon = new Pokemon(null, "bulbasaur", 1, null, 0);
+testPokemon.create().then(() => {
+    console.log("Successfully created test Pokémon.");
+}).catch((error) => {
+    console.error("Error:", error);
+});
 
