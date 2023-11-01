@@ -1,9 +1,9 @@
 const db = require("../database/connect");
 
 class Class {
-    constructor(class_id, admin_id) {
-        this.class_id = class_id;
-        this.admin_id = admin_id;
+    constructor(data) {
+        this.class_id = data.class_id;
+        this.admin_id = data.admin_id;
     }
 
     static async getById(id) {

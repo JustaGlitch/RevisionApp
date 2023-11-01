@@ -3,22 +3,27 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { screen, render, cleanup } from '@testing-library/react';
 import TaskCard from './TaskCard';
 import matchers from '@testing-library/jest-dom/matchers';
+import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
 expect.extend(matchers);
 
 describe('TaskCard', () => {
-    const task = {
-      title: 'Class 1',
-      description: 'Some placeholder content in a paragraph',
-      timestamp: 'now',
-    };
+  const task = {
+    title: 'Class 1',
+    description: 'Some placeholder content in a paragraph',
+    timestamp: 'now',
+  };
 
-    beforeEach(() => {
-      render(<TaskCard task={task} />);
-    });
-  
-    afterEach(() => {
-      cleanup();
-    });
+  beforeEach(() => {
+    render(
+      <MemoryRouter> 
+        <TaskCard task={task} />
+      </MemoryRouter>
+    );
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
 
     it('renders the component', () => {
       const taskCard = screen.getByTestId('task-card');

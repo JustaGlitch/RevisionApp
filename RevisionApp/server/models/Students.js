@@ -1,10 +1,10 @@
 const db = require("../database/connect");
 
 class Students {
-    constructor(student_id, user_id, class_id) {
-        this.student_id = student_id;
-        this.user_id = user_id;
-        this.class_id = class_id;
+    constructor(data) {
+        this.student_id = data.student_id;
+        this.user_id = data.user_id;
+        this.class_id = data.class_id;
     }
 
     // Fetch all students
