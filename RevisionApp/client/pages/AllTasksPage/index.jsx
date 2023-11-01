@@ -38,8 +38,6 @@ function TasksPage() {
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
 
       <div className="tab-content" id="myTabContent">
-        // Content for each tab. It displays tasks based on the currently
-        selected tab.
         <div
           className="tab-pane fade show active"
           id="home"

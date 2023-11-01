@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 
 function index() {
@@ -6,27 +6,44 @@ function index() {
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Sample Task 1",
-      description: "This is a dummy task description.",
-      status: "Completed",
-      timestamp: new Date().toLocaleString(),
-      responsible: "Class 1",
-    },
-    {
-      id: 2,
-      title: "Sample Task 2",
-      description: "Another dummy task description.",
-      status: "In Progress",
-      timestamp: new Date().toLocaleString(),
-      responsible: "Tom Byrne",
-    },
+    // {
+    //   id: 1,
+    //   title: "Sample Task 1",
+    //   description: "This is a dummy task description.",
+    //   status: "Completed",
+    //   timestamp: new Date().toLocaleString(),
+    //   responsible: "Class 1",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Sample Task 2",
+    //   description: "Another dummy task description.",
+    //   status: "In Progress",
+    //   timestamp: new Date().toLocaleString(),
+    //   responsible: "Tom Byrne",
+    // },
   ]);
 
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
   console.log("Currently Selected Tab:", selectedTab);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("https://studydex.onrender.com/tasks");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   //Date Object to capture the current date and time
   const currentDateTime = new Date();
