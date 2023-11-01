@@ -4,6 +4,7 @@ class Class {
     constructor(data) {
         this.class_id = data.class_id;
         this.admin_id = data.admin_id;
+        this.classname = data.classname;
     }
 
     static async getById(id) {
@@ -20,14 +21,14 @@ class Class {
     }
 
     static async create(data) {
-        const { admin_id } = data;
-        const response = await db.query(`INSERT INTO class (admin_id) VALUES ($1) RETURNING *`, [admin_id]);
+        const { admin_id, classname } = data;
+        const response = await db.query(`INSERT INTO class (admin_id, classname) VALUES ($1, $2) RETURNING *`, [admin_id, classname]);
         const newId = response.rows[0].class_id;
         return Class.getById(newId);
     }
 
     async update() {
-        const response = await db.query(`UPDATE class SET admin_id = $1 WHERE class_id = $2 RETURNING *`, [this.admin_id, this.class_id]);
+        const response = await db.query(`UPDATE class SET admin_id = $1, classname = $2 WHERE class_id = $3 RETURNING *`, [this.admin_id, this.classname, this.class_id]);
         return new Class(response.rows[0]);
     }
 

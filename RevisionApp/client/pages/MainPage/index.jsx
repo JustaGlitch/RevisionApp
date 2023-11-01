@@ -58,13 +58,19 @@ function index() {
   const formattedDateTime = `${currentDateTime.toLocaleDateString()} ${currentDateTime.toLocaleTimeString()}`;
 
   // Function to handle the addition of a new task.
-  const handleAddTask = async (title, description, responsible) => {
+  const handleAddTask = async (
+    title,
+    description,
+    responsible,
+    suggested_time
+  ) => {
     const newTask = {
       id: tasks.length + 1,
       title,
       description,
       responsible,
       status: "In Progress",
+      suggested_time,
       timestamp: formattedDateTime,
     };
 

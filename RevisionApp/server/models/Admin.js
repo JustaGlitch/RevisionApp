@@ -24,19 +24,12 @@ class Admin {
     }
 
     static async getOneByToken(token) {
-        // First, retrieve the token record to get the associated admin_id
-        const tokenResponse = await db.query("SELECT * FROM token WHERE token = $1", [token]);
-        if (tokenResponse.rows.length != 1) {
-            throw new Error("Token not found");
-        }
-        const adminId = tokenResponse.rows[0].admin_id;
-    
-        // Now, retrieve the admin record using the admin_id obtained from the token table
-        const adminResponse = await db.query("SELECT * FROM admin WHERE admin_id = $1", [adminId]);
-        if (adminResponse.rows.length != 1) {
+        const response = await db.query("SELECT admin_id FROM token WHERE token = $1", [token]);
+        if (response.rows.length != 1) {
             throw new Error("Admin not found");
         }
-        return new Admin(adminResponse.rows[0]);
+        const admin = await Admin.getAdminId(response.rows[0].admin_id);
+        return admin;
     }
 
     static async getAll() {
