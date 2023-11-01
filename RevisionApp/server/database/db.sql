@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS tasks CASCADE;
 DROP TABLE IF EXISTS students CASCADE;
 DROP TABLE IF EXISTS student_user CASCADE;
 DROP TABLE IF EXISTS class CASCADE;
-DROP TABLE IF EXISTS pokemon CASCADE;
+-- DROP TABLE IF EXISTS pokemon CASCADE;
 DROP TABLE IF EXISTS admin CASCADE;
 
 
@@ -74,15 +74,15 @@ CREATE TABLE study_sessions (
 );
 
 -- Pokémon table
-CREATE TABLE pokemon (
-    pokemon_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    evolution_stage VARCHAR(50),  -- 'baby', 'middle', 'final'
-    evolves_to INT,               -- Reference to the ID of the evolved form
-    study_time INT,              -- Time in minutes
-    image_url VARCHAR(500),
-    FOREIGN KEY (evolves_to) REFERENCES pokemon(pokemon_id)
-);
+-- CREATE TABLE pokemon (
+--     pokemon_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+--     name VARCHAR(255) NOT NULL,
+--     evolution_stage VARCHAR(50),  -- 'baby', 'middle', 'final'
+--     evolves_to INT,               -- Reference to the ID of the evolved form
+--     study_time INT,              -- Time in minutes
+--     image_url VARCHAR(500),
+--     FOREIGN KEY (evolves_to) REFERENCES pokemon(pokemon_id)
+-- );
 
 -- Collection table
 CREATE TABLE collection (
@@ -120,44 +120,44 @@ ON DELETE SET NULL;
 -- Dummy data insertion
 INSERT INTO admin (username, password) VALUES ('adminUser', 'password123');
 INSERT INTO class (admin_id) VALUES (1);
-INSERT INTO student_user (username, password, current_poked) VALUES ('studentUser1', 'pass1234', 'Pikachu');
+-- INSERT INTO student_user (username, password, current_poked) VALUES ('studentUser1', 'pass1234', 'Pikachu');
 
 INSERT INTO student_user (username, password, current_poked)
 VALUES
-('student1', 'password1', 'Pikachu'),
-('student2', 'password2', 'Pikachu'),
-('student3', 'password3', 'Pikachu'),
-('student4', 'password4', 'Pikachu'),
-('student5', 'password5', 'Pikachu');
+('student1', 'password1', 15),
+('student2', 'password2', 12),
+('student3', 'password3', 9),
+('student4', 'password4', 6),
+('student5', 'password5', 3);
 
 INSERT INTO students (user_id, class_id) VALUES (1, 1);
 -- Insert the baby Pokemon
-INSERT INTO pokemon (name, evolution_stage) VALUES ('Pikachu', 'baby');
+-- INSERT INTO pokemon (name, evolution_stage) VALUES ('Pikachu', 'baby');
 
--- Insert final evolutions first (evolves_to is NULL and study_time can be NULL or 0)
-INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
-VALUES ('Charizard', 'final', NULL, NULL),
-       ('Blastoise', 'final', NULL, NULL);
+-- -- Insert final evolutions first (evolves_to is NULL and study_time can be NULL or 0)
+-- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
+-- VALUES ('Charizard', 'final', NULL, NULL),
+--        ('Blastoise', 'final', NULL, NULL);
 
--- Insert middle evolutions next
-INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
-VALUES ('Charmeleon', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Charizard'), 60),
-       ('Wartortle', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Blastoise'), 60);
+-- -- Insert middle evolutions next
+-- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
+-- VALUES ('Charmeleon', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Charizard'), 60),
+--        ('Wartortle', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Blastoise'), 60);
 
--- Insert baby evolutions last
-INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
-VALUES ('Charmander', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Charmeleon'), 30),
-       ('Squirtle', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Wartortle'), 30);
+-- -- Insert baby evolutions last
+-- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
+-- VALUES ('Charmander', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Charmeleon'), 30),
+--        ('Squirtle', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Wartortle'), 30);
 
--- Inserting dummy data into the pokemon table
-INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
-VALUES 
-('Bulbasaur', 'baby', NULL, 15),
-('Ivysaur', 'middle', NULL, 30),
-('Venusaur', 'final', NULL, 45),
-('Charmander', 'baby', NULL, 15),
-('Charmeleon', 'middle', NULL, 30),
-('Charizard', 'final', NULL, 45);
+-- -- Inserting dummy data into the pokemon table
+-- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
+-- VALUES 
+-- ('Bulbasaur', 'baby', NULL, 15),
+-- ('Ivysaur', 'middle', NULL, 30),
+-- ('Venusaur', 'final', NULL, 45),
+-- ('Charmander', 'baby', NULL, 15),
+-- ('Charmeleon', 'middle', NULL, 30),
+-- ('Charizard', 'final', NULL, 45);
 
 -- Inserting dummy data into the collection table
 INSERT INTO collection (pokemon_id, user_id)

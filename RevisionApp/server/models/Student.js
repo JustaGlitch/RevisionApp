@@ -45,8 +45,8 @@ class StudentUser {
         return new StudentUser(response.rows[0]);
     }
 
-    static async updatePoke(user_id) {
-        const response = await db.query("UPDATE student_user SET current_poked = true WHERE user_id = $1 RETURNING *", [user_id]);
+    static async updatePoke(user_id,pokemon_id) {
+        const response = await db.query("UPDATE student_user SET current_poked = $1 WHERE user_id = $2 RETURNING *", [pokemon_id, user_id]);
         return new StudentUser(response.rows[0]);
     }
 

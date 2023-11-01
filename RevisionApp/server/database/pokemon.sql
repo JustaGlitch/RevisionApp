@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS pokemon;
+DROP TABLE IF EXISTS pokemon CASCADE;
 
 -- Pokémon table
 CREATE TABLE pokemon (

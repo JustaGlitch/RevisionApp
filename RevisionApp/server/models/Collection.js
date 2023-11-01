@@ -9,7 +9,7 @@ class Collection {
     }
 
     // Create a new collection entry
-    async create() {
+    static async create(pokemon_id,user_id) {
         try {
             const result = await db.query(
                 `INSERT INTO ${this.tableName} (pokemon_id, user_id) VALUES ($1, $2) RETURNING collection_id`,

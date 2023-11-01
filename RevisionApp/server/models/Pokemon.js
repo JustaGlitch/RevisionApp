@@ -1,9 +1,9 @@
 const db = require("../database/connect");
-let fetch;
-import('node-fetch').then(module => fetch = module.default);
+// let fetch;
+// import('node-fetch').then(module => fetch = module.default);
 
 class Pokemon {
-    constructor(pokemon_id, name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url) {
+    constructor({pokemon_id, name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url}) {
         this.pokemon_id = pokemon_id;
         this.name = name;
         this.evolution_stage = evolution_stage;
@@ -52,9 +52,26 @@ class Pokemon {
             const result = await db.query(`SELECT * FROM ${this.tableName} WHERE evolution_stage = 'baby'`)
             const random = Math.floor(Math.random() * result.rowCount)
             const pokemonData = result.rows[random]
-            return new Pokemon(pokemonData.pokemon_id, pokemonData.name, pokemonData.evolution_stage, pokemonData.evolves_to, pokemonData.study_time, pokemonData.sprite_url, pokemonData.threeD_url)
+            return new Pokemon(pokemonData)
         } catch (error) {
             console.error("Error getting new baby:", error)
+            throw error;
+        }
+    }
+
+    async findBabyVersion() {
+        try {
+            const middleResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = ${this.pokemon_id}`)
+            const babyResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = ${middleResult.rows[0].pokemon_id}`)
+            let pokemonData
+            if(babyResult){
+                pokemonData = babyResult.rows[0]
+            }else{
+                pokemonData = middleResult.rows[0]
+            }
+            return new Pokemon(pokemonData)
+        } catch (error) {
+            console.error("Error getting baby version:", error)
             throw error;
         }
     }
@@ -67,16 +84,19 @@ class Pokemon {
             );
             if (result.rows.length === 0) return null;
             const pokemonData = result.rows[0];
-            return new Pokemon(pokemonData.pokemon_id, pokemonData.name, pokemonData.evolution_stage, pokemonData.evolves_to, pokemonData.study_time, pokemonData.sprite_url, pokemonData.threeD_url);
+            return new Pokemon(pokemonData);
         } catch (error) {
             console.error("Error finding Pokémon by ID:", error);
             throw error;
         }
     }
 
-    async checkForEvolution() {
-        if (this.study_time >= 30 && this.evolves_to) {
+    async checkForEvolution(studyTime) {
+        if (studyTime >= this.study_time && this.evolves_to) {
             return await this.evolve();
+        }
+        if(this.evolves_to == null){
+            return "add to collection"
         }
     }
 

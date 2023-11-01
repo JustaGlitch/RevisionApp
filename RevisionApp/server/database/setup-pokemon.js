@@ -65,9 +65,9 @@ const sql = fs.readFileSync('./database/pokemon.sql').toString();
 // }
 
 const addToDB = async(final,middle,baby) => {
-    console.log(final)
-    console.log(middle)
-    console.log(baby)
+    // console.log(final)
+    // console.log(middle)
+    // console.log(baby)
     // remove gmax and mega
     // const tag = name.replace('name-','')
     // if substring(4) == gmax || mega
@@ -148,7 +148,6 @@ const addGen1Pokemon = async () => {
         const theCurrent = await getTheCurrent.json()
         const getTheLine = await fetch(theCurrent.evolution_chain.url)
         const theLine = await getTheLine.json()
-        console.log(theLine)
         let baby, middle, final
         baby = theLine.chain.species.name
         if(theLine.chain.evolves_to.length >= 1){
