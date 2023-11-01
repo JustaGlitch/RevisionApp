@@ -11,7 +11,6 @@ class Pokemon {
         this.study_time = study_time;
         this.sprite_url = sprite_url;
         this.threeD_url = threeD_url;
-        this.tableName = "pokemon";
     }
 
     // static async fetchSpriteURL(pokemonName) {
@@ -34,7 +33,7 @@ class Pokemon {
     //         console.log(`Inserting: ${this.name}, ${this.evolution_stage}, ${this.evolves_to}, ${this.study_time}, ${this.image_url}`);
 
     //         const result = await db.query(
-    //             `INSERT INTO ${this.tableName} (name, evolution_stage, evolves_to, study_time, image_url) 
+    //             `INSERT INTO $pokemon} (name, evolution_stage, evolves_to, study_time, image_url) 
     //              VALUES ($1, $2, $3, $4, $5) 
     //              RETURNING pokemon_id`,
     //             [this.name, this.evolution_stage, this.evolves_to, this.study_time, this.image_url]
@@ -49,7 +48,7 @@ class Pokemon {
     
     static async getNewBaby() {
         try {
-            const result = await db.query(`SELECT * FROM ${this.tableName} WHERE evolution_stage = 'baby'`)
+            const result = await db.query(`SELECT * FROM pokemon WHERE evolution_stage = 'baby'`)
             const random = Math.floor(Math.random() * result.rowCount)
             const pokemonData = result.rows[random]
             return new Pokemon(pokemonData)
@@ -60,18 +59,18 @@ class Pokemon {
     }
 
     static async getAllPokemon() {
-        const result = await db.query(`SELECT DISTINCT(*) FROM ${this.tableName}`)
+        const result = await db.query(`SELECT DISTINCT(name) FROM pokemon`)
         return result.rows
     }
     static async getAllBabyPokemon() {
-        const result = await db.query(`SELECT * FROM ${this.tableName} WHERE evolution_stage = 'baby'`)
+        const result = await db.query(`SELECT * FROM pokemon WHERE evolution_stage = 'baby'`)
         return result.rows
     }
 
     async findBabyVersion() {
         try {
-            const middleResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = $1`,[this.pokemon_id])
-            const babyResult = await db.query(`SELECT * FROM ${this.tableName} WHERE evolves_to = $1`, [middleResult.rows[0].pokemon_id])
+            const middleResult = await db.query(`SELECT * FROM pokemon WHERE evolves_to = $1`,[this.pokemon_id])
+            const babyResult = await db.query(`SELECT * FROM pokemon WHERE evolves_to = $1`, [middleResult.rows[0].pokemon_id])
             let pokemonData
             if(babyResult){
                 pokemonData = babyResult.rows[0]
@@ -87,7 +86,6 @@ class Pokemon {
 
     static async findById(pokemon_id) {
         try {
-            console.log(this.tableName)
             const result = await db.query(`SELECT * FROM pokemon WHERE pokemon_id = $1`,[pokemon_id]);
             if (result.rowCount === 0) return null;
             const pokemonData = result.rows[0];
@@ -129,7 +127,7 @@ class Pokemon {
     async update() {
         try {
             await db.query(
-                `UPDATE ${this.tableName} SET name = $1, evolution_stage = $2, evolves_to = $3, sprite_url = $4, threeD_url = $5 WHERE pokemon_id = $6`,
+                `UPDATE pokemon SET name = $1, evolution_stage = $2, evolves_to = $3, sprite_url = $4, threeD_url = $5 WHERE pokemon_id = $6`,
                 [this.name, this.evolution_stage, this.evolves_to, this.sprite_url, this.threeD_url, this.pokemon_id]
             );
         } catch (error) {
@@ -141,7 +139,7 @@ class Pokemon {
     async destroy() {
         try {
             await db.query(
-                `DELETE FROM ${this.tableName} WHERE pokemon_id = $1`,
+                `DELETE FROM pokemon WHERE pokemon_id = $1`,
                 [this.pokemon_id]
             );
         } catch (error) {
