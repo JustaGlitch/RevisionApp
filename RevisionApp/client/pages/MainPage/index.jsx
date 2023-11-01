@@ -41,6 +41,8 @@ function index() {
           id: task.task_id,
           title: task.title,
           description: task.description,
+          class_id: task.class_id,
+          suggested_time: Number(task.suggested_time.split(":")[1]),
           status: task.completed ? "Completed" : "In Progress",
         }));
 
@@ -49,7 +51,6 @@ function index() {
         console.error("Error fetching tasks:", error);
       }
     };
-
     fetchTasks();
   }, []);
 

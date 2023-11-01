@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 function AddTaskForm({ onAddTask, isAdmin }) {
   // Local state for form fields.
   const [title, setTitle] = useState("");
   const [suggested_time, setSuggestedTime] = useState("");
   const [description, setDescription] = useState("");
-  const [class_id, setclass_id] = useState("");
+  const [responsible, setResponsible] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getAllCategories = async () => {
+      const resp = await fetch("https://studydex.onrender.com/class");
+      const result = await resp.json();
+      setCategories(result);
+    };
+    getAllCategories();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddTask(title, description, class_id, suggested_time);
+    onAddTask(title, description, responsible, suggested_time);
     setTitle("");
     setSuggestedTime(0);
     setDescription("");
-    setclass_id("");
+    setResponsible("");
   };
   // Renders a form to input task title and description.
   return (
@@ -41,13 +52,14 @@ function AddTaskForm({ onAddTask, isAdmin }) {
             <div className="col-sm-12 col-md-4">
               <select
                 className="form-select"
-                value={class_id}
-                onChange={(e) => setclass_id(e.target.value)}
+                value={responsible}
+                onChange={(e) => setResponsible(e.target.value)}
               >
-                <option value="">Select class_id</option>
-                <option value="Class 1">Class 1</option>
-                <option value="Class 2">Class 2</option>
-                <option value="Tom Byrne">Tom Byrne</option>
+                {categories.map((el) => (
+                  <option key={el.classname} value={el.classname}>
+                    {el.classname}
+                  </option>
+                ))}
               </select>
             </div>
           </>

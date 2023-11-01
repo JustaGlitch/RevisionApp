@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ModalAcceptedTask } from "../../components";
 
-function ModalAcceptTask({ id, suggested_time }) {
+function ModalAcceptTask({ id, suggested_time, responsible = "Class 1" }) {
   const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);
@@ -31,7 +31,7 @@ function ModalAcceptTask({ id, suggested_time }) {
             <div className="modal-body">
               <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
               <p className="lead">
-                Who is class_id: <span className="small">Class 1</span>
+                Who is Responsible: <span className="small">{responsible}</span>
               </p>
               <div className="mb-3">
                 <form>
@@ -72,7 +72,11 @@ function ModalAcceptTask({ id, suggested_time }) {
           </div>
         </div>
       </div>
-      <ModalAcceptedTask id={id} time={suggestedTime} />
+      <ModalAcceptedTask
+        id={id}
+        time={suggestedTime}
+        responsible={responsible}
+      />
     </>
   );
 }
