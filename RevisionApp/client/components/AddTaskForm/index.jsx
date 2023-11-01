@@ -5,11 +5,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
   const [suggested_time, setSuggestedTime] = useState("");
   const [description, setDescription] = useState("");
   const [class_id, setClass_id] = useState("");
-<<<<<<< HEAD
   const [categories, setCategories] = useState([]);
-=======
-  const [categories, setCategories] = useState([])
->>>>>>> e4f11d641209ed7910ae23dcb245f24a92e2728b
 
   useEffect(() => {
     const getAllCategories = async () => {
@@ -43,7 +39,6 @@ function AddTaskForm({ onAddTask, isAdmin }) {
           />
         </div>
         {isAdmin && (
-<<<<<<< HEAD
           <>
             <div className="col-sm-12 col-md-4">
               <input
@@ -67,30 +62,6 @@ function AddTaskForm({ onAddTask, isAdmin }) {
                 ))}
               </select>
             </div>
-=======
-        <>
-        <div className="col-sm-12 col-md-4">
-          <input
-            className="form-control mb-3"
-            type="number"
-            placeholder="Suggested time"
-            value={suggested_time}
-            onChange={(e) => setSuggestedTime(e.target.value)}
-          />
-        </div>
-          <div className="col-sm-12 col-md-4">
-            <select
-              className="form-select"
-              value={class_id}
-              onChange={(e) => setClass_id(e.target.value)}
-            >
-
-              {categories.map(el => (
-                <option key={el.classname} value={el.classname}>{el.classname}</option>
-              ))}
-            </select>
-          </div>
->>>>>>> e4f11d641209ed7910ae23dcb245f24a92e2728b
           </>
         )}
         <div className="col-sm-12">
