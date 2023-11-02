@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 import preloader from "../../assets/img/preloader2.gif";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
 function index() {
-  const isAdmin = true;
+  // const isAdmin = true;
+  const { userRole } = useContext(AuthContext); // Destructure userRole from context
+  const isAdmin = userRole === "admin"; // Determine if the user is an admin
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
