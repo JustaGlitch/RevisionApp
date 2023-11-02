@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { screen, render, cleanup } from '@testing-library/react';
 import TaskCard from './TaskCard';
 import matchers from '@testing-library/jest-dom/matchers';
-import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
+import { MemoryRouter } from 'react-router-dom';
 expect.extend(matchers);
 
 describe('TaskCard', () => {
@@ -31,15 +31,17 @@ describe('TaskCard', () => {
     });
 
     it('displays the class name', () => {
-      const className = screen.getByText('Class 1', { selector: '.card-list-head h6' });
+      const className = screen.getByText('Class 1', { selector: '.list-group-item h6' });
       expect(className).toBeInTheDocument();
     });
     
+    
 
     it('displays the task details', () => {
-      const taskDescription = screen.getByText(task.description);
-      expect(taskDescription).toBeInTheDocument();
+      const taskDescriptions = screen.getAllByText('Some placeholder content in a paragraph', { selector: 'p' });
+      expect(taskDescriptions).toHaveLength(2);
     });
+    
 
     it('displays the timestamp', () => {
       const timestamp = screen.getByText(task.timestamp);

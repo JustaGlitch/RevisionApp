@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, cleanup, screen } from '@testing-library/react';
-import { it, expect, describe } from 'vitest';
+import { it, expect, describe, afterEach } from 'vitest';
 import matchers from '@testing-library/jest-dom/matchers';
 import TasksList from '../TasksList';
 import { MemoryRouter } from 'react-router-dom';
@@ -14,13 +14,20 @@ describe('TasksList', () => {
     { id: 4, title: 'Task 4', status: 'Completed' },
   ];
 
+  afterEach(() => {
+    cleanup(); // Clean up the DOM after each test
+  });
+
   it('renders a list of tasks with "All" filter', () => {
     render(
       <MemoryRouter>
         <TasksList tasks={tasks} filter="All" />
       </MemoryRouter>
     );
+
     const taskElements = screen.getAllByTestId('task-card');
+    console.log(taskElements); // Log the taskElements
+
     expect(taskElements).toHaveLength(tasks.length);
   });
 
@@ -30,8 +37,8 @@ describe('TasksList', () => {
         <TasksList tasks={tasks} filter="Completed" />
       </MemoryRouter>
     );
-    const taskElements = screen.getAllByTestId('task-card');
 
+    const taskElements = screen.getAllByTestId('task-card');
     console.log(taskElements); // Log the taskElements
 
     expect(taskElements).toHaveLength(2); // Two tasks are completed
