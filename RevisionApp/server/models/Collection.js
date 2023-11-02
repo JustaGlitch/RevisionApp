@@ -5,14 +5,13 @@ class Collection {
         this.collection_id = collection_id;
         this.pokemon_id = pokemon_id;
         this.user_id = user_id;
-        this.tableName = "collection";
     }
 
     // Create a new collection entry
     static async create(pokemon_id,user_id) {
         try {
             const result = await db.query(
-                `INSERT INTO ${this.tableName} (pokemon_id, user_id) VALUES ($1, $2) RETURNING collection_id`,
+                `INSERT INTO collection (pokemon_id, user_id) VALUES ($1, $2) RETURNING collection_id`,
                 [this.pokemon_id, this.user_id]
             );
             this.collection_id = result.rows[0].collection_id;
@@ -27,7 +26,7 @@ class Collection {
     static async findById(collection_id) {
         try {
             const result = await db.query(
-                `SELECT * FROM ${this.tableName} WHERE collection_id = $1`,
+                `SELECT * FROM collection WHERE collection_id = $1`,
                 [collection_id]
             );
             if (result.rows.length === 0) return null;
@@ -43,7 +42,7 @@ class Collection {
     async update() {
         try {
             await db.query(
-                `UPDATE ${this.tableName} SET pokemon_id = $1, user_id = $2 WHERE collection_id = $3`,
+                `UPDATE collection SET pokemon_id = $1, user_id = $2 WHERE collection_id = $3`,
                 [this.pokemon_id, this.user_id, this.collection_id]
             );
         } catch (error) {
@@ -56,7 +55,7 @@ class Collection {
     async destroy() {
         try {
             await db.query(
-                `DELETE FROM ${this.tableName} WHERE collection_id = $1`,
+                `DELETE FROM collection WHERE collection_id = $1`,
                 [this.collection_id]
             );
         } catch (error) {
@@ -69,7 +68,7 @@ class Collection {
     static async findByUserId(user_id) {
         try {
             const result = await db.query(
-                `SELECT * FROM ${this.tableName} WHERE user_id = $1`,
+                `SELECT * FROM collection WHERE user_id = $1`,
                 [user_id]
             );
             if (result.rows.length === 0) return new Collection(null);

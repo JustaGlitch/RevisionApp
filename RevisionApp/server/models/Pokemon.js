@@ -3,14 +3,14 @@ const db = require("../database/connect");
 // import('node-fetch').then(module => fetch = module.default);
 
 class Pokemon {
-    constructor({pokemon_id, name, evolution_stage, evolves_to, study_time, sprite_url, threeD_url}) {
+    constructor({pokemon_id, name, evolution_stage, evolves_to, study_time, sprite_url, threed_url}) {
         this.pokemon_id = pokemon_id;
         this.name = name;
         this.evolution_stage = evolution_stage;
         this.evolves_to = evolves_to;
         this.study_time = study_time;
         this.sprite_url = sprite_url;
-        this.threeD_url = threeD_url;
+        this.threeD_url = threed_url;
     }
 
     // static async fetchSpriteURL(pokemonName) {
