@@ -9,25 +9,33 @@ async function newBaby (req,res) {
         const { user_id } = student;
         console.log(user_id)
         if(student.current_poked === null){
-            // const studentCollection = await Collection.findByUserId(user_id)
-            // let newBaby
-            // if(studentCollection != null){
-            //     const babyVersion = studentCollection.map(async(item) => {
-            //         // const pokemon = await Pokemon.findById(item.pokemon_id)
-            //         item = await Pokemon.findBabyVersion(item.pokemon_id)
-            //     })
-            //     console.log(babyVersion)
-            //     let condition = true
-            //     do {
-            //         newBaby = await Pokemon.getNewBaby()
-            //         if(babyVersion.findIndex((poke) => poke.pokemon_id == newBaby.pokemon_id) == -1){
-            //             condition = false
-            //         }
-            //     } while (condition);
-            // }else{
-            //     newBaby = await Pokemon.getNewBaby()
-            // }
-            const newBaby = await Pokemon.getNewBaby()
+            const studentCollection = await Collection.findByUserId(user_id)
+            let newBaby
+            if(studentCollection != null){
+                // const babyVersion = studentCollection.map(async(item) => {
+                //     // const pokemon = await Pokemon.findById(item.pokemon_id)
+                //     item = await Pokemon.findBabyVersion(item.pokemon_id)
+                // })
+                // console.log(babyVersion)
+                let condition = true
+                do {
+                    newBaby = await Pokemon.getNewBaby()
+                    let temp = newBaby
+                    do {
+                        temp = await temp.checkForEvolution(temp.study_time)
+                    } while (temp.evolves_to != null);
+                    console.log("temp:")
+                    console.log(temp)
+                    console.log("collection:")
+                    console.log(studentCollection)
+                    if(studentCollection.findIndex((poke) => poke.pokemon_id == temp.pokemon_id) == -1){
+                        condition = false
+                    }
+                } while (condition);
+            }else{
+                newBaby = await Pokemon.getNewBaby()
+            }
+            // const newBaby = await Pokemon.getNewBaby()
             await Student.updatePoke(user_id, newBaby.pokemon_id)
             console.log(newBaby)
             res.status(201).json(newBaby)
@@ -71,11 +79,12 @@ async function evolution (req,res) {
             }
             await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
             const finalCheck = await evolvedPokemon.checkForEvolution(studyTime)
+            let message = "current pokemon:"
             if(finalCheck == "add to collection"){
                 await addToCollection(req,res)
-            }else{
-                res.status(200).send(evolvedPokemon)
+                message = "added to collection:"
             }
+            res.status(200).send({message: message, pokemon: evolvedPokemon})
         }else{
             res.status(200).send({message: "no pokemon to evolve"})
         }
@@ -91,9 +100,14 @@ async function addToCollection (req,res) {
         const student = await Student.getOneByToken(token);
         const { user_id, current_poked } = student;
         const pokemon = await Pokemon.findById(current_poked)
-        await Collection.create(pokemon, user_id)
+        try {
+            await Collection.create(pokemon, user_id)
+        } catch (error) {
+            res.status(200).json({message: "already in collection :<"})
+        }
         await Student.updatePoke(user_id, null)
-        res.status(201).json({message: "added to collection"})
+        // res.status(201).json({message: "added to collection"})
+        return
     } catch (error) {
         console.log(error)
         res.status(404).send(error)
