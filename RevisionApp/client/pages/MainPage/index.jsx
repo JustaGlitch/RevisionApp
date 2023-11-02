@@ -29,6 +29,7 @@ function index() {
     // },
   ]);
   const [userName, setUserName] = useState("");
+  const [userClassName, setUserClassName] = useState(""); // Declare userClassName state
 
   const [loading, setLoading] = useState(false);
   // State to track the currently selected tab.
@@ -77,6 +78,7 @@ function index() {
         }
         const profileData = await response.json();
         setUserName(profileData.username);
+        setUserClassName(profileData.classname);
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -144,63 +146,33 @@ function index() {
 
       {/* Tabs UI. */}
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
+
+      {/* Tab Content */}
       <div className="tab-content" id="myTabContent">
-        <div
-          className="tab-pane fade show active"
-          id="home"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-        >
-          {selectedTab === "All" &&
-            (loading ? (
-              <TasksList key={selectedTab} tasks={tasks} filter="All" />
-            ) : (
-              <div className="card-list mt-4 p-5 text-center">
-                <img src={preloader} className="img-fluid" />
-                <p>Loading...</p>
-              </div>
-            ))}
-        </div>
-        <div
-          className="tab-pane fade show active"
-          id="home"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-        >
-          {selectedTab === "In Progress" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
-          )}
-        </div>
-        <div
-          className="tab-pane fade show active"
-          id="home"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-        >
-          {selectedTab === "Completed" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
-          )}
-        </div>
-        {/* <div
-          className="tab-pane fade"
-          id="profile"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          {selectedTab === "In Progress" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
-          )}
-        </div>
-        <div
-          className="tab-pane fade"
-          id="contact"
-          role="tabpanel"
-          aria-labelledby="contact-tab"
-        >
-          {selectedTab === "Completed" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
-          )}
-        </div> */}
+        {selectedTab === "All" && (
+          <TasksList
+            key={selectedTab}
+            tasks={tasks}
+            filter="All"
+            userClassName={userClassName}
+          />
+        )}
+        {selectedTab === "In Progress" && (
+          <TasksList
+            key={selectedTab}
+            tasks={tasks}
+            filter="In Progress"
+            userClassName={userClassName}
+          />
+        )}
+        {selectedTab === "Completed" && (
+          <TasksList
+            key={selectedTab}
+            tasks={tasks}
+            filter="Completed"
+            userClassName={userClassName}
+          />
+        )}
       </div>
     </div>
   );
