@@ -45,7 +45,41 @@
 | `/students/:student_id` | `DELETE` | id in params | returns deleted message |
 
 
-'student/1' returns user_id, username, password, pokemon
-'students/1' (with an S at the end) returns student_id, user_id, class_id (based on student_id, user_id does not always equal student_id)
+`student/1` returns user_id, username, password, pokemon
+`students/1` (with an S at the end) returns student_id, user_id, class_id (based on student_id, user_id does not always equal student_id)
 
 returned students from /student paths return classname
+
+`/pokemon/new/:id` is for the starter pokemon
+`/pokemon/new` returns a random new baby pokemon that is not in the collection
+`/pokemon/evolve` returns a message followed by a pokemon
+this is returned when evolving to a middle stage
+{
+  "message": "current pokemon:",
+  "pokemon": {
+    "pokemon_id": 157,
+    "name": "dragonair",
+    "evolution_stage": "middle",
+    "evolves_to": 156,
+    "study_time": 60,
+    "sprite_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png",
+    "threeD_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/148.png"
+  }
+}
+this is returned when evolving to a final stage
+{
+  "message": "added to collection:",
+  "pokemon": {
+    "pokemon_id": 156,
+    "name": "dragonite",
+    "evolution_stage": "final",
+    "evolves_to": null,
+    "study_time": null,
+    "sprite_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png",
+    "threeD_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/149.png"
+  }
+}
+the pokemon is added to the collection when fully evolved and doesn't need to be worried about
+`/pokemon/current` returns the current pokemon
+
+`/pokemon/new` needs to called when current pokemon is null
