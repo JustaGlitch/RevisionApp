@@ -39,6 +39,7 @@ function TaskCard({ id, task }) {
       <ModalAcceptTask
         id={id}
         title={title}
+        description={description}
         suggested_time={suggested_time}
         class_id={class_id}
       />
