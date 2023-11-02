@@ -5,10 +5,7 @@ function TaskCard({ id, task }) {
   const { title, description, timestamp, suggested_time, class_id } = task;
 
   return (
-    <div className="card-list mt-4" data-testid="task-card">
-      <div className="card-list-head">
-        <h6>{title}</h6>
-      </div>
+
 
       <div className="list-group">
         <a
@@ -37,7 +34,7 @@ function TaskCard({ id, task }) {
             </button>
           </div>
         </a>
-      </div>
+      
 
       <ModalAcceptTask
         id={id}
