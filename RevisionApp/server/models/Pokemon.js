@@ -104,6 +104,7 @@ class Pokemon {
         if(this.evolves_to == null){
             return "add to collection"
         }
+        return "can not evolve"
     }
 
     async evolve() {
