@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
-
+import preloader from '../../assets/img/preloader.png';
 function index() {
   const isAdmin = true;
 
@@ -12,7 +12,7 @@ function index() {
     //   description: "This is a dummy task description.",
     //   status: "Completed",
     //   timestamp: new Date().toLocaleString(),
-    //   responsible: "Class 1",
+    //   class_id: "Class 1",
     // },
     // {
     //   id: 2,
@@ -20,10 +20,10 @@ function index() {
     //   description: "Another dummy task description.",
     //   status: "In Progress",
     //   timestamp: new Date().toLocaleString(),
-    //   responsible: "Tom Byrne",
+    //   class_id: "Tom Byrne",
     // },
   ]);
-
+const [loading, setLoading] = useState(false)
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
 
@@ -41,17 +41,26 @@ function index() {
           id: task.task_id,
           title: task.title,
           description: task.description,
+          class_id: task.class_id,
+          // suggested_time: Number(task.suggested_time.split(":")[1]),
           status: task.completed ? "Completed" : "In Progress",
         }));
 
         setTasks(transformedTasks);
+        setLoading(true);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
     };
-
     fetchTasks();
+
+
   }, []);
+  const fetchCategoriesByName = async (name) => {
+      const response = await fetch(`https://studydex.onrender.com/class/classname/${name}`);
+      const data = await response.json();
+      return data.class_id
+  }
 
   //Date Object to capture the current date and time
   const currentDateTime = new Date();
@@ -61,19 +70,20 @@ function index() {
   const handleAddTask = async (
     title,
     description,
-    responsible,
+    class_id,
     suggested_time
   ) => {
+    const cat = await fetchCategoriesByName(class_id);
     const newTask = {
       id: tasks.length + 1,
       title,
       description,
-      responsible,
+      class_id: cat,
       status: "In Progress",
-      suggested_time,
+      suggested_time: "00:30:00",
       timestamp: formattedDateTime,
     };
-
+    console.log(newTask);
     try {
       const response = await fetch("https://studydex.onrender.com/tasks", {
         method: "POST",
@@ -113,7 +123,11 @@ function index() {
           aria-labelledby="home-tab"
         >
           {selectedTab === "All" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="All" />
+            loading ?
+        
+              <TasksList key={selectedTab} tasks={tasks} filter="All" />
+              :
+              <div className="card-list mt-4 p-5 text-center"><img src={preloader} className="img-fluid"/></div>
           )}
         </div>
         <div

@@ -26,12 +26,12 @@
 }
 
 .main-page {
-  background-image: url('../img/bg-main.png'), linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-image: url('../img/bg-main.png'), linear-gradient(-90deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: auto;
 }
 
 .animate {
-  animation: gradientAnimation 30s linear infinite;
+  animation: gradientAnimation 120s linear infinite;
 }
 
 #account-page {

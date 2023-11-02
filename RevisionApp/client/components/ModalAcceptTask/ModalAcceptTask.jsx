@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { ModalAcceptedTask } from "../../components";
 
-function ModalAcceptTask({ id, suggested_time }) {
+
+function ModalAcceptTask({ id, title, suggested_time, class_id }) {
   const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
   const handleSetSuggestedTime = (e) => {
-      setSuggestedTime(e.target.value);
+    setSuggestedTime(e.target.value);
   };
   return (
     <>
@@ -19,7 +20,7 @@ function ModalAcceptTask({ id, suggested_time }) {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id={`task-${id}`}>
-                Task 1
+                {title}
               </h1>
               <button
                 type="button"
@@ -31,7 +32,7 @@ function ModalAcceptTask({ id, suggested_time }) {
             <div className="modal-body">
               <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
               <p className="lead">
-                Who is Responsible: <span className="small">Class 1</span>
+                Who is Responsible: <span className="small">{`Class ${class_id}`}</span>
               </p>
               <div className="mb-3">
                 <form>
@@ -72,7 +73,7 @@ function ModalAcceptTask({ id, suggested_time }) {
           </div>
         </div>
       </div>
-      <ModalAcceptedTask id={id} time={suggestedTime} />
+      <ModalAcceptedTask id={id} time={suggestedTime} class_id={class_id} />
     </>
   );
 }

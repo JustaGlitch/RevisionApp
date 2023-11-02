@@ -8,11 +8,30 @@ function TasksList({ tasks, filter }) {
     filteredTasks = tasks.filter((task) => task.status === filter);
   }
 
-  // Maps over the filtered tasks and renders TaskCard for each.
+
+  const groupedTasks = [];
+  filteredTasks.forEach(async (task) => {
+    const classIdGroup = groupedTasks.find((group) => group.class_id === task.class_id);
+    if (classIdGroup) {
+      classIdGroup.tasks.push(task);
+    } else {
+      groupedTasks.push({ class_id: task.class_id, tasks: [task]});
+    }
+  });
+
   return (
     <div>
-      {filteredTasks.map((task) => (
-        <TaskCard key={task.id} id={task.id} task={task} />
+      {groupedTasks.map((group) => (
+        <div key={group.class_id}>
+          <div className="card-list mt-4" data-testid="task-card">
+            <div className="card-list-head">
+              <h6>{`Class ${group.class_id}`}</h6>
+            </div>
+            {group.tasks.map((task) => (
+              <TaskCard key={task.id} id={task.id} task={task} />
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );

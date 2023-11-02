@@ -1,6 +1,6 @@
-const { Router } = require('express');
+const { Router } = require("express");
 
-const studentController = require('../controllers/studentController');
+const studentController = require("../controllers/studentController");
 
 const pokemonRouter = require('./pokemonRoutes')
 const studentRouter = Router();
@@ -10,7 +10,6 @@ studentRouter.use('/pokemon', pokemonRouter)
 studentRouter.post('/register', studentController.register);
 studentRouter.post('/login', studentController.login);
 studentRouter.get('/profile', studentController.profile);
-// studentRouter.post('/poke', studentController.poke);
 studentRouter.get('/', studentController.index);
 studentRouter.get('/:user_id', studentController.show);
 studentRouter.post('/', studentController.create);

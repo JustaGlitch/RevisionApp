@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 function AddTaskForm({ onAddTask, isAdmin }) {
   // Local state for form fields.
   const [title, setTitle] = useState("");
-  const [suggested_time, setSuggestedTime] = useState('');
+  const [suggested_time, setSuggestedTime] = useState("");
   const [description, setDescription] = useState("");
-  const [responsible, setResponsible] = useState("");
+  const [class_id, setClass_id] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getAllCategories = async () => {
+      const resp = await fetch("https://studydex.onrender.com/class");
+      const result = await resp.json();
+      setCategories(result);
+    };
+    getAllCategories();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddTask(title, description, responsible, suggested_time);
+    onAddTask(title, description, class_id, suggested_time);
     setTitle("");
     setSuggestedTime(0);
     setDescription("");
-    setResponsible("");
+    setClass_id("");
   };
   // Renders a form to input task title and description.
   return (
@@ -28,28 +39,29 @@ function AddTaskForm({ onAddTask, isAdmin }) {
           />
         </div>
         {isAdmin && (
-        <>
-        <div className="col-sm-12 col-md-4">
-          <input
-            className="form-control mb-3"
-            type="number"
-            placeholder="Suggested time"
-            value={suggested_time}
-            onChange={(e) => setSuggestedTime(e.target.value)}
-          />
-        </div>
-          <div className="col-sm-12 col-md-4">
-            <select
-              className="form-select"
-              value={responsible}
-              onChange={(e) => setResponsible(e.target.value)}
-            >
-              <option value="">Select Responsible</option>
-              <option value="Class 1">Class 1</option>
-              <option value="Class 2">Class 2</option>
-              <option value="Tom Byrne">Tom Byrne</option>
-            </select>
-          </div>
+          <>
+            <div className="col-sm-12 col-md-4">
+              <input
+                className="form-control mb-3"
+                type="number"
+                placeholder="Suggested time"
+                value={suggested_time}
+                onChange={(e) => setSuggestedTime(e.target.value)}
+              />
+            </div>
+            <div className="col-sm-12 col-md-4">
+              <select
+                className="form-select"
+                value={class_id}
+                onChange={(e) => setClass_id(e.target.value)}
+              >
+                {categories.map((el) => (
+                  <option key={el.classname} value={el.classname}>
+                    {el.classname}
+                  </option>
+                ))}
+              </select>
+            </div>
           </>
         )}
         <div className="col-sm-12">

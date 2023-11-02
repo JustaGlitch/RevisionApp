@@ -1,12 +1,17 @@
 {
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
     "setup-db": "node ./database/setup-db.js",
-    "both": "node ./database/setup-db.js && nodemon index.js"
+    "both": "node ./database/setup-db.js && nodemon index.js",
+    "test": "jest",
+    "coverage": "jest --colors --coverage"
+
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
