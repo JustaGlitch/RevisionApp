@@ -47,20 +47,21 @@ export default function Header() {
             </button>
             <div className="collapse navbar-collapse" id="mainNav">
               <div className="navbar-nav ms-auto">
+                {authToken ? (
+                  <>
                 <NavLink className="ms-5 nav-link" to="/">
                   All Tasks
                 </NavLink>
                 <NavLink className="ms-5 nav-link" to="/account">
                   Account
                 </NavLink>
-                {authToken ? (
-                  // Show logout if user is authenticated
                   <button
                     className="ms-5 nav-link btn btn-link"
                     onClick={handleLogout}
                   >
                     Logout
                   </button>
+                  </>
                 ) : (
                   // Show login and register if user is not authenticated
                   <>

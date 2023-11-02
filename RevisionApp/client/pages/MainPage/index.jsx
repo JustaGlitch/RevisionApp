@@ -4,6 +4,8 @@ import preloader from "../../assets/img/preloader2.gif";
 function index() {
   const isAdmin = true;
 
+    const [isLoading, setIsLoading] = useState(false)
+
   // State to store all tasks.
   const [tasks, setTasks] = useState([
     // {
@@ -71,6 +73,7 @@ function index() {
           throw new Error("Network response was not ok");
         }
         const profileData = await response.json();
+        setIsLoading(true)
         setUserName(profileData.username);
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -133,7 +136,7 @@ function index() {
 
   return (
     <div className="col-sm-12 offset-md-1 col-md-7 bg-white p-4 rounded-4">
-      <h1>Welcome {userName}</h1>
+      <h1>Welcome {isLoading ? `${userName.charAt(0).toUpperCase()+userName.slice(1)}`: '... '}!</h1>
       {/* Form to add a new task. */}
       <AddTaskForm isAdmin={isAdmin} onAddTask={handleAddTask} />
 

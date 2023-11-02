@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-
+import Preloader from '../../assets/img/preloader3.gif'
 function index() {
   const [pokemonData, setPokemonData] = useState({});
   const [collection, setCollection] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     const fetchCollection = async () => {
       try {
@@ -20,6 +20,7 @@ function index() {
           throw new Error("Network response was not ok");
         }
         const collectionData = await response.json();
+        setIsLoading(true)
         setCollection(collectionData);
         console.log(collectionData);
       } catch (error) {
@@ -50,18 +51,25 @@ function index() {
     <div>
       <h1>
         My Collection (<span id="pokemonQuantity">{collection.length}</span>
-        /510)
+        /151)
       </h1>
       <div className="d-flex flex-wrap">
-        {collection.map((pokemon) => (
-          <div
-            className="px-4 mb-4 d-flex flex-column align-items-center"
-            key={pokemon.collection_id}
-          >
-            <img src={pokemon.sprite_url} alt={pokemon.name} />
-            <span>{pokemon.name}</span>
-          </div>
-        ))}
+        {isLoading ?
+        collection.map((pokemon) => (
+            <div
+              className="px-4 mb-4 d-flex flex-column align-items-center"
+              key={pokemon.collection_id}
+            >
+              <img src={pokemon.sprite_url} alt={pokemon.name} />
+              <span>{pokemon.name}</span>
+            </div>
+             
+             
+             ))
+             :
+             <img src={Preloader}/>
+      
+      }
       </div>
     </div>
   );
