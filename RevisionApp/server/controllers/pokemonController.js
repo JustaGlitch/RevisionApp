@@ -38,6 +38,21 @@ async function newBaby (req,res) {
     }
 }
 
+async function starter (req,res) {
+    const token = req.headers["authorization"];
+    try {
+        const student = await Student.getOneByToken(token);
+        const { user_id } = student;
+        const poke_id = req.params.id
+        const starter = await Pokemon.findById(poke_id)
+        await Student.updatePoke(user_id, starter.pokemon_id)
+        res.status(201).json(starter)
+    } catch (error) {
+        console.log(error)
+        res.status(404).send({message: error})
+    }
+}
+
 async function evolution (req,res) {
     const token = req.headers["authorization"];
     const studyTime = req.body["studyTime"]
@@ -121,4 +136,4 @@ async function getById (req,res) {
     res.status(200).send(pokemon)
 }
 
-module.exports = {newBaby, evolution, currentPokemon, currentCollection, getAll, getAllBaby, getById}
+module.exports = {newBaby, evolution, currentPokemon, currentCollection, getAll, getAllBaby, getById, starter}

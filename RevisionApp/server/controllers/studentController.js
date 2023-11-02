@@ -46,7 +46,7 @@ async function profile(req, res){
     const token = req.headers["authorization"];
     try{
         const student = await StudentUser.getOneByToken(token);
-        res.status(200).json({username: student.username, classname: student.classname});
+        res.status(200).json({username: student.username, current_pokemon: student.current_poked, classname: student.classname});
     }catch(error){
         console.log(error);
         res.status(403).json({error: error.message});
