@@ -15,6 +15,14 @@ class Class {
         return new Class(response.rows[0]);
     }
 
+    static async getByName(classname) {
+        const response = await db.query(`SELECT class_id FROM class WHERE classname = $1`, [classname]);
+        if (response.rows.length != 1) {
+            throw new Error("Class not found");
+        }
+        return new Class(response.rows[0]);
+    }
+
     static async getAll() {
         const response = await db.query(`SELECT * FROM class`);
         return response.rows.map(row => new Class(row));

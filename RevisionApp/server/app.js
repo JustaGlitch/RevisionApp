@@ -21,8 +21,8 @@ app.use(logRoutes);
 //Routes
 
 app.get("/", (req, res) => {
-    res.send("this is the StudyDex API");
-  });
+	res.send("this is the StudyDex API");
+});
 
 app.use("/student", studentRouter);
 app.use("/admin", adminRouter);

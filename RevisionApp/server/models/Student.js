@@ -27,12 +27,20 @@ class StudentUser {
 
     // You might need to join with the token table or modify your schema for this method to work
     static async getOneByToken(token) {
-        const response = await db.query("SELECT * FROM student_user WHERE token = $1", [token]);
+        const response = await db.query("SELECT * FROM student_user as s JOIN token as t on t.user_id = s.user_id WHERE token LIKE $1", [token]);
         if (response.rows.length != 1) {
             throw new Error("Student not found");
         }
         return new StudentUser(response.rows[0]);
     }
+    // static async getOneByToken(token) {
+    //     const response = await db.query("SELECT * FROM student_user as s JOIN token as t on t.user_id = s.user_id WHERE token LIKE token = $1", [token]);
+    //     if (response.rows.length != 1) {
+    //         throw new Error("Student not found");
+    //     }
+    //     const student = await StudentUser.getStudentId(response.rows[0].user_id);
+    //     return student;
+    // }
 
     static async getAll() {
         const response = await db.query("SELECT * FROM student_user");
@@ -45,8 +53,8 @@ class StudentUser {
         return new StudentUser(response.rows[0]);
     }
 
-    static async updatePoke(user_id) {
-        const response = await db.query("UPDATE student_user SET current_poked = true WHERE user_id = $1 RETURNING *", [user_id]);
+    static async updatePoke(user_id, pokemon_id) {
+        const response = await db.query("UPDATE student_user SET current_poked = $1 WHERE user_id = $2 RETURNING *", [pokemon_id, user_id]);
         return new StudentUser(response.rows[0]);
     }
 
