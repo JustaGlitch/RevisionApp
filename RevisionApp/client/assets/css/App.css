@@ -5,6 +5,9 @@
 }
 
 
+.selected {
+  opacity: .5;
+}
 
 
 #main-containter {
