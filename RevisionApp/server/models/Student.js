@@ -60,7 +60,7 @@ class StudentUser {
     }
 
     async update() {
-        const response = await db.query("UPDATE student_user SET username = $1, password = $2, classname = $3 WHERE user_id = $3 RETURNING *", 
+        const response = await db.query("UPDATE student_user SET username = $1, password = $2, classname = $3 WHERE user_id = $4 RETURNING *", 
         [this.username, this.password, this.classname, this.user_id]
         );
         return new StudentUser(response.rows[0]);

@@ -139,16 +139,11 @@ VALUES ('adminUser', 'password123'),
 
 
 INSERT INTO class (admin_id, classname) 
-VALUES (1, 'class1'),
-         (2, 'class2'),
-         (5, 'class3'),
-         (5, 'class4'),
-         (6, 'class5'),
-         (7, 'class6'),
-         (9, 'class7'),
-         (10, 'class8'),
-         (2, 'class9'),
-         (3, 'class10');
+VALUES (1, 'Class 1'),
+         (2, 'Class 2'),
+         (5, 'Class 3'),
+         (5, 'Class 4'),
+         (6, 'Class 5');
 
 
 
@@ -163,23 +158,7 @@ VALUES
 ('student6', 'password6', 9, 'class3'),
 ('student7', 'password7', 4, 'class4'),
 ('student8', 'password8', 9, 'class4'),
-('student9', 'password9', 9, 'class5'),
-('student10', 'password10', 9, 'class5'),
-('student11', 'password11', 9, 'class6'),
-('student12', 'password12', 9, 'class6'),
-('student13', 'password13', 9, 'class7'),
-('student14', 'password14', 2, 'class7'),
-('student15', 'password15', 4, 'class8'),
-('student16', 'password16', 9, 'class8'),
-('student17', 'password17', 9, 'class9'),
-('student18', 'password18', 9, 'class9'),
-('student19', 'password19', 9, 'class10'),
-('student20', 'password20', 2, 'class10'),
-('student21', 'password21', 9, 'class1'),
-('student22', 'password22', 9, 'class1'),
-('student23', 'password23', 9, 'class2'),
-('student24', 'password24', 9, 'class2'),
-('student25', 'password25', 2, 'class3');
+('student9', 'password9', 9, 'class5');
 
 INSERT INTO students (user_id, class_id) 
 VALUES (1, 1),
@@ -187,78 +166,22 @@ VALUES (1, 1),
             (3, 1),
             (4, 1),
             (5, 1),
-            (6, 2),
-            (7, 2),
-            (8, 2),
-            (9, 2),
-            (10, 2),
-            (11, 3),
-            (12, 3),
-            (13, 3),
-            (14, 3),
-            (15, 3),
-            (16, 4),
-            (17, 4),
-            (18, 4),
-            (19, 4),
-            (20, 4),
-            (21, 5),
-            (22, 5),
-            (23, 5),
-            (24, 5),
-            (25, 5);
-
--- Insert the baby Pokemon
--- INSERT INTO pokemon (name, evolution_stage) VALUES (9, 'baby');
-
--- -- Insert final evolutions first (evolves_to is NULL and study_time can be NULL or 0)
--- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
--- VALUES ('Charizard', 'final', NULL, NULL),
---        ('Blastoise', 'final', NULL, NULL);
-
--- -- Insert middle evolutions next
--- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
--- VALUES ('Charmeleon', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Charizard'), 60),
---        ('Wartortle', 'middle', (SELECT pokemon_id FROM pokemon WHERE name = 'Blastoise'), 60);
-
--- -- Insert baby evolutions last
--- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
--- VALUES ('Charmander', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Charmeleon'), 30),
---        ('Squirtle', 'baby', (SELECT pokemon_id FROM pokemon WHERE name = 'Wartortle'), 30);
-
--- -- Inserting dummy data into the pokemon table
--- INSERT INTO pokemon (name, evolution_stage, evolves_to, study_time)
--- VALUES 
--- ('Bulbasaur', 'baby', NULL, 15),
--- ('Ivysaur', 'middle', NULL, 30),
--- ('Venusaur', 'final', NULL, 45),
--- ('Charmander', 'baby', NULL, 15),
--- ('Charmeleon', 'middle', NULL, 30),
--- ('Charizard', 'final', NULL, 45);
-
--- Inserting dummy data into the collection table
--- THIS HAD TO BE MOVED TO SETUP
--- INSERT INTO collection (pokemon_id, user_id)
--- VALUES 
--- (1, 1), -- User 1 has Bulbasaur
--- (4, 1), -- User 1 also has Charmander
--- (2, 2), -- User 2 has Ivysaur
--- (3, 3); -- User 3 has Venusaur
+            (6, 2);
 
 -- Inserting dummy data into the tasks table
 INSERT INTO tasks (title, description, admin_id, user_id, class_id, completed, suggested_time, taskCreated_at)
 VALUES
-('Task 1', 'Description 1', 1, 1, 1, FALSE, 30, CURRENT_TIMESTAMP),
-('Task 2', 'Description 2', 1, 2, 1, TRUE, 30, CURRENT_TIMESTAMP),
-('Task 3', 'Description 3', 1, 3, 1, FALSE, 30, CURRENT_TIMESTAMP),
-('Task 4', 'Description 4', 1, 4, 1, FALSE, 30, CURRENT_TIMESTAMP),
-('Task 5', 'Description 5', 1, 5, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 1', 'A set of exercises on Mathematics to enhance problem-solving and numerical skills.', 1, 1, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 2', 'A series of Science tasks aimed at understanding natural phenomena through experiments and observations.', 1, 2, 1, TRUE, 30, CURRENT_TIMESTAMP),
+('Task 3', 'English assignments focused on improving grammar, writing skills, and literary analysis.', 1, 3, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 4', 'History tasks to study significant events, figures, and timelines from the past.', 1, 4, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 5', 'Geographical studies covering physical landscapes, human-environment interactions, and map skills.', 1, 5, 1, FALSE, 30, CURRENT_TIMESTAMP),
 
-('Task 6', 'Description 6', 1, 6, 2, TRUE, 30, CURRENT_TIMESTAMP),
-('Task 7', 'Description 7', 1, 7, 2, FALSE, 30, CURRENT_TIMESTAMP),
-('Task 8', 'Description 8', 1, 8, 2, TRUE, 30, CURRENT_TIMESTAMP),
-('Task 9', 'Description 9', 1, 9, 2, FALSE, 30, CURRENT_TIMESTAMP),
-('Task 10', 'Description 10', 1, 10, 2, TRUE, 30, CURRENT_TIMESTAMP);
+('Task 6', 'ICT coursework to develop computer literacy and understanding the role of technology in society.', 1, 6, 2, TRUE, 30, CURRENT_TIMESTAMP),
+('Task 7', 'Computer Science projects that cover programming, algorithms, and computational theory.', 1, 7, 2, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 8', 'Technology-based tasks that involve the application of engineering principles and design.', 1, 8, 2, TRUE, 30, CURRENT_TIMESTAMP),
+('Task 9', 'Artistic tasks that involve creative expression through various mediums and art studies.', 1, 9, 2, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 10', 'Drama and theatre activities including script analysis, acting, and studying stagecraft.', 1, 1, 2, TRUE, 30, CURRENT_TIMESTAMP);
 
 
 
