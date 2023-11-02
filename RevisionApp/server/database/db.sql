@@ -98,7 +98,8 @@ CREATE TABLE collection (
     name VARCHAR(500),
     sprite_url VARCHAR(500),
     FOREIGN KEY (pokemon_id) REFERENCES pokemon(pokemon_id),
-    FOREIGN KEY (user_id) REFERENCES student_user(user_id)
+    FOREIGN KEY (user_id) REFERENCES student_user(user_id),
+    CONSTRAINT combo UNIQUE (pokemon_id, user_id)
 );
 
 ALTER TABLE students
