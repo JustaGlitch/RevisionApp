@@ -7,7 +7,7 @@ function RegisterForm() {
             <div className="form-group">
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-              <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
               placeholder='Your Name'/>
             </div>
             <div className="mb-3">

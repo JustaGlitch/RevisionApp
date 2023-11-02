@@ -23,6 +23,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
     setSuggestedTime(0);
     setDescription("");
     setClass_id("");
+    window.location.reload();
   };
   // Renders a form to input task title and description.
   return (
@@ -73,7 +74,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
           ></textarea>
         </div>
         <div className="col-sm-12 offset-md-4 col-md-4">
-          <button className="btn btn-info text-white w-100" type="submit">
+          <button className="btn bg-info text-white w-100" type="submit">
             Add Task
           </button>
         </div>

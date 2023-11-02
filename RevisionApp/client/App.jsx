@@ -39,9 +39,9 @@ function App() {
           <Route path="users" element={<Pages.AllUsersPage/>} />
          <Route path="settings" element={<Pages.AccountSettingsPage/>}/>
         </Route>
-         
-        <Route path="*" element={<Pages.PageNotFound />} />
-      
+        <Route path="/" element={<Layouts.notfound />}>
+          <Route path="*" element={<Pages.PageNotFound />} />
+        </Route>
     </Routes>
       )
   );
