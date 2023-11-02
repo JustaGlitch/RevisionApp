@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-const StopWatch = ({onStartStop, isStopped, setIsStopped, stopPokeChange}) => {
+const StopWatch = ({
+  onStartStop,
+  isStopped,
+  setIsStopped,
+  stopPokeChange,
+}) => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-
 
   useEffect(() => {
     let intervalId;
@@ -18,41 +22,46 @@ const StopWatch = ({onStartStop, isStopped, setIsStopped, stopPokeChange}) => {
   const startAndStop = () => {
     onStartStop();
     setIsRunning(!isRunning);
-
   };
-  
+
   const finish = () => {
     setTime(0);
     setIsRunning(false);
-    stopPokeChange()
+    stopPokeChange();
     if (!isStopped) {
       setIsStopped(true);
-  }
+    }
+    props.handleFinish();
   };
   return (
     <div className="stopwatch-container text-center mt-5">
-      {isStopped ? 
-        <p className="stopwatch-stopped">
-        
-        </p>
-      : 
-      <>
-        <p className="stopwatch-time">
-          {minutes.toString().padStart(2, "0")}:
-          {seconds.toString().padStart(2, "0")}
-        </p>
-              <div className="btn-group  btn-group-lg stopwatch-buttons" role="group">
-        <button className="stopwatch-button btn bg-success-subtle" onClick={startAndStop}>
-          {isRunning ? "Pause" : "Start"}
-        </button>
-        <button className="stopwatch-button btn bg-info-subtle" onClick={finish}>
-          Finish
-        </button>
-      </div>
-      </>
-      }
-
-
+      {isStopped ? (
+        <p className="stopwatch-stopped"></p>
+      ) : (
+        <>
+          <p className="stopwatch-time">
+            {minutes.toString().padStart(2, "0")}:
+            {seconds.toString().padStart(2, "0")}
+          </p>
+          <div
+            className="btn-group  btn-group-lg stopwatch-buttons"
+            role="group"
+          >
+            <button
+              className="stopwatch-button btn bg-success-subtle"
+              onClick={startAndStop}
+            >
+              {isRunning ? "Pause" : "Start"}
+            </button>
+            <button
+              className="stopwatch-button btn bg-info-subtle"
+              onClick={finish}
+            >
+              Finish
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

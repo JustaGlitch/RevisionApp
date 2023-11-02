@@ -5,7 +5,7 @@ import Logo from "../../assets/img/pokeball.png";
 import StudyDex from "../../assets/img/logo.png";
 
 export default function Header() {
-  const { authToken, logout } = useContext(AuthContext);
+  const { authToken, logout } = useContext(AuthContext) || {};
   const navigate = useNavigate();
 
   const handleLogout = () => {

@@ -1,16 +1,20 @@
 const request = require("supertest");
-const app = require("../app"); // Assuming your Express app is in 'app.js'
+const app = require("../app");
 const StudentUser = require("../models/Student");
 const db = require("../database/connect");
 
 describe("Student Routes", () => {
+	afterEach(async () => {
+		// Manually delete data after each test
+		await db.query("DELETE FROM student_user WHERE username IN ($1, $2, $3)", ["gg123", "testuser", "test99"]);
+	});
 	it("should register a new student user", async () => {
 		const userData = await StudentUser.create({
-			username: "ggg",
-			password: "ggg",
+			username: "gg123",
+			password: "gg123",
 		});
 
-		const response = await request(app).post("/student/register").send(userData);
+		const response = await request(app).post("/student/register/").send(userData);
 
 		expect(response.status).toBe(201);
 		expect(typeof response.body === "object").toBe(true);
@@ -32,7 +36,7 @@ describe("Student Routes", () => {
 		// Assuming you have a valid user ID from a previously registered user
 		const userId = 1; // Replace with a valid user ID
 
-		const response = await request(app).get(`/student/profile?user_id=${userId}`);
+		const response = await request(app).get(`/student/profile/${userId}`);
 
 		expect(response.status).toBe(200);
 		expect(typeof response.body === "object").toBe(true);
@@ -58,7 +62,7 @@ describe("Student Routes", () => {
 	it("should get a single student user by ID", async () => {
 		const userId = 2;
 
-		const response = await request(app).get(`/student/${userId}`);
+		const response = await request(app).get(`/student/?userid=${userId}`);
 
 		expect(response.status).toBe(200);
 		expect(typeof response.body === "object").toBe(true);
@@ -84,7 +88,7 @@ describe("Student Routes", () => {
 
 	it("should delete a student user by ID", async () => {
 		// Assuming you have a valid user ID from a previously registered user
-		const userId = 1; // Replace with a valid user ID
+		const userId = 25; // Replace with a valid user ID
 
 		const response = await request(app).delete(`/student/${userId}`);
 
