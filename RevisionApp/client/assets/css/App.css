@@ -31,7 +31,7 @@
 }
 
 .animate {
-  animation: gradientAnimation 120s linear infinite;
+  animation: gradientAnimation 240s linear infinite;
 }
 
 #account-page {
@@ -155,7 +155,7 @@ h1, h2 {
   margin-left: .5rem;
   margin-top: .5rem;
   transition: .25s ease;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .loader {
