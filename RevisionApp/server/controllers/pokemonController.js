@@ -7,10 +7,11 @@ async function newBaby (req,res) {
     try {
         const student = await Student.getOneByToken(token);
         const { user_id } = student;
-        if(student.current_poked == null){
+        console.log(user_id)
+        if(student.current_poked === null){
             const studentCollection = await Collection.findByUserId(user_id)
             let newBaby
-            if(studentCollection.collection_id != null){
+            if(studentCollection != null){
                 const babyVersion = studentCollection.map(async(item) => {
                     const pokemon = await Pokemon.findById(item.pokemon_id)
                     return await pokemon.findBabyVersion()
@@ -28,11 +29,12 @@ async function newBaby (req,res) {
             await Student.updatePoke(user_id, newBaby.pokemon_id)
             console.log(newBaby)
             res.status(201).json(newBaby)
+        }else{
+            res.status(200).send({message: "still have a pokemon to evolve"})
         }
-        res.status(200).send({message: "still have a pokemon to evolve"})
     } catch (error) {
         console.log(error)
-        res.status(404).send(error)
+        res.status(404).send({message: error})
     }
 }
 
@@ -44,14 +46,19 @@ async function evolution (req,res) {
         //if add to collection call addToCollection
         const student = await Student.getOneByToken(token);
         const {user_id, current_poked} = student
-        const pokemon = await Pokemon.findById(current_poked)
-        const evolvedPokemon = await pokemon.checkForEvolution(studyTime)
-        console.log(evolvedPokemon)
-        if(evolvedPokemon == "add to collection"){
-            await addToCollection(req,res)
+        if(current_poked != null){
+            const pokemon = await Pokemon.findById(current_poked)
+            const evolvedPokemon = await pokemon.checkForEvolution(studyTime)
+            console.log(evolvedPokemon)
+            if(evolvedPokemon == "add to collection"){
+                await addToCollection(req,res)
+            }else{
+                await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
+                res.status(200).send(evolvedPokemon)
+            }
+        }else{
+            res.status(200).send({message: "no pokemon to evolve"})
         }
-        await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
-        res.status(200).send(evolvedPokemon)
     } catch (error) {
         console.log(error)
         res.status(404).send(error)
@@ -64,6 +71,7 @@ async function addToCollection (req,res) {
         const student = await Student.getOneByToken(token);
         const { user_id, current_poked } = student;
         await Collection.create(current_poked, user_id)
+        await Student.updatePoke(user_id, null)
         res.status(201).json({message: "added to collection"})
     } catch (error) {
         console.log(error)
