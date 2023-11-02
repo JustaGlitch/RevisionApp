@@ -80,8 +80,6 @@ async function show(req, res) {
     try {
         const id = parseInt(req.params.user_id);
         const student = await StudentUser.getStudentId(id);
-        const class_id = await Students.findById(user_id)
-        student.class_id = class_id
         res.status(200).json(student);
     }catch(error){
         console.log(error);
