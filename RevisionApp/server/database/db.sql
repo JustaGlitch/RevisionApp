@@ -73,7 +73,7 @@ CREATE TABLE tasks (
 CREATE TABLE study_sessions (
     session_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id INT,
-    duration TIME NOT NULL,
+    duration INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
 
