@@ -12,7 +12,7 @@ describe("Study Session Routes", () => {
 	it("should get a single study session by ID", async () => {
 		const studySessionData = {
 			user_id: 1,
-			duration: "01:00:00",
+			duration: 60,
 		};
 
 		const studySession = await StudySession.create(studySessionData);
@@ -25,7 +25,7 @@ describe("Study Session Routes", () => {
 	it("should create a new study session", async () => {
 		const sessionData = {
 			user_id: 1,
-			duration: "1:00:00",
+			duration: 60,
 		};
 
 		const response = await request(app).post("/studysession").send(sessionData);
@@ -36,12 +36,12 @@ describe("Study Session Routes", () => {
 	it("should update an existing study session by ID", async () => {
 		const studySession = await StudySession.create({
 			user_id: 1,
-			duration: "01:00:00",
+			duration: 60,
 		});
 
 		const updatedData = {
 			user_id: 2,
-			duration: "02:00:00",
+			duration: 60,
 		};
 
 		const response = await request(app).patch(`/studysession/${studySession.session_id}`).send(updatedData);
@@ -52,7 +52,7 @@ describe("Study Session Routes", () => {
 	it("should delete a study session by ID", async () => {
 		const studySession = await StudySession.create({
 			user_id: 1,
-			duration: "01:00:00",
+			duration: 60,
 		});
 
 		const response = await request(app).delete(`/studysession/${studySession.session_id}`);

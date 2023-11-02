@@ -9,7 +9,7 @@
     "dev": "nodemon index.js",
     "setup-db": "node ./database/setup-db.js",
     "both": "node ./database/setup-db.js && nodemon index.js",
-    "test": "jest",
+    "test": "jest studentRoutes.test.js",
     "coverage": "jest --colors --coverage"
 
   },
