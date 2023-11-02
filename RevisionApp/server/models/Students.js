@@ -31,8 +31,8 @@ class Students {
     }
 
     // Update the student's user_id and class_id
-    async update() {
-        const response = await db.query("UPDATE students SET user_id = $1, class_id = $2 WHERE student_id = $3 RETURNING *", [this.user_id, this.class_id, this.student_id]);
+    async update(data) {
+        const response = await db.query("UPDATE students SET user_id = $1, class_id = $2 WHERE student_id = $3 RETURNING *", [data.user_id, data.class_id, this.student_id]);
         return new Students(response.rows[0]);
     }
 
