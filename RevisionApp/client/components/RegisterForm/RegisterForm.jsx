@@ -1,38 +1,96 @@
-import React from 'react'
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      // Handle password mismatch
+      console.error("Passwords do not match");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        "https://studydex.onrender.com/student/register",
+        {
+          username,
+          password,
+        }
+      );
+      login(response.data.token);
+      navigate("/");
+    } catch (error) {
+      console.error(
+        "Registration failed:",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
   return (
-    <form className='w-75 p-4 bg-body-secondary shadow rounded'>
-      <h3 className='text-center'>Register Page</h3>
-            <div className="form-group">
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-              <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder='Your Name'/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1"
-              placeholder='Your Password'/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword2" className="form-label">Confirm Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword2"
-              placeholder='Your Password Again'/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="selectClass" className="form-label">Your Class</label>
-              <select className="form-select" aria-label="Default select example">
-                <option selected>Select</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-            <button type="submit" className="btn btn-info offset-3 col-6 text-white">Register</button>
-            </div>
-          </form>
-  )
+
+    <form
+      className="w-75 p-4 bg-body-secondary shadow rounded"
+      onSubmit={handleSubmit}
+    >
+      <h3 className="text-center">Register Page</h3>
+      <div className="form-group">
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            placeholder="Choose a Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="Create a Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="confirmPassword" className="form-label">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="confirmPassword"
+            placeholder="Confirm Your Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <button
+          type="submit"
+          className="btn btn-info offset-3 col-6 text-white"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  );
 }
 
-export default RegisterForm
+export default RegisterForm;

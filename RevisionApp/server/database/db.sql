@@ -62,7 +62,7 @@ CREATE TABLE tasks (
     user_id INT,
     class_id INT,
     completed BOOLEAN,
-    suggested_time TIME,
+    suggested_time INT,
     taskCreated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (admin_id) REFERENCES admin(admin_id),
     FOREIGN KEY (user_id) REFERENCES student_user(user_id),
@@ -73,7 +73,7 @@ CREATE TABLE tasks (
 CREATE TABLE study_sessions (
     session_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id INT,
-    duration TIME NOT NULL,
+    duration INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
 
@@ -247,23 +247,23 @@ VALUES (1, 1),
 -- Inserting dummy data into the tasks table
 INSERT INTO tasks (title, description, admin_id, user_id, class_id, completed, suggested_time, taskCreated_at)
 VALUES
-('Task 1', 'Description 1', 1, 1, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 2', 'Description 2', 1, 2, 1, TRUE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 3', 'Description 3', 1, 3, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 4', 'Description 4', 1, 4, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 5', 'Description 5', 1, 5, 1, FALSE, '00:30:00', CURRENT_TIMESTAMP),
+('Task 1', 'Description 1', 1, 1, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 2', 'Description 2', 1, 2, 1, TRUE, 30, CURRENT_TIMESTAMP),
+('Task 3', 'Description 3', 1, 3, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 4', 'Description 4', 1, 4, 1, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 5', 'Description 5', 1, 5, 1, FALSE, 30, CURRENT_TIMESTAMP),
 
-('Task 6', 'Description 6', 1, 6, 2, TRUE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 7', 'Description 7', 1, 7, 2, FALSE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 8', 'Description 8', 1, 8, 2, TRUE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 9', 'Description 9', 1, 9, 2, FALSE, '00:30:00', CURRENT_TIMESTAMP),
-('Task 10', 'Description 10', 1, 10, 2, TRUE, '00:30:00', CURRENT_TIMESTAMP);
+('Task 6', 'Description 6', 1, 6, 2, TRUE, 30, CURRENT_TIMESTAMP),
+('Task 7', 'Description 7', 1, 7, 2, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 8', 'Description 8', 1, 8, 2, TRUE, 30, CURRENT_TIMESTAMP),
+('Task 9', 'Description 9', 1, 9, 2, FALSE, 30, CURRENT_TIMESTAMP),
+('Task 10', 'Description 10', 1, 10, 2, TRUE, 30, CURRENT_TIMESTAMP);
 
 
 
 -- Inserting dummy data into the study_sessions table
 INSERT INTO study_sessions (user_id, duration)
 VALUES
-(1, '00:30:00'),
-(2, '00:30:00');
+(1, 30),
+(2, 30);
 
