@@ -64,11 +64,14 @@ async function evolution (req,res) {
         if(current_poked != null){
             const pokemon = await Pokemon.findById(current_poked)
             const evolvedPokemon = await pokemon.checkForEvolution(studyTime)
-            console.log(evolvedPokemon)
-            if(evolvedPokemon == "add to collection"){
+            if(evolvedPokemon == "can not evolve"){
+                res.status(200).send({message: "not enough time"})
+            }
+            await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
+            const finalCheck = await evolvedPokemon.checkForEvolution(studyTime)
+            if(finalCheck == "add to collection"){
                 await addToCollection(req,res)
             }else{
-                await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
                 res.status(200).send(evolvedPokemon)
             }
         }else{
