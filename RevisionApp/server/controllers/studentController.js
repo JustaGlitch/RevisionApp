@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 
 const StudentUser = require("../models/Student");
 const Token = require("../models/Token");
-const Students = require('../models/Students')
 
 async function register(req, res){
     try{
@@ -43,13 +42,11 @@ async function login(req, res){
     }
 }
 
-async function profile (req, res){
+async function profile(req, res){
     const token = req.headers["authorization"];
     try{
         const student = await StudentUser.getOneByToken(token);
-        const { user_id, username, current_poked} = student;
-        const class_id = await Students.findById(user_id)
-        res.status(200).json({username: username, current_poked: current_poked, class_id: class_id});
+        res.status(200).json({username: student.username, classname: student.classname});
     }catch(error){
         console.log(error);
         res.status(403).json({error: error.message});

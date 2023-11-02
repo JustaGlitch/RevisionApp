@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ModalAcceptedTask } from "../../components";
+import AcceptGIF from "../../assets/img/accept.gif";
 
-
-function ModalAcceptTask({ id, title, suggested_time, class_id }) {
+function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
   const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);
@@ -29,41 +29,45 @@ function ModalAcceptTask({ id, title, suggested_time, class_id }) {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <p className="lead">
-                Who is Responsible: <span className="small">{`Class ${class_id}`}</span>
-              </p>
-              <div className="mb-3">
-                <form>
-                  <label
-                    htmlFor={`suggestedTimeInput-${id}`}
-                    className="col-form-label"
-                  >
-                    Suggested time (in minutes)
-                  </label>
-                  <input
-                    type="number"
-                    onChange={handleSetSuggestedTime}
-                    className="form-control"
-                    id={`suggestedTimeInput-${id}`}
-                    value={suggestedTime}
-                    required
-                  />
-                </form>
+
+            <div className="container">
+            <div className="row">
+              <div className="col-8">
+                <div className="modal-body">
+                  <p>{description}</p>
+                  <p>
+                    Who is Responsible: <span className="small">{`Class ${class_id}`}</span>
+                  </p>
+                  <div className="mb-3">
+                    <form>
+                      <label
+                        htmlFor={`suggestedTimeInput-${id}`}
+                        className="col-form-label"
+                      >
+                        Suggested time (in minutes)
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleSetSuggestedTime}
+                        className="form-control"
+                        id={`suggestedTimeInput-${id}`}
+                        value={suggestedTime}
+                        required
+                      />
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div className="col-4 d-flex align-items-center justify-content-center">
+                  <img className="img-fluid" src={AcceptGIF}/>
               </div>
             </div>
-            <div className="modal-footer">
+            </div>
+
+            <div className="modal-footer d-flex justify-content-center">
               <button
                 type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
+                className="btn btn-info text-white"
                 data-bs-target={`#acceptedTaskModal-${id}`}
                 data-bs-toggle="modal"
               >

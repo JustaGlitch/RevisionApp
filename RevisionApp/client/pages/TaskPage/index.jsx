@@ -55,13 +55,13 @@ function index() {
            
             <>
               <h1>{isLoading ? 'Loading...' : !isStopped ? title : 'Task Finished!'}</h1>
-              {!isStopped ? <p>Suggested time: {time}</p> : ''}
+              {!isStopped ? <p>Suggested time: {time} min.</p> : ''}
               <div className='lead px-5 text-center'>{!isStopped ? taskDescription: 'Congratulations, you can take a break now'}</div>
             </>
         <StopWatch changePokemon={changePokemon} onStartStop={handleStartStop} isStopped={isStopped} setIsStopped={setIsStopped} stopPokeChange={handleFinish} />
         </div>
       </div>
-      <div className='col-sm-12 col-md-6'>
+      <div className='col-sm-12 col-md-6 mt-3'>
         <YourReward rewards={rewards} rewardIndex={rewardIndex} isStopped={isStopped} />
       </div>
     </div>

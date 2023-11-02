@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
-import preloader from '../../assets/img/preloader.png';
+import preloader from '../../assets/img/preloader2.gif';
 function index() {
   const isAdmin = true;
 
@@ -80,7 +80,7 @@ const [loading, setLoading] = useState(false)
       description,
       class_id: cat,
       status: "In Progress",
-      suggested_time: "00:30:00",
+      suggested_time: suggested_time,
       timestamp: formattedDateTime,
     };
     console.log(newTask);
@@ -127,7 +127,7 @@ const [loading, setLoading] = useState(false)
         
               <TasksList key={selectedTab} tasks={tasks} filter="All" />
               :
-              <div className="card-list mt-4 p-5 text-center"><img src={preloader} className="img-fluid"/></div>
+              <div className="card-list mt-4 p-5 text-center"><img src={preloader} className="img-fluid"/><p>Loading...</p></div>
           )}
         </div>
         <div

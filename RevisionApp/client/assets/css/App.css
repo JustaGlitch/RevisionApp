@@ -15,6 +15,18 @@
   background-position: bottom;
 }
 
+#pnf-containter {
+  height: 100%;
+  background: url('../img/b1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 0%;
@@ -31,7 +43,7 @@
 }
 
 .animate {
-  animation: gradientAnimation 240s linear infinite;
+  animation: gradientAnimation 60s linear infinite;
 }
 
 #account-page {
@@ -58,7 +70,7 @@ h1, h2 {
   margin-bottom: 2rem;
   border-radius: 1rem;
   padding: 1rem;
-  background: #dee2e6
+  background: linear-gradient(90deg, #ee775290, #e73c7e90, #23a6d560, #23d5ab60)
 }
 
 .card {
@@ -155,7 +167,7 @@ h1, h2 {
   margin-left: .5rem;
   margin-top: .5rem;
   transition: .25s ease;
-  /* text-decoration: underline; */
+
 }
 
 .loader {

@@ -30,6 +30,7 @@ CREATE TABLE student_user (
     user_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL, 
+    classname VARCHAR(255),
     current_poked VARCHAR(255)
 );
 
@@ -73,7 +74,7 @@ CREATE TABLE tasks (
 CREATE TABLE study_sessions (
     session_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id INT,
-    duration TIME NOT NULL,
+    duration INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
 
@@ -150,35 +151,35 @@ VALUES (1, 'class1'),
          (3, 'class10');
 
 
-INSERT INTO student_user (username, password, current_poked) VALUES ('studentUser1', 'pass1234', 9);
 
-INSERT INTO student_user (username, password, current_poked)
+
+INSERT INTO student_user (username, password, current_poked, classname)
 VALUES
-('student1', 'password1', 6),
-('student2', 'password2', 6),
-('student3', 'password3', 6),
-('student4', 'password4', 9),
-('student5', 'password5', 9),
-('student6', 'password6', 9),
-('student7', 'password7', 3),
-('student8', 'password8', 3),
-('student9', 'password9', 3),
-('student10', 'password10', 12),
-('student11', 'password11', 11),
-('student12', 'password12', 5),
-('student13', 'password13', 18),
-('student14', 'password14', 21),
-('student15', 'password15', 20),
-('student16', 'password16', 30),
-('student17', 'password17', 11),
-('student18', 'password18', 7),
-('student19', 'password19', 50),
-('student20', 'password20', 51),
-('student21', 'password21', 70),
-('student22', 'password22', 71),
-('student23', 'password23', 6),
-('student24', 'password24', 3),
-('student25', 'password25', 2);
+('student1', 'password1', 6, 'class1'),
+('student2', 'password2', 6, 'class1'),
+('student3', 'password3', 6, 'class2'),
+('student4', 'password4', 9, 'class2'),
+('student5', 'password5', 9, 'class3'),
+('student6', 'password6', 9, 'class3'),
+('student7', 'password7', 4, 'class4'),
+('student8', 'password8', 9, 'class4'),
+('student9', 'password9', 9, 'class5'),
+('student10', 'password10', 9, 'class5'),
+('student11', 'password11', 9, 'class6'),
+('student12', 'password12', 9, 'class6'),
+('student13', 'password13', 9, 'class7'),
+('student14', 'password14', 2, 'class7'),
+('student15', 'password15', 4, 'class8'),
+('student16', 'password16', 9, 'class8'),
+('student17', 'password17', 9, 'class9'),
+('student18', 'password18', 9, 'class9'),
+('student19', 'password19', 9, 'class10'),
+('student20', 'password20', 2, 'class10'),
+('student21', 'password21', 9, 'class1'),
+('student22', 'password22', 9, 'class1'),
+('student23', 'password23', 9, 'class2'),
+('student24', 'password24', 9, 'class2'),
+('student25', 'password25', 2, 'class3');
 
 INSERT INTO students (user_id, class_id) 
 VALUES (1, 1),

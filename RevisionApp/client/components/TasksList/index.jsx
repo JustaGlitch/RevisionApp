@@ -25,7 +25,7 @@ function TasksList({ tasks, filter }) {
         <div key={group.class_id}>
           <div className="card-list mt-4" data-testid="task-card">
             <div className="card-list-head">
-              <h6>{`Class ${group.class_id}`}</h6>
+              <h6 className="text-white">{`Class ${group.class_id}`}</h6>
             </div>
             {group.tasks.map((task) => (
               <TaskCard key={task.id} id={task.id} task={task} />
