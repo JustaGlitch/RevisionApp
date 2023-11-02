@@ -1,7 +1,7 @@
 | ROUTE | METHOD | REQUIREMENTS | RESPONSE |
 | --- | --- | --- | --- |
 | `/student` | `GET` | null | EVERYTHING |
-| `/student/:user_id` | `GET` | id in params | returns student with id (includes class_id) |
+| `/student/:user_id` | `GET` | id in params | returns student with id |
 | `/student/:user_id` | `PATCH` | id in params, BODY (things to change eg "password": new password) | returns updated student
 | `/student/:user_id` | `DELETE` | id in params | student deleted message |
 | `/student/register` | `POST` | BODY ("username": username, "password": password) | registers user and makes token (can log in like this )|
@@ -47,3 +47,5 @@
 
 'student/1' returns user_id, username, password, pokemon
 'students/1' (with an S at the end) returns student_id, user_id, class_id (based on student_id, user_id does not always equal student_id)
+
+returned students from /student paths return classname
