@@ -5,6 +5,7 @@ class StudentUser {
         this.user_id = data.user_id;
         this.username = data.username;
         this.password = data.password; 
+        this.classname = data.classname;
         this.current_poked = data.current_poked;
     }
 
@@ -48,8 +49,8 @@ class StudentUser {
     }
 
     static async create(data) {
-        const { username, password } = data;
-        const response = await db.query("INSERT INTO student_user (username, password) VALUES ($1, $2) RETURNING *", [username, password]);
+        const { username, password, classname } = data;
+        const response = await db.query("INSERT INTO student_user (username, password, classname) VALUES ($1, $2, $3) RETURNING *", [username, password, classname]);
         return new StudentUser(response.rows[0]);
     }
 
@@ -59,8 +60,8 @@ class StudentUser {
     }
 
     async update() {
-        const response = await db.query("UPDATE student_user SET username = $1, password = $2 WHERE user_id = $3 RETURNING *", 
-        [this.username, this.password, this.user_id]
+        const response = await db.query("UPDATE student_user SET username = $1, password = $2, classname = $3 WHERE user_id = $3 RETURNING *", 
+        [this.username, this.password, this.classname, this.user_id]
         );
         return new StudentUser(response.rows[0]);
     }
