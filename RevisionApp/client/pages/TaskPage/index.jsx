@@ -9,6 +9,8 @@ function index() {
   const [rewardIndex, setRewardIndex] = useState(0);
   const [changePokemon, setChangePokemon] = useState(false);
   const [isStopped, setIsStopped] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [taskDescription, setTaskDescription] = useState('Task description');
   const [title, setTitle] = useState('')
   const [time, setTime] = useState(0)
@@ -19,23 +21,24 @@ function index() {
       setTitle(data.title)
       setTaskDescription(data.description)
       setTime(data.suggested_time)
+      setIsLoading(false);
     };
 
     fetchHero();
   }, [id]);
-useEffect(() => {
-  let intervalId;
-  if (changePokemon) {
-    intervalId = setInterval(() => {
-      setRewardIndex((prevIndex) => {
-        if (prevIndex + 1 === rewards.length) {
-          setChangePokemon(false);
-          return prevIndex;
-        }
-        return (prevIndex + 1) % rewards.length;
-      });
-    }, 3000);
-  }
+  useEffect(() => {
+    let intervalId;
+    if (changePokemon) {
+      intervalId = setInterval(() => {
+        setRewardIndex((prevIndex) => {
+          if (prevIndex + 1 === rewards.length) {
+            setChangePokemon(false);
+            return prevIndex;
+          }
+          return (prevIndex + 1) % rewards.length;
+        });
+      }, 3000);
+    }
 
   return () => clearInterval(intervalId);
 }, [changePokemon]);
@@ -51,7 +54,7 @@ useEffect(() => {
         <div className='d-flex col-sm-12 col-md-8 flex-column align-items-center py-4 stopWatch h-100'>
            
             <>
-              <h1>{!isStopped ? title : 'Task Finished!'}</h1>
+              <h1>{isLoading ? 'Loading...' : !isStopped ? title : 'Task Finished!'}</h1>
               {!isStopped ? <p>Suggested time: {time}</p> : ''}
               <div className='lead px-5 text-center'>{!isStopped ? taskDescription: 'Congratulations, you can take a break now'}</div>
             </>

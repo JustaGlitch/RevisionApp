@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
-
+import preloader from '../../assets/img/preloader.png';
 function index() {
   const isAdmin = true;
 
@@ -23,7 +23,7 @@ function index() {
     //   class_id: "Tom Byrne",
     // },
   ]);
-const [category, setCategory] = useState(0)
+const [loading, setLoading] = useState(false)
   // State to track the currently selected tab.
   const [selectedTab, setSelectedTab] = useState("All");
 
@@ -47,6 +47,7 @@ const [category, setCategory] = useState(0)
         }));
 
         setTasks(transformedTasks);
+        setLoading(true);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
@@ -60,9 +61,6 @@ const [category, setCategory] = useState(0)
       const data = await response.json();
       return data.class_id
   }
-
-
-
 
   //Date Object to capture the current date and time
   const currentDateTime = new Date();
@@ -125,7 +123,11 @@ const [category, setCategory] = useState(0)
           aria-labelledby="home-tab"
         >
           {selectedTab === "All" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="All" />
+            loading ?
+        
+              <TasksList key={selectedTab} tasks={tasks} filter="All" />
+              :
+              <div className="card-list mt-4 p-5 text-center"><img src={preloader} className="img-fluid"/></div>
           )}
         </div>
         <div
