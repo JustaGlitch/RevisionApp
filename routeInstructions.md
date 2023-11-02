@@ -1,20 +1,21 @@
 | ROUTE | METHOD | REQUIREMENTS | RESPONSE |
-| `/student` | `GET` | 
+| --- | --- | --- | --- |
+<!-- | `/student` | `GET` | 
 | `/student` | `POST` |
 | `/student/:user_id` | `GET` |
 | `/student/:user_id` | `PATCH` |
 | `/student/:user_id` | `DELETE` |
 | `/student/register` | `POST` |
 | `/student/login` | `POST` |
-| `/student/profile` | `GET` |
-| `/student/pokemon` | `GET` |
-| `/student/pokemon/baby` | `GET` |
-| `/student/pokemon/:id` | `GET` |
-| `/student/pokemon/current` | `GET` |
-| `/student/pokemon/collection` | `GET` |
-| `/student/pokemon/new` | `POST` |
-| `/student/pokemon/evolve` | `POST` |
-| `/admin` | `GET` |
+| `/student/profile` | `GET` | -->
+| `/student/pokemon` | `GET` | null | EVERYTHING |
+| `/student/pokemon/baby` | `GET` | null | ALL FIRST FORM POKEMON |
+| `/student/pokemon/:id` | `GET` | id in params | returns ONE pokemon |
+| `/student/pokemon/current` | `GET` | HEADER ("authorization": token) | returns current poke of student |
+| `/student/pokemon/collection` | `GET` | HEADER ("authorization": token) | returns collection of pokemon student has |
+| `/student/pokemon/new` | `POST` | HEADER ("authorization": token) | sets a new pokemon or returns that already a pokemon |
+| `/student/pokemon/evolve` | `POST` | HEADER ("authorization": token) BODY ("studyTime" : INT of timer) | returns evolved pokemon or adds to collection (this makes students current pokemon null and let's a new pokemon be added) |
+<!-- | `/admin` | `GET` |
 | `/admin` | `POST` |
 | `/admin/:admin_id` | `GET` |
 | `/admin/:admin_id` | `PATCH` |
@@ -42,4 +43,4 @@
 | `/students` | `POST` |
 | `/students/:student_id` | `GET` |
 | `/students/:student_id` | `PATCH` |
-| `/students/:student_id` | `DELETE` |
+| `/students/:student_id` | `DELETE` | -->
