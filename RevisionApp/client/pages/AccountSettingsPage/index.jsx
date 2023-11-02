@@ -9,28 +9,49 @@ function index() {
     current_pokemon: "",
     classname: "",
   });
+  const [collection, setCollection] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
     const fetchProfileData = async () => {
-      // Get the token from local storage
-      const token = localStorage.getItem("token");
       console.log(token);
       if (token) {
         const response = await fetch(
           "https://studydex.onrender.com/student/profile",
           {
             headers: {
-              Authorization: token, // Pass the token here
+              Authorization: token,
             },
           }
         );
 
         const data = await response.json();
-        setProfileData(data); // Update the state with the fetched data
+        setProfileData(data);
+      }
+    };
+    fetchProfileData();
+
+    const fetchCollection = async () => {
+      if (token) {
+        const response = await fetch(
+          "https://studydex.onrender.com/student/pokemon/collection",
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        // console.log(data);
+        setCollection(data);
+        console.log(collection);
       }
     };
 
-    fetchProfileData();
+    fetchCollection();
   }, []);
 
   return (
@@ -56,7 +77,7 @@ function index() {
             Your Collection:{" "}
             <span id="accountInfoClass">
               <NavLink to="/account/collection">
-                {profileData.current_pokemon}/510
+                {collection?.length || 0} out of 151
               </NavLink>
             </span>
           </p>
