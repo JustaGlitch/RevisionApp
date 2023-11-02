@@ -48,7 +48,7 @@ async function profile (req, res){
     try{
         const student = await StudentUser.getOneByToken(token);
         const { user_id, username, current_poked} = student;
-        const class_id = await Students.getStudentId(user_id)
+        const class_id = await Students.findById(user_id)
         res.status(200).json({username: username, current_poked: current_poked, class_id: class_id});
     }catch(error){
         console.log(error);
