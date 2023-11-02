@@ -136,4 +136,4 @@ async function getById (req,res) {
     res.status(200).send(pokemon)
 }
 
-module.exports = {newBaby, evolution, currentPokemon, currentCollection, getAll, getAllBaby, getById}
+module.exports = {newBaby, evolution, currentPokemon, currentCollection, getAll, getAllBaby, getById, starter}
