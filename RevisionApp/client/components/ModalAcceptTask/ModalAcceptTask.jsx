@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ModalAcceptedTask } from "../../components";
 
 
-function ModalAcceptTask({ id, title, suggested_time, class_id }) {
+function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
   const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);
@@ -30,8 +30,8 @@ function ModalAcceptTask({ id, title, suggested_time, class_id }) {
               ></button>
             </div>
             <div className="modal-body">
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <p className="lead">
+              <p>{description}</p>
+              <p>
                 Who is Responsible: <span className="small">{`Class ${class_id}`}</span>
               </p>
               <div className="mb-3">
