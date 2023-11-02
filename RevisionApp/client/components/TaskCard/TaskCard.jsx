@@ -29,7 +29,7 @@ function TaskCard({ id, task }) {
             role="group"
             aria-label="Basic outlined example"
           >
-            <button type="button" className="btn btn-success bg-gradient">
+            <button type="button" className="btn bg-success-subtle bg-gradient">
               Accept
             </button>
           </div>
