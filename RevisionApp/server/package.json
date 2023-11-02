@@ -8,8 +8,10 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "setup-db": "node ./database/setup-db.js",
+    "both": "node ./database/setup-db.js && nodemon index.js",
     "test": "jest",
     "coverage": "jest --colors --coverage"
+
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

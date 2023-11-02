@@ -25,7 +25,7 @@ async function login(req, res){
     try{
         const data = req.body;
 
-        const student = await Student.getUserUsername(data.username);
+        const student = await StudentUser.getUserUsername(data.username);
 
         const authenticated = await bcrypt.compare(data.password, student.password);
 
