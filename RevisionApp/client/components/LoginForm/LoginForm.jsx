@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -62,12 +62,10 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button
-          type="submit"
-          className="btn btn-info offset-3 col-6 text-white"
-        >
-          Login
-        </button>
+        <div className="mb-3">
+          Do not have an account? <Link to='/register'>Sign Up</Link>
+        </div>
+        <button type="submit" className="btn btn-info offset-3 col-6 text-white">Login</button>
       </div>
     </form>
   );

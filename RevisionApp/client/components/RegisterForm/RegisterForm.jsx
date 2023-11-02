@@ -36,6 +36,7 @@ function RegisterForm() {
   };
 
   return (
+
     <form
       className="w-75 p-4 bg-body-secondary shadow rounded"
       onSubmit={handleSubmit}

@@ -14,6 +14,7 @@ export default function Header() {
   };
 
   return (
+
     <header className="bg-body-tertiary z-3 shadow-sm">
       <div className="container">
         <nav className="navbar navbar-expand-lg">
@@ -22,14 +23,14 @@ export default function Header() {
               <img
                 src={Logo}
                 alt="Logo"
-                width="30"
-                height="30"
+                width="42"
+                height="42"
                 className="d-inline-block align-text-top me-2"
               />
               <img
                 src={StudyDex}
                 alt="StudyDex"
-                width="90"
+                width="150"
                 className="d-inline-block align-text-top"
               />
             </a>
@@ -45,8 +46,8 @@ export default function Header() {
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="mainNav">
-              <div className="navbar ms-auto">
-                <NavLink className="nav-link" to="/">
+              <div className="navbar-nav ms-auto">
+                <NavLink className="ms-5 nav-link" to="/">
                   All Tasks
                 </NavLink>
                 <NavLink className="ms-5 nav-link" to="/account">
