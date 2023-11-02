@@ -41,7 +41,7 @@ function App() {
         <Route path="/" element={<Layouts.notfound />}>
           <Route path="*" element={<Pages.PageNotFound />} />
         </Route>
-
+      </Route>
     </Routes>
   );
 }
