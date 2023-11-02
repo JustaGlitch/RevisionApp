@@ -95,6 +95,8 @@ CREATE TABLE collection (
     collection_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     pokemon_id INT,
     user_id INT,
+    name VARCHAR(500),
+    sprite_url VARCHAR(500),
     FOREIGN KEY (pokemon_id) REFERENCES pokemon(pokemon_id),
     FOREIGN KEY (user_id) REFERENCES student_user(user_id)
 );
