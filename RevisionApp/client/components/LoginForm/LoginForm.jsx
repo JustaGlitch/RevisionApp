@@ -6,32 +6,39 @@ import { useNavigate, Link } from "react-router-dom";
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorHandler, setErrorHandler] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const [errorHandler, setErrorHandler] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    //isadmin check
+    const endpoint = isAdmin
+      ? "https://studydex.onrender.com/admin/login"
+      : "https://studydex.onrender.com/student/login";
+
     try {
-      const response = await axios.post(
-        "https://studydex.onrender.com/student/login",
-        {
-          username,
-          password,
-        }
-      );
-      login(response.data.token);
+      const response = await axios.post(endpoint, {
+        username,
+        password,
+      });
+      const role = isAdmin ? "admin" : "student";
+      login(response.data.token, role);
+
+      // login(response.data.token);
       navigate("/");
     } catch (error) {
       console.error(
-        setErrorHandler('User does not exist!')
+        setErrorHandler("User does not exist!")
 
         // error.response?.data?.message || error.message
       );
     }
-      setTimeout(() => {
-        setErrorHandler('');
-      }, 3000);
+    setTimeout(() => {
+      setErrorHandler("");
+    }, 3000);
   };
 
   return (
@@ -53,8 +60,12 @@ function LoginForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            />
-            {errorHandler ? <div className="mt-1 text-danger">{errorHandler}</div> : ''}
+          />
+          {errorHandler ? (
+            <div className="mt-1 text-danger">{errorHandler}</div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
@@ -70,10 +81,27 @@ function LoginForm() {
             required
           />
         </div>
-        <div className="mb-3">
-          Do not have an account? <Link to='/register'>Sign Up</Link>
+        <div className="mb-3 form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="adminCheck"
+            checked={isAdmin}
+            onChange={(e) => setIsAdmin(e.target.checked)}
+          />
+          <label className="form-check-label" htmlFor="adminCheck">
+            Login as Admin
+          </label>
         </div>
-        <button type="submit" className="btn btn-info offset-3 col-6 text-white">Login</button>
+        <div className="mb-3">
+          Do not have an account? <Link to="/register">Sign Up</Link>
+        </div>
+        <button
+          type="submit"
+          className="btn btn-info offset-3 col-6 text-white"
+        >
+          Login
+        </button>
       </div>
     </form>
   );

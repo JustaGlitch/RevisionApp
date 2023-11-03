@@ -7,18 +7,20 @@ function TasksList({ tasks, filter, currentClass }) {
   if (filter !== "All") {
     filteredTasks = tasks.filter((task) => task.status === filter);
   }
- const defaultClassId = currentClass == null ? "Class 1" : currentClass;
+  const defaultClassId = currentClass == null ? "Class 1" : currentClass;
   const defaultClassIdNumber = Number(defaultClassId.split(" ").at(-1));
   filteredTasks = filteredTasks.filter((task) => {
     return task.class_id === defaultClassIdNumber;
   });
   const groupedTasks = [];
   filteredTasks.forEach(async (task) => {
-    const classIdGroup = groupedTasks.find((group) => group.class_id === task.class_id);
+    const classIdGroup = groupedTasks.find(
+      (group) => group.class_id === task.class_id
+    );
     if (classIdGroup) {
       classIdGroup.tasks.push(task);
     } else {
-      groupedTasks.push({ class_id: task.class_id, tasks: [task]});
+      groupedTasks.push({ class_id: task.class_id, tasks: [task] });
     }
   });
 
@@ -26,7 +28,11 @@ function TasksList({ tasks, filter, currentClass }) {
     <>
       {groupedTasks.map((group) => (
         <div key={group.class_id}>
-          <div key={group.class_id} className="card-list mt-4" data-testid="task-card">
+          <div
+            key={group.class_id}
+            className="card-list mt-4"
+            data-testid="task-card"
+          >
             <div className="card-list-head">
               <h6 className="text-white">{`Class ${group.class_id}`}</h6>
             </div>

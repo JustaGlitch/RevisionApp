@@ -4,7 +4,7 @@ import preloader from "../../assets/img/preloader2.gif";
 function index() {
   const isAdmin = true;
 
-    const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
@@ -74,10 +74,9 @@ function index() {
           throw new Error("Network response was not ok");
         }
         const profileData = await response.json();
-        setIsLoading(true)
+        setIsLoading(true);
         setUserName(profileData.username);
         setCurrentClass(profileData.classname);
-      
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -90,7 +89,7 @@ function index() {
       `https://studydex.onrender.com/class/classname/${name}`
     );
     const data = await response.json();
-    return data.class_id
+    return data.class_id;
   };
 
   //Date Object to capture the current date and time
@@ -139,7 +138,13 @@ function index() {
 
   return (
     <div className="col-sm-12 offset-md-1 col-md-7 bg-white p-4 rounded-4">
-      <h1>Welcome {isLoading ? `${userName.charAt(0).toUpperCase()+userName.slice(1)}`: '... '}!</h1>
+      <h1>
+        Welcome{" "}
+        {isLoading
+          ? `${userName.charAt(0).toUpperCase() + userName.slice(1)}`
+          : "... "}
+        !
+      </h1>
       {/* Form to add a new task. */}
       <AddTaskForm isAdmin={isAdmin} onAddTask={handleAddTask} />
 
@@ -154,7 +159,12 @@ function index() {
         >
           {selectedTab === "All" &&
             (loading ? (
-              <TasksList key={selectedTab} tasks={tasks} filter="All" currentClass={currentClass} />
+              <TasksList
+                key={selectedTab}
+                tasks={tasks}
+                filter="All"
+                currentClass={currentClass}
+              />
             ) : (
               <div className="card-list mt-4 p-5 text-center">
                 <img src={preloader} className="img-fluid" />
@@ -169,7 +179,12 @@ function index() {
           aria-labelledby="home-tab"
         >
           {selectedTab === "In Progress" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" currentClass={currentClass} />
+            <TasksList
+              key={selectedTab}
+              tasks={tasks}
+              filter="In Progress"
+              currentClass={currentClass}
+            />
           )}
         </div>
         <div
@@ -179,7 +194,12 @@ function index() {
           aria-labelledby="home-tab"
         >
           {selectedTab === "Completed" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="Completed" currentClass={currentClass} />
+            <TasksList
+              key={selectedTab}
+              tasks={tasks}
+              filter="Completed"
+              currentClass={currentClass}
+            />
           )}
         </div>
         {/* <div

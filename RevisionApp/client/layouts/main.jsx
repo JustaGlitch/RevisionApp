@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Header, Footer, LeftColumn } from "../components";
+import { AuthContext } from "../contexts/AuthContext";
 
 function index() {
-  // const isAdmin = false;
+  const { userRole } = useContext(AuthContext);
+  const isAdmin = userRole === "admin";
 
   const bgColor = "#f8f9fa";
   const textColor = "#212529";
