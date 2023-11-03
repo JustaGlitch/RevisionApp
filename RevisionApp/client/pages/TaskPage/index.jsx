@@ -7,16 +7,17 @@ function index() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const [reward, setReward] = useState(Preloader);
+  const [thisPokemon, setThisPokemon] = useState({});
   const [changePokemon, setChangePokemon] = useState(false);
   const [isStopped, setIsStopped] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [taskFinished, setTaskFinished] = useState(false)
   const [taskDescription, setTaskDescription] = useState("Task description");
   const [title, setTitle] = useState("");
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
- 
+
   const fetchPokemon = async () => {
     const resp = await fetch(`https://studydex.onrender.com/tasks/${id}`);
     const data = await resp.json();
@@ -25,65 +26,94 @@ function index() {
     setTime(data.suggested_time);
     setIsLoading(false);
   };
-
-  const currentPokemon = async () => {
-    const resp = await fetch(`https://studydex.onrender.com/student/pokemon/current`, {headers: {Authorization: token}});
-    const data = await resp.json();
-    setReward(data.threeD_url)
-  }
-  const evolvePokemon = async () => {
-    const resp = await fetch(`https://studydex.onrender.com/student/pokemon/evolve`, {headers: {Authorization: token}, method: 'POST', studyTime: time});
-    const data = await resp.json();
-    return data;
-  }
-  const newPokemon = async () => {
-    const resp = await fetch(`https://studydex.onrender.com/student/pokemon/new`, {headers: {Authorization: token}, method: 'POST'});
-    const data = await resp.json();
-    return data;
-  }
-
-    useEffect(() => {
-        currentPokemon();
-        fetchPokemon();
-        // evolvePokemon()
-        // newPokemon()
-
-    }, []);
-
-  const handleStartStop = () => {
-    setChangePokemon(!changePokemon);
-  };
-
-  const handleFinish = async () => {
-    setChangePokemon(false);
-    setIsStopped(true);
-
-    // Get the token from local storage
-    if (token) {
-      try {
-        const response = await fetch(
-          `https://studydex.onrender.com/tasks/${id}`,
-          {
+  const updateTaskStatus = async () => {
+    const resp = await fetch(`https://studydex.onrender.com/tasks/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
             },
             body: JSON.stringify({ completed: true }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Task completion failed");
-        }
-
-        const data = await response.json();
-        console.log("Task completed:", data);
-      } catch (error) {
-        console.error("Error finishing task:", error);
-      }
+          });
+    const data = await resp.json();
+    return data
+  }
+  const currentPokemon = async () => {
+    const resp = await fetch(`https://studydex.onrender.com/student/pokemon/current`, {headers: {authorization: token}});
+    const data = await resp.json();
+    if(!data || !data.threeD_url) {
+      // newPokemon()
+    } else {
+      setThisPokemon(data)
+      setReward(data.threeD_url);
     }
+  
+  }
+  const evolvePokemon = async () => {
+    const resp = await fetch(`https://studydex.onrender.com/student/pokemon/evolve`, {
+      headers: {
+        authorization: token
+      }, 
+      method: 'POST', 
+      body: JSON.stringify({studyTime: 60})
+    });
+    const data = await resp.json();
+    console.log(data)
+    return data;
+  }
+  const newPokemon = async () => {
+    const resp = await fetch(`https://studydex.onrender.com/student/pokemon/new`, {headers: {authorization: token}, method: 'POST'});
+    const data = await resp.json();
+    return data;
+  }
+
+  useEffect(() => {
+    currentPokemon();
+      fetchPokemon();
+    }, []);
+
+    useEffect(() => {
+  if(Math.floor(timer/100) >= timer*60 ){
+    evolvePokemon()
+    newPokemon()
+  } 
+
+    },[Math.floor(timer/100)])
+
+  const handleStartStop = () => {
+    setChangePokemon(!changePokemon);
   };
+
+  // const handleFinish = async () => {
+  //   setChangePokemon(false);
+  //   setIsStopped(true);
+
+  //   // Get the token from local storage
+  //   if (token) {
+  //     try {
+  //       const response = await fetch(
+  //         `https://studydex.onrender.com/tasks/${id}`,
+  //         {
+  //           method: "PATCH",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: token,
+  //           },
+  //           body: JSON.stringify({ completed: true }),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error("Task completion failed");
+  //       }
+
+  //       const data = await response.json();
+  //       console.log("Task completed:", data);
+  //     } catch (error) {
+  //       console.error("Error finishing task:", error);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     let intervalId;
@@ -95,16 +125,16 @@ function index() {
 
 
     const finish = () => {
-if (Math.floor(timer/6000) >= time){
-
-  setTaskFinished(true)
-}
-      
+    setTimer(0);
     setIsRunning(false);
-
     if (!isStopped) {
       setIsStopped(true);
     }
+    if(Math.floor(timer/100) > time*60) {
+      setTaskFinished(true)
+    } 
+updateTaskStatus()
+
   };
   return (
     <div className="row h-100">
@@ -126,8 +156,6 @@ if (Math.floor(timer/6000) >= time){
             onStartStop={handleStartStop}
             isStopped={isStopped}
             setIsStopped={setIsStopped}
-            stopPokeChange={handleFinish}
-            handleFinish={handleFinish}
             timer={timer}
             setTimer={setTimer}
             isRunning={isRunning}

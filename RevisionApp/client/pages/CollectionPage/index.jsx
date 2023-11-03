@@ -12,7 +12,7 @@ function index() {
           "https://studydex.onrender.com/student/pokemon/collection",
           {
             headers: {
-              Authorization: token,
+              authorization: token,
             },
           }
         );
@@ -20,31 +20,18 @@ function index() {
           throw new Error("Network response was not ok");
         }
         const collectionData = await response.json();
-        setIsLoading(true)
+        if (collectionData) {
+        setIsLoading(true);
         setCollection(collectionData);
-        console.log(collectionData);
+      } else {
+        console.error("Collection data is empty or not in the expected format");
+      }
       } catch (error) {
         console.error("Error fetching collection:", error);
       }
     };
 
     fetchCollection();
-
-    // const getPokemonInfo = async (id) => {
-    //   try {
-    //     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    //     const result = await response.json();
-    //     setPokemonData((prevData) => ({
-    //       ...prevData,
-    //       [id]: result,
-    //     }));
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
-    // for (let id = 1; id <= 18; id++) {
-    //   getPokemonInfo(id);
-    // }
   }, []);
 
   return (

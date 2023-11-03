@@ -49,8 +49,6 @@ const StopWatch = ({
             >
               Finish
             </button>
-          
-
           </div>
         </>
       )}
