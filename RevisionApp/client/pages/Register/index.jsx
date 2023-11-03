@@ -9,8 +9,8 @@ function index() {
         <div className="col-sm-12 col-md-6 d-flex justify-content-center align-items-center h-75">
           <RegisterForm />
         </div>
-        <div className="col-sm-12 col-md-6 d-flex justify-content-center align-items-center h-75">
-          <img src={Greetings} />
+        <div className="col-sm-12 col-md-6 d-md-flex d-none justify-content-center align-items-center h-75">
+          <img src={Greetings} className="img-fluid" />
         </div>
       </div>
     </div>

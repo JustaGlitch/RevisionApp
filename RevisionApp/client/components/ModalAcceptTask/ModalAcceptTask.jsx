@@ -3,7 +3,8 @@ import { ModalAcceptedTask } from "../../components";
 import AcceptGIF from "../../assets/img/accept.gif";
 
 function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
-  const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
+  const [suggestedTime, setSuggestedTime] = useState(suggested_time);
+
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);
     setNewSuggestedTime(id, e.target.value)
@@ -66,7 +67,7 @@ function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
                         onChange={handleSetSuggestedTime}
                         className="form-control"
                         id={`suggestedTimeInput-${id}`}
-                        value={suggestedTime}
+                        value={suggestedTime||30}
                         required
                       />
                     </form>

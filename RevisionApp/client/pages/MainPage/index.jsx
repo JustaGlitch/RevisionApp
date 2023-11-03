@@ -26,6 +26,7 @@ function index() {
     // },
   ]);
   const [userName, setUserName] = useState("");
+  const [currentClass, setCurrentClass] = useState("");
 
   const [loading, setLoading] = useState(false);
   // State to track the currently selected tab.
@@ -46,7 +47,7 @@ function index() {
           title: task.title,
           description: task.description,
           class_id: task.class_id,
-          // suggested_time: Number(task.suggested_time.split(":")[1]),
+          suggested_time: task.suggested_time,
           status: task.completed ? "Completed" : "In Progress",
         }));
 
@@ -75,6 +76,8 @@ function index() {
         const profileData = await response.json();
         setIsLoading(true)
         setUserName(profileData.username);
+        setCurrentClass(profileData.classname);
+      
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -87,7 +90,7 @@ function index() {
       `https://studydex.onrender.com/class/classname/${name}`
     );
     const data = await response.json();
-    return data.class_id;
+    return data.class_id
   };
 
   //Date Object to capture the current date and time
@@ -101,7 +104,8 @@ function index() {
     class_id,
     suggested_time
   ) => {
-    const cat = await fetchCategoriesByName(class_id);
+    const cat = await fetchCategoriesByName(currentClass);
+    console.log(cat)
     const newTask = {
       id: tasks.length + 1,
       title,
@@ -151,7 +155,7 @@ function index() {
         >
           {selectedTab === "All" &&
             (loading ? (
-              <TasksList key={selectedTab} tasks={tasks} filter="All" />
+              <TasksList key={selectedTab} tasks={tasks} filter="All" currentClass={currentClass} />
             ) : (
               <div className="card-list mt-4 p-5 text-center">
                 <img src={preloader} className="img-fluid" />
@@ -166,7 +170,7 @@ function index() {
           aria-labelledby="home-tab"
         >
           {selectedTab === "In Progress" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" currentClass={currentClass} />
           )}
         </div>
         <div
@@ -176,7 +180,7 @@ function index() {
           aria-labelledby="home-tab"
         >
           {selectedTab === "Completed" && (
-            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" currentClass={currentClass} />
           )}
         </div>
         {/* <div
