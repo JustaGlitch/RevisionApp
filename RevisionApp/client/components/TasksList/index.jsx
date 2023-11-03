@@ -7,7 +7,11 @@ function TasksList({ tasks, filter, currentClass }) {
   if (filter !== "All") {
     filteredTasks = tasks.filter((task) => task.status === filter);
   }
-  filteredTasks = filteredTasks.filter((task) => task.class_id === Number(currentClass.split(' ').at(-1)));
+ const defaultClassId = currentClass == null ? "Class 1" : currentClass;
+  const defaultClassIdNumber = Number(defaultClassId.split(" ").at(-1));
+  filteredTasks = filteredTasks.filter((task) => {
+    return task.class_id === defaultClassIdNumber;
+  });
   const groupedTasks = [];
   filteredTasks.forEach(async (task) => {
     const classIdGroup = groupedTasks.find((group) => group.class_id === task.class_id);

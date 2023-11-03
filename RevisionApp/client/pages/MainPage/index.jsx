@@ -26,7 +26,7 @@ function index() {
     // },
   ]);
   const [userName, setUserName] = useState("");
-  const [currentClass, setCurrentClass] = useState("");
+  const [currentClass, setCurrentClass] = useState("Class 1");
 
   const [loading, setLoading] = useState(false);
   // State to track the currently selected tab.
