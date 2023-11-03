@@ -13,7 +13,9 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [classname, setClassname] = useState("");
+  const [classname, setClassname] = useState("Your Class");
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handlePokemonClick = (selectedPokemon) => {
     setSelected(selectedPokemon);
@@ -92,11 +94,20 @@ function RegisterForm() {
     const result = await resp.json();
     return result;
   };
+  const getAllCategories = async () => {
+    const resp = await fetch("https://studydex.onrender.com/class");
+    const result = await resp.json();
+    setIsLoading(true)
+    setCategories(result);
+  };
 
   useEffect(() => {
     fetchPokemons();
+    getAllCategories();
   }, []);
 
+
+  
   return (
     <>
       <form
@@ -123,7 +134,7 @@ function RegisterForm() {
             <label htmlFor="classname" className="form-label">
               Class Name
             </label>
-            <input
+            {/* <input
               type="text"
               className="form-control"
               id="classname"
@@ -131,7 +142,17 @@ function RegisterForm() {
               value={classname}
               onChange={(e) => setClassname(e.target.value)}
               required
-            />
+            /> */}
+              <select
+                className="form-select"
+                onChange={(e) => setClassname(e.target.value)}
+              >
+                {categories.map((el) => (
+                  <option key={el.classname} value={el.classname}>
+                    {isLoading ? el.classname : 'Loading...'}
+                  </option>
+                ))}
+              </select>
           </div>
 
           <div className="mb-3">

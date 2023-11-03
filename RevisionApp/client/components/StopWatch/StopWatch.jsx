@@ -3,36 +3,25 @@ const StopWatch = ({
   onStartStop,
   isStopped,
   setIsStopped,
-  stopPokeChange,
+  timer,
+  setTimer,
+  isRunning,
+  setIsRunning,
+  finish
 }) => {
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    let intervalId;
-    if (isRunning) {
-      intervalId = setInterval(() => setTime(time + 1), 10);
-    }
-    return () => clearInterval(intervalId);
-  }, [isRunning, time]);
 
-  const minutes = Math.floor((time % 360000) / 6000);
-  const seconds = Math.floor((time % 6000) / 100);
+
+
+  const minutes = Math.floor((timer % 360000) / 6000);
+  const seconds = Math.floor((timer % 6000) / 100);
 
   const startAndStop = () => {
     onStartStop();
     setIsRunning(!isRunning);
   };
 
-  const finish = () => {
-    setTime(0);
-    setIsRunning(false);
-    stopPokeChange();
-    if (!isStopped) {
-      setIsStopped(true);
-    }
-    props.handleFinish();
-  };
+
   return (
     <div className="stopwatch-container text-center mt-5">
       {isStopped ? (

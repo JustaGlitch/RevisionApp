@@ -29,7 +29,9 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Layouts.main />}>
           <Route index element={<Pages.MainPage />} />
-          <Route path="task/:id" element={<Pages.TaskPage />} />
+        </Route>
+        <Route path="/task" element={<Layouts.task />}>
+          <Route path=":id" element={<Pages.TaskPage />} />
         </Route>
         <Route path="/account" element={<Layouts.account />}>
           <Route index element={<Pages.AccountPage />} />

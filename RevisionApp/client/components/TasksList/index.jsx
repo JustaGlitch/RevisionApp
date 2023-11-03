@@ -20,7 +20,7 @@ function TasksList({ tasks, filter }) {
   });
 
   return (
-    <div>
+    <>
       {groupedTasks.map((group) => (
         <div key={group.class_id}>
           <div className="card-list mt-4" data-testid="task-card">
@@ -33,7 +33,7 @@ function TasksList({ tasks, filter }) {
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
