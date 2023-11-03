@@ -29,13 +29,11 @@ function index() {
   const currentPokemon = async () => {
     const resp = await fetch(`https://studydex.onrender.com/student/pokemon/current`, {headers: {Authorization: token}});
     const data = await resp.json();
-    console.log(data)
-    setReward(data.threed_url)
+    setReward(data.threeD_url)
   }
   const evolvePokemon = async () => {
     const resp = await fetch(`https://studydex.onrender.com/student/pokemon/evolve`, {headers: {Authorization: token}, method: 'POST', studyTime: time});
     const data = await resp.json();
-    console.log(data)
     return data;
   }
   const newPokemon = async () => {

@@ -13,7 +13,7 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [classname, setClassname] = useState("Your Class");
+  const [classname, setClassname] = useState("Class 1");
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
 
@@ -60,7 +60,7 @@ function RegisterForm() {
   const handleSubmitPokemon = async (e) => {
     e.preventDefault();
     addChosenPokemon(addPokemon.id);
-    console.log(addPokemon.id);
+    console.log(addPokemon);
     window.location.href = "/";
   };
   const fetchPokemons = async () => {
@@ -144,11 +144,13 @@ function RegisterForm() {
               required
             /> */}
               <select
+              id="classname"
                 className="form-select"
                 onChange={(e) => setClassname(e.target.value)}
+                
               >
                 {categories.map((el) => (
-                  <option key={el.classname} value={el.classname}>
+                  <option key={el.classname} value={el.classname} >
                     {isLoading ? el.classname : 'Loading...'}
                   </option>
                 ))}

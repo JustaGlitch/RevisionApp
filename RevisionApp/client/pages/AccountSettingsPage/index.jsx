@@ -42,12 +42,8 @@ function index() {
             },
           }
         );
-
         const data = await response.json();
-
-        // console.log(data);
         setCollection(data);
-        console.log(collection);
       }
     };
 
@@ -85,7 +81,7 @@ function index() {
 
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-info text-white"
             data-bs-toggle="modal"
             data-bs-target="#updateYourInfo"
           >

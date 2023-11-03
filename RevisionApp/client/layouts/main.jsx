@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Header, Footer, LeftColumn } from "../components";
 
 function index() {
-  const isAdmin = false;
+  // const isAdmin = false;
 
   const bgColor = "#f8f9fa";
   const textColor = "#212529";
@@ -26,7 +26,7 @@ function index() {
       <div className={`main-page h-100 ${stopAnimation ? "" : "animate"}`}>
         <div className="container h-100">
           <div className="row d-flex justify-content-center my-5">
-            {isAdmin && <LeftColumn />}
+            {/* {isAdmin && <LeftColumn />} */}
             <Outlet />
           </div>
         </div>

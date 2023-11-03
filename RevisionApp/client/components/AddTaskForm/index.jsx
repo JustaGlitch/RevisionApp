@@ -4,7 +4,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
   const [title, setTitle] = useState("");
   const [suggested_time, setSuggestedTime] = useState("");
   const [description, setDescription] = useState("");
-  const [class_id, setClass_id] = useState("");
+  const [class_id, setClass_id] = useState(0);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
               <select
                 className="form-select"
                 value={class_id}
-                onChange={(e) => setClass_id(e.target.value)}
+                onChange={(e) => setClass_id((e.target.value))}
               >
                 {categories.map((el) => (
                   <option key={el.classname} value={el.classname}>
