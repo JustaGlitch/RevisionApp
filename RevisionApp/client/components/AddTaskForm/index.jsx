@@ -23,7 +23,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
     setSuggestedTime(0);
     setDescription("");
     setClass_id("");
-    window.location.reload();
+    setTimeout(() => window.location.reload(), 1000)
   };
   // Renders a form to input task title and description.
   return (

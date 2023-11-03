@@ -95,12 +95,12 @@ function index() {
 
 
     const finish = () => {
-      if(Math.floor(timer/100) > time) {
-        setTaskFinished(true)
-      } 
-    setTimer(0);
+if (Math.floor(timer/6000) >= time){
+
+  setTaskFinished(true)
+}
+      
     setIsRunning(false);
-console.log(time, Math.floor(timer/1000) )
 
     if (!isStopped) {
       setIsStopped(true);
