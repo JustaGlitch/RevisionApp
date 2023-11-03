@@ -23,7 +23,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
     setSuggestedTime(0);
     setDescription("");
     setClass_id("");
-    setTimeout(() => window.location.reload(), 1000)
+    // setTimeout(() => window.location.reload(), 1000)
   };
   // Renders a form to input task title and description.
   return (
@@ -54,7 +54,7 @@ function AddTaskForm({ onAddTask, isAdmin }) {
               <select
                 className="form-select"
                 value={class_id}
-                onChange={(e) => setClass_id((e.target.value))}
+                onChange={(e) => setClass_id(e.target.value)}
               >
                 {categories.map((el) => (
                   <option key={el.classname} value={el.classname}>
