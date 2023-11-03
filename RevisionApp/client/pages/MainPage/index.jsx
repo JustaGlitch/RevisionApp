@@ -104,7 +104,6 @@ function index() {
     suggested_time
   ) => {
     const cat = await fetchCategoriesByName(currentClass);
-    console.log(cat);
     const newTask = {
       id: tasks.length + 1,
       title,
