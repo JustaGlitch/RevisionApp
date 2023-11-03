@@ -13,7 +13,7 @@ function index() {
   const [taskFinished, setTaskFinished] = useState(false)
   const [taskDescription, setTaskDescription] = useState("Task description");
   const [title, setTitle] = useState("");
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState('');
   const [timer, setTimer] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
  
@@ -47,6 +47,7 @@ function index() {
         fetchPokemon();
         // evolvePokemon()
         // newPokemon()
+
     }, []);
 
   const handleStartStop = () => {
@@ -66,7 +67,7 @@ function index() {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: token,
             },
             body: JSON.stringify({ completed: true }),
           }
@@ -94,15 +95,16 @@ function index() {
 
 
     const finish = () => {
+      if(Math.floor(timer/100) > time) {
+        setTaskFinished(true)
+      } 
     setTimer(0);
     setIsRunning(false);
+console.log(time, Math.floor(timer/1000) )
+
     if (!isStopped) {
       setIsStopped(true);
     }
-    if(Math.floor(timer/100) > time) {
-      setTaskFinished(true)
-    } 
-
   };
   return (
     <div className="row h-100">

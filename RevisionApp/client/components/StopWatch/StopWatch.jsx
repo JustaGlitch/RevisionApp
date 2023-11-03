@@ -42,12 +42,15 @@ const StopWatch = ({
             >
               {isRunning ? "Pause" : "Start"}
             </button>
+           
             <button
               className="stopwatch-button btn bg-info-subtle"
               onClick={finish}
             >
               Finish
             </button>
+          
+
           </div>
         </>
       )}
