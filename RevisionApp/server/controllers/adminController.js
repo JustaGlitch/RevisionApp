@@ -33,7 +33,7 @@ async function login(req, res){
         }else{
 
         const token = await Token.create(null, admin.admin_id);
-        res.status(200).json({authenticated: true, token: token.token});
+        res.status(200).json({authenticated: true, token: token.token, isAdmin: true});
         }
 
     }catch(error){

@@ -28,7 +28,7 @@ function index() {
       <div className={`main-page h-100 ${stopAnimation ? "" : "animate"}`}>
         <div className="container h-100">
           <div className="row d-flex justify-content-center my-5">
-            {isAdmin && <LeftColumn />}
+            {/* {isAdmin && <LeftColumn />} */}
             <Outlet />
           </div>
         </div>

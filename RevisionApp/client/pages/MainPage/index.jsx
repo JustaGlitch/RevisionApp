@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { TaskCard, TasksTabs, AddTaskForm, TasksList } from "../../components";
 import preloader from "../../assets/img/preloader2.gif";
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-
 function index() {
-  // const isAdmin = true;
-  const { userRole } = useContext(AuthContext); // Destructure userRole from context
-  const isAdmin = userRole === "admin"; // Determine if the user is an admin
+  const isAdmin = true;
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // State to store all tasks.
   const [tasks, setTasks] = useState([
@@ -29,7 +26,7 @@ function index() {
     // },
   ]);
   const [userName, setUserName] = useState("");
-  const [userClassName, setUserClassName] = useState(""); // Declare userClassName state
+  const [currentClass, setCurrentClass] = useState("Class 1");
 
   const [loading, setLoading] = useState(false);
   // State to track the currently selected tab.
@@ -50,7 +47,7 @@ function index() {
           title: task.title,
           description: task.description,
           class_id: task.class_id,
-          // suggested_time: Number(task.suggested_time.split(":")[1]),
+          suggested_time: task.suggested_time,
           status: task.completed ? "Completed" : "In Progress",
         }));
 
@@ -77,8 +74,9 @@ function index() {
           throw new Error("Network response was not ok");
         }
         const profileData = await response.json();
+        setIsLoading(true);
         setUserName(profileData.username);
-        setUserClassName(profileData.classname);
+        setCurrentClass(profileData.classname);
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -105,7 +103,8 @@ function index() {
     class_id,
     suggested_time
   ) => {
-    const cat = await fetchCategoriesByName(class_id);
+    const cat = await fetchCategoriesByName(currentClass);
+    console.log(cat);
     const newTask = {
       id: tasks.length + 1,
       title,
@@ -140,39 +139,90 @@ function index() {
 
   return (
     <div className="col-sm-12 offset-md-1 col-md-7 bg-white p-4 rounded-4">
-      <h1>Welcome {userName}</h1>
+      <h1>
+        Welcome{" "}
+        {isLoading
+          ? `${userName.charAt(0).toUpperCase() + userName.slice(1)}`
+          : "... "}
+        !
+      </h1>
       {/* Form to add a new task. */}
       <AddTaskForm isAdmin={isAdmin} onAddTask={handleAddTask} />
 
       {/* Tabs UI. */}
       <TasksTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
-
-      {/* Tab Content */}
       <div className="tab-content" id="myTabContent">
-        {selectedTab === "All" && (
-          <TasksList
-            key={selectedTab}
-            tasks={tasks}
-            filter="All"
-            userClassName={userClassName}
-          />
-        )}
-        {selectedTab === "In Progress" && (
-          <TasksList
-            key={selectedTab}
-            tasks={tasks}
-            filter="In Progress"
-            userClassName={userClassName}
-          />
-        )}
-        {selectedTab === "Completed" && (
-          <TasksList
-            key={selectedTab}
-            tasks={tasks}
-            filter="Completed"
-            userClassName={userClassName}
-          />
-        )}
+        <div
+          className="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          {selectedTab === "All" &&
+            (loading ? (
+              <TasksList
+                key={selectedTab}
+                tasks={tasks}
+                filter="All"
+                currentClass={currentClass}
+              />
+            ) : (
+              <div className="card-list mt-4 p-5 text-center">
+                <img src={preloader} className="img-fluid" />
+                <p>Loading...</p>
+              </div>
+            ))}
+        </div>
+        <div
+          className="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          {selectedTab === "In Progress" && (
+            <TasksList
+              key={selectedTab}
+              tasks={tasks}
+              filter="In Progress"
+              currentClass={currentClass}
+            />
+          )}
+        </div>
+        <div
+          className="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          {selectedTab === "Completed" && (
+            <TasksList
+              key={selectedTab}
+              tasks={tasks}
+              filter="Completed"
+              currentClass={currentClass}
+            />
+          )}
+        </div>
+        {/* <div
+          className="tab-pane fade"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          {selectedTab === "In Progress" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="In Progress" />
+          )}
+        </div>
+        <div
+          className="tab-pane fade"
+          id="contact"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+        >
+          {selectedTab === "Completed" && (
+            <TasksList key={selectedTab} tasks={tasks} filter="Completed" />
+          )}
+        </div> */}
       </div>
     </div>
   );

@@ -67,17 +67,17 @@ class Pokemon {
         return result.rows
     }
 
-    async findBabyVersion() {
+    static async findBabyVersion(id) {
         try {
-            const middleResult = await db.query(`SELECT * FROM pokemon WHERE evolves_to = $1`,[this.pokemon_id])
+            const middleResult = await db.query(`SELECT * FROM pokemon WHERE evolves_to = $1`,[id])
             const babyResult = await db.query(`SELECT * FROM pokemon WHERE evolves_to = $1`, [middleResult.rows[0].pokemon_id])
             let pokemonData
-            if(babyResult){
-                pokemonData = babyResult.rows[0]
+            if(babyResult.rowCount == 1){
+                pokemonData = babyResult.rows[0].pokemon_id
             }else{
-                pokemonData = middleResult.rows[0]
+                pokemonData = middleResult.rows[0].pokemon_id
             }
-            return new Pokemon(pokemonData)
+            return pokemonData
         } catch (error) {
             console.error("Error getting baby version:", error)
             throw error;

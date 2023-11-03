@@ -5,7 +5,7 @@ function TaskCard({ id, task }) {
   const { title, description, timestamp, suggested_time, class_id } = task;
 
   return (
-    <div className="list-group" data-testid="task-card">
+    <div className="list-group">
       <a
         href="#"
         className="list-group-item list-group-item-action d-flex gap-3 py-3"

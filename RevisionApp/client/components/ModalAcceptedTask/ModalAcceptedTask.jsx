@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import AcceptedGIF from "../../assets/img/accepted.gif";
 
 
-function ModalAcceptedTask({id, time}) {
+function ModalAcceptedTask({id, suggestedTime}) {
   return (
     <div className="modal fade" id={`acceptedTaskModal-${id}`} aria-hidden="true" aria-labelledby={`acceptedTaskModalLabel${id}`} tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
@@ -17,7 +17,7 @@ function ModalAcceptedTask({id, time}) {
               <div className="col-8">
           <div className="modal-body d-flex flex-column justify-content-center h-100">
             <p>You've accepted the task.</p>
-            <p className='lead'>Suggested time: <span className='small'>{time} min.</span></p>
+            <p className='lead'>Suggested time: <span className='small'>{suggestedTime} min.</span></p>
           </div>
           </div>
           <div className="col-4 d-flex align-items-center justify-content-center">
@@ -26,7 +26,7 @@ function ModalAcceptedTask({id, time}) {
           </div>
           </div>
           <div className="modal-footer d-flex justify-content-center">
-            <Link time={time} to={`/task/${id}`}><button type="button" className="btn btn-info text-white" data-bs-target={`#acceptedTaskModal-${id}`} data-bs-toggle="modal" >Go to the Task Page</button></Link>
+            <Link time={suggestedTime} to={`/task/${id}`}><button type="button" className="btn btn-info text-white" data-bs-target={`#acceptedTaskModal-${id}`} data-bs-toggle="modal" >Go to the Task Page</button></Link>
           </div>
         </div>
       </div>

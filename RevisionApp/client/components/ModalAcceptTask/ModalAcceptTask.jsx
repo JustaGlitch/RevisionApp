@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ModalAcceptedTask } from "../../components";
 import AcceptGIF from "../../assets/img/accept.gif";
 
 function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
-  const [suggestedTime = 30, setSuggestedTime] = useState(suggested_time);
+  const [suggestedTime, setSuggestedTime] = useState(suggested_time);
+
   const handleSetSuggestedTime = (e) => {
     setSuggestedTime(e.target.value);
+    setNewSuggestedTime(id, e.target.value)
   };
+
+    const setNewSuggestedTime = async (id, newSuggestedTime) => {
+      const resp = await fetch(`https://studydex.onrender.com/tasks/${id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({'suggested_time': newSuggestedTime})
+      })
+      const result = await resp.json() 
+      return result; 
+    }
+ 
   return (
     <>
       <div
@@ -51,7 +67,7 @@ function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
                         onChange={handleSetSuggestedTime}
                         className="form-control"
                         id={`suggestedTimeInput-${id}`}
-                        value={suggestedTime}
+                        value={suggestedTime||30}
                         required
                       />
                     </form>
@@ -77,7 +93,7 @@ function ModalAcceptTask({ id, title, description, suggested_time, class_id }) {
           </div>
         </div>
       </div>
-      <ModalAcceptedTask id={id} time={suggestedTime} class_id={class_id} />
+      <ModalAcceptedTask id={id} suggestedTime={suggestedTime} class_id={class_id} />
     </>
   );
 }

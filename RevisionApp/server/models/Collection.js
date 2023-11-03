@@ -8,11 +8,11 @@ class Collection {
     }
 
     // Create a new collection entry
-    static async create(pokemon_id,user_id) {
+    static async create({pokemon_id, name, sprite_url},user_id) {
         try {
             const result = await db.query(
-                `INSERT INTO collection (pokemon_id, user_id) VALUES ($1, $2) RETURNING *`,
-                [pokemon_id, user_id]
+                `INSERT INTO collection (pokemon_id, user_id, name, sprite_url) VALUES ($1, $2, $3, $4) RETURNING *`,
+                [pokemon_id, user_id, name, sprite_url]
             );
             const collectionData = result.rows[0]
             return new Collection(collectionData);

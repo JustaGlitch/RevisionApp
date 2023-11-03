@@ -8,6 +8,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [errorHandler, setErrorHandler] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -30,10 +31,14 @@ function LoginForm() {
       navigate("/");
     } catch (error) {
       console.error(
-        "Login failed:",
-        error.response?.data?.message || error.message
+        setErrorHandler("User does not exist!")
+
+        // error.response?.data?.message || error.message
       );
     }
+    setTimeout(() => {
+      setErrorHandler("");
+    }, 3000);
   };
 
   return (
@@ -54,7 +59,13 @@ function LoginForm() {
             placeholder="Your Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
+          {errorHandler ? (
+            <div className="mt-1 text-danger">{errorHandler}</div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
@@ -67,6 +78,7 @@ function LoginForm() {
             placeholder="Your Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <div className="mb-3 form-check">
