@@ -75,16 +75,17 @@ async function evolution (req,res) {
             const pokemon = await Pokemon.findById(current_poked)
             const evolvedPokemon = await pokemon.checkForEvolution(studyTime)
             if(evolvedPokemon == "can not evolve"){
-                res.status(200).send({message: "not enough time"})
+                res.status(200).send({message: "not enough time", pokemon: pokemon})
+            } else {
+                await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
+                const finalCheck = await evolvedPokemon.checkForEvolution(studyTime)
+                let message = "current pokemon:"
+                if(finalCheck == "add to collection"){
+                    await addToCollection(req,res)
+                    message = "added to collection:"
+                }
+                res.status(200).send({message: message, pokemon: evolvedPokemon})
             }
-            await Student.updatePoke(user_id, evolvedPokemon.pokemon_id)
-            const finalCheck = await evolvedPokemon.checkForEvolution(studyTime)
-            let message = "current pokemon:"
-            if(finalCheck == "add to collection"){
-                await addToCollection(req,res)
-                message = "added to collection:"
-            }
-            res.status(200).send({message: message, pokemon: evolvedPokemon})
         }else{
             res.status(200).send({message: "no pokemon to evolve"})
         }
